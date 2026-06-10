@@ -1,0 +1,337 @@
+{
+ "meta": {
+  "title": "Habitación Centro Histórico Arequipa - Lofts en alquiler en Cercado De Arequipa, Arequipa, Perú - Airbnb",
+  "og:title": "Loft · Cercado De Arequipa · ★4.81 · 1 habitación · 1 cama · 1 baño privado",
+  "og:description": "Habitación Centro Histórico Arequipa",
+  "description": "10 de jun de 2026 · Alojamiento entero: loft · ¡Bienvenidos a La Casa de Roos!  Es un placer recibirlos en el corazón del Centro Histórico de Arequipa. Nos encontramos dentro de un edificio empr..."
+ },
+ "sharingConfig": {
+  "__typename": "PdpSharingConfig",
+  "title": "Loft · Cercado De Arequipa · ★4.81 · 1 habitación · 1 cama · 1 baño privado"
+ },
+ "seoFeatures": {
+  "__typename": "SeoFeatures",
+  "androidAlternateUrl": "android-app://com.airbnb.android/airbnb/rooms/1353094020937867539",
+  "androidDeeplink": "airbnb://rooms/1353094020937867539",
+  "canonicalUrl": "https://www.airbnb.com.pe/rooms/1353094020937867539",
+  "iphoneDeeplink": "airbnb://rooms/1353094020937867539",
+  "metaDescription": "10 de jun de 2026 · Alojamiento entero: loft · ¡Bienvenidos a La Casa de Roos!  Es un placer recibirlos en el corazón del Centro Histórico de Arequipa. Nos encontramos dentro de un edificio empr...",
+  "title": "Habitación Centro Histórico Arequipa - Lofts en alquiler en Cercado De Arequipa, Arequipa, Perú - Airbnb",
+  "breadcrumbDetails": [],
+  "nearbyCities": [],
+  "neighborhoodBreadcrumbDetails": [],
+  "ogTags": {
+   "__typename": "SeoOgTags",
+   "ogDescription": "Habitación Centro Histórico Arequipa",
+   "ogImage": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/a673ae08-14af-4c79-90ca-9219fbb8cd6b.jpeg?im_w=720&width=720&quality=70&auto=webp",
+   "ogTitle": "Loft · Cercado De Arequipa · ★4.81 · 1 habitación · 1 cama · 1 baño privado",
+   "ogType": "airbedandbreakfast:listing",
+   "ogUrl": "https://www.airbnb.com.pe/rooms/1353094020937867539",
+   "ogImageHeight": null,
+   "ogImageWidth": null,
+   "ogVideoUrl": null,
+   "ogVideoHeight": null,
+   "ogVideoWidth": null
+  },
+  "otherPropertyTypes": [],
+  "propertySearchUrl": null,
+  "relImageSrc": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/a673ae08-14af-4c79-90ca-9219fbb8cd6b.jpeg?im_w=720&width=720&quality=70&auto=webp",
+  "twitterTags": {
+   "__typename": "SeoTwitterTags",
+   "twitterCard": "photo",
+   "twitterDescription": null,
+   "twitterImage": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/a673ae08-14af-4c79-90ca-9219fbb8cd6b.jpeg?im_w=720&width=720&quality=70&auto=webp",
+   "twitterTitle": null,
+   "twitterUrl": "https://www.airbnb.com.pe/rooms/1353094020937867539"
+  },
+  "indexInSearchEngines": true
+ },
+ "amenityGroups": [
+  {
+   "group": "",
+   "items": [
+    "Wifi",
+    "TV",
+    "Microondas",
+    "Estacionamiento de pago fuera de las instalaciones",
+    "Cámaras de seguridad en la parte exterior de la propiedad",
+    "NO: Detector de monóxido de carbono",
+    "NO: Detector de humo"
+   ]
+  },
+  {
+   "group": "Baño",
+   "items": [
+    "Agua caliente"
+   ]
+  },
+  {
+   "group": "Dormitorio y lavadero",
+   "items": [
+    "Ganchos para la ropa",
+    "Sábanas",
+    "Espacio para guardar la ropa"
+   ]
+  },
+  {
+   "group": "Entretenimiento",
+   "items": [
+    "TV",
+    "Libros y material de lectura"
+   ]
+  },
+  {
+   "group": "Seguridad en el hogar",
+   "items": [
+    "Cámaras de seguridad en la parte exterior de la propiedad",
+    "Extintor de incendios"
+   ]
+  },
+  {
+   "group": "Internet y oficina",
+   "items": [
+    "Wifi"
+   ]
+  },
+  {
+   "group": "Utensilios y vajilla",
+   "items": [
+    "Microondas",
+    "Utensilios básicos para cocinar",
+    "Platos y cubiertos",
+    "Mininevera",
+    "Cafetera",
+    "Copas de vino",
+    "Cocina pequeña"
+   ]
+  },
+  {
+   "group": "Características de la ubicación",
+   "items": [
+    "Lavandería cercana"
+   ]
+  },
+  {
+   "group": "Estacionamiento e instalaciones",
+   "items": [
+    "Estacionamiento de pago fuera de las instalaciones"
+   ]
+  },
+  {
+   "group": "Servicios",
+   "items": [
+    "Llegada autónoma",
+    "Caja de seguridad con llaves"
+   ]
+  },
+  {
+   "group": "No incluidos",
+   "items": [
+    "NO: Cocina",
+    "NO: Lavadora",
+    "NO: Secadora",
+    "NO: Aire acondicionado",
+    "NO: Servicios básicos",
+    "NO: Detector de humo",
+    "NO: Detector de monóxido de carbono",
+    "NO: Calefacción"
+   ]
+  }
+ ],
+ "ratings": [
+  "CLEANLINESS=4.9",
+  "ACCURACY=4.8",
+  "CHECKIN=4.9",
+  "COMMUNICATION=5.0",
+  "LOCATION=5.0",
+  "VALUE=4.8",
+  "=88%",
+  "=8%",
+  "=3%",
+  "=0%",
+  "=1%"
+ ],
+ "reviewTags": [],
+ "roomTour": [
+  "Sala",
+  "Cocina pequeña",
+  "Habitación",
+  "Baño completo",
+  "Fotos adicionales"
+ ],
+ "listItems": [
+  "4.81",
+  "El check-in es a partir de las 2:00 p.m.",
+  "La salida es antes de las 11:00 a.m.",
+  "2 viajeros como máximo",
+  "Mostrar más",
+  "Llegada autónoma con caja de seguridad con llaves",
+  "No se admiten mascotas",
+  "Horas de silencio — De 11:00 p.m. a 6:00 a.m.",
+  "Está prohibido hacer fiestas o eventos",
+  "Fotografía comercial permitida",
+  "Prohibido fumar",
+  "Apaga todas las luces y aparatos",
+  "Devuelve las llaves",
+  "Cámaras de seguridad en la parte exterior de la propiedad — “Cámara de seguridad para áreas comunes”",
+  "No consta que tenga un detector de monóxido de carbono — El anfitrión no informó que hubiera un detector de monóxido de carbono en la propiedad. Te sugerimos que lleves un detector portátil en el viaje.",
+  "No consta que tenga un detector de humo — El anfitrión no informó que hubiera un detector de humo en la propiedad. Te sugerimos que lleves un detector portátil en el viaje.",
+  "Mostrar 90 reseñas",
+  "¿Cómo funcionan las reseñas? — Las reseñas de los huéspedes anteriores ayudan a nuestra comunidad a obtener más información sobre cada alojamiento. Las reseñas se ordenan por relevancia de forma predeterminada. La relevancia se basa en la fecha de publicación, la extensión y la información que nos proporcionas, tales como la búsqueda de reservaciones, el país y las preferencias de idioma.\n\nSolo el huésped que hizo la reservación puede dejar una reseña y Airbnb solo modera las reseñas reportadas que no sigan nuestras políticas.\n\nPara cumplir con los requisitos de una clasificación por percentil o una etiqueta de Favorito entre huéspedes, los anuncios necesitan tener al menos 5 reseñas en los últimos 4 años. Los criterios están sujetos a cambios.\n\n<a target=\"_blank\" href=\"/help/article/13\">Obtén más información en el Centro de ayuda</a>",
+  "Para proteger tus pagos, usa siempre Airbnb a la hora de transferir dinero y comunicarte con los anfitriones.",
+  "Cusco — Alquileres vacacionales",
+  "La Paz — Alquileres vacacionales",
+  "Iquique — Alquileres vacacionales",
+  "Arica — Alquileres vacacionales",
+  "Aguas Calientes — Alquileres vacacionales",
+  "Cerro Colorado — Alquileres vacacionales",
+  "San Sebastián — Alquileres vacacionales",
+  "Ayacucho — Alquileres vacacionales",
+  "Puno — Alquileres vacacionales",
+  "Alquileres vacacionales en Arequipa",
+  "Estadías largas en Arequipa",
+  "Alquileres vacacionales en lofts en Arequipa",
+  "Alquileres vacacionales en lofts en Perú",
+  "Airbnb",
+  "Perú",
+  "Arequipa",
+  "Borrar fechas",
+  "Cierra",
+  "4.81 · — 90 reseñas",
+  "Más información",
+  "Alojamiento entero: loft"
+ ],
+ "headers": [],
+ "texts": [
+  "¡Bienvenidos a La Casa de Roos! Es un placer recibirlos en el corazón del Centro Histórico de Arequipa. Nos encontramos dentro de un edificio empresarial, lo que les garantiza seguridad, tranquilidad y comodidad durante su estadía. Aquí podrán disfrutar de un espacio diseñado para su descanso, con todas las comodidades necesarias para que se sientan como en casa. Si necesitan recomendaciones o ayuda con algo durante su estadía, incluimos nuestro servicio como Concierge digital gratuito. Acceso de los huéspedes Para tu comodidad, contamos con una cocina compartida en nuestra área común equipada con cocina eléctrica, microondas, mini nevera y utensilios básicos, perfecta para preparar algo rápido y disfrutar de una comida casera durante tu estancia. Otros aspectos a destacar Estarán a solo una cuadra de Calle Mercaderes y a unos pasos de las principales atracciones de la ciudad, como la Plaza de Armas, el Monasterio de Santa Catalina y una gran variedad de cafés, restaurantes y bares tradicionales. En nuestro edificio empresarial contamos en el primer piso con un restaurante vegano YURAKUNA 100% recomendado favorito entre nuestros turistas, y una óptica enfocada en brindar el mejor servicio en salud visual. Si necesitan recomendaciones o ayuda con algo durante su estadía, no duden en contactarnos y aprovechar nuestro servicio de Concierge Digital. ¡Esperamos que disfruten de Arequipa y de su tiempo en nuestro Airbnb! Nuestro alojamiento está ubicado en el corazón del centro histórico de Arequipa, una zona vibrante y con mucho movimiento. Debido a su ubicación céntrica, es pos",
+  "Los animales de servicio no se consideran mascotas, así que no hace falta que los agregues aquí. ¿Viajas con un animal de apoyo emocional? Consulta nuestra política de accesibilidad .",
+  "¡Bienvenidos a La Casa de Roos! Es un placer recibirlos en el corazón del Centro Histórico de Arequipa. Nos encontramos dentro de un edificio empresarial, lo que les garantiza seguridad, tranquilidad y comodidad durante su estadía. Aquí podrán disfrutar de un espacio diseñado para su descanso, con todas las comodidades necesarias para que se sientan como en casa. Si necesitan recomendaciones o ayuda con algo durante su estadía, incluimos nuestro servicio como Concierge digital gratuito.",
+  "Para tu comodidad, contamos con una cocina compartida en nuestra área común equipada con cocina eléctrica, microondas, mini nevera y utensilios básicos, perfecta para preparar algo rápido y disfrutar de una comida casera durante tu estancia.",
+  "Estarán a solo una cuadra de Calle Mercaderes y a unos pasos de las principales atracciones de la ciudad, como la Plaza de Armas, el Monasterio de Santa Catalina y una gran variedad de cafés, restaurantes y bares tradicionales. En nuestro edificio empresarial contamos en el primer piso con un restaurante vegano YURAKUNA 100% recomendado favorito entre nuestros turistas, y una óptica enfocada en brindar el mejor servicio en salud visual. Si necesitan recomendaciones o ayuda con algo durante su estadía, no duden en contactarnos y aprovechar nuestro servicio de Concierge Digital. ¡Esperamos que disfruten de Arequipa y de su tiempo en nuestro Airbnb! Nuestro alojamiento está ubicado en el corazón del centro histórico de Arequipa, una zona vibrante y con mucho movimiento. Debido a su ubicación céntrica, es posible que escuches algo de ruido proveniente del entorno (tráfico, música o actividad nocturna). Para tu comodidad, ofrecemos tapones para los oídos sin costo adicional, disponibles en el alojamiento. Queremos que disfrutes de tu estadía con nosotros y descanses bien, sin perderte la energía única del centro histórico arequipeño. ¡Bienvenidos y que tengan una excelente estadía!",
+  "Para tu comodidad contamos con un restaurante en nuestro primer piso “YURAKUNA” favorito entre nuestros turistas",
+  "Siéntete como en casa, usa nuestra cocina de uso compartido para nuestros huéspedes.",
+  "Loft · Cercado De Arequipa · ★4.81 · 1 habitación · 1 cama · 1 baño privado"
+ ],
+ "images": [
+  {
+   "url": "https://a0.muscache.com/im/pictures/AirbnbPlatformAssets/AirbnbPlatformAssets-Review-AI-Synthesis/original/481a6680-46b2-4c94-91e9-d7917d97b660.png",
+   "alt": ""
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/AirbnbPlatformAssets/AirbnbPlatformAssets-Review-AI-Synthesis/original/b5957392-bf60-4304-8666-c030859eebf7.png",
+   "alt": ""
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/AirbnbPlatformAssets/AirbnbPlatformAssets-Review-AI-Synthesis/original/8fc8e4ea-2fda-4e54-924c-9a16c481c747.png",
+   "alt": ""
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/AirbnbPlatformAssets/AirbnbPlatformAssets-Review-AI-Synthesis/original/e4546c79-fd9d-412c-862b-7faade48f32e.png",
+   "alt": ""
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/AirbnbPlatformAssets/AirbnbPlatformAssets-Review-AI-Synthesis/original/b0dbbf5c-02a9-4781-a3ad-cf6953beccdc.png",
+   "alt": ""
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/AirbnbPlatformAssets/AirbnbPlatformAssets-Review-AI-Synthesis/original/b0d9a4f0-26d1-4d4d-a269-4884338ab168.png",
+   "alt": ""
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/AirbnbPlatformAssets/AirbnbPlatformAssets-Review-AI-Synthesis/original/9a063063-76d9-401e-b8e7-8992e32a38f7.png",
+   "alt": ""
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/AirbnbPlatformAssets/AirbnbPlatformAssets-Review-AI-Synthesis/original/8ab51c28-bc4b-464e-8e54-f391fc36f132.png",
+   "alt": ""
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/AirbnbPlatformAssets/AirbnbPlatformAssets-Review-AI-Synthesis/original/aaf8701c-bfe8-4d81-a168-e62cf1efb091.png",
+   "alt": ""
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/AirbnbPlatformAssets/AirbnbPlatformAssets-Review-AI-Synthesis/original/a189c291-f179-4cf5-912e-5949e419e182.png",
+   "alt": ""
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/0dc3be5a-ee59-4a56-a8d5-4e80393934c7.jpeg",
+   "alt": "Habitación"
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/a673ae08-14af-4c79-90ca-9219fbb8cd6b.jpeg",
+   "alt": ""
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/07a4152a-a8a8-41eb-8f45-3410e2fbcaff.jpeg",
+   "alt": "Sala imagen 2"
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/1220d7bf-f92b-4a22-873e-c9cb2edf4acc.jpeg",
+   "alt": "Sala imagen 3"
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/374a2b12-c505-4ea5-b5cd-6779306c4434.jpeg",
+   "alt": "Sala imagen 4"
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/734df84c-dc57-489e-a7ee-ed89f45b443b.jpeg",
+   "alt": "Cocina pequeña imagen 1"
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/6b46f6e4-0af4-4ddc-80f9-bf1bcf70f55e.jpeg",
+   "alt": "Siéntete como en casa, usa nuestra cocina de uso compartido para nuestros huéspedes."
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/16e009fc-f0c6-4353-af7a-d648aac29c1a.jpeg",
+   "alt": "Siéntete como en casa, usa nuestra cocina de uso compartido para nuestros huéspedes."
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/95417a37-ac6d-4f9a-a686-455b526e767f.jpeg",
+   "alt": "Cocina pequeña imagen 4"
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/f4d33f5a-198e-4101-b650-60eaa11ccb9f.jpeg",
+   "alt": "Cocina pequeña imagen 5"
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/35be00ee-71e9-4b12-81ef-6d4080459499.jpeg",
+   "alt": "Habitación imagen 2"
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/2eb6e327-e6d4-43e0-bc99-8575ac168910.jpeg",
+   "alt": "Habitación imagen 3"
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/ef5ac616-b5cd-4e54-af3d-e452373a6e82.jpeg",
+   "alt": "Baño completo imagen 1"
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/eef6c821-ca91-45e9-ac60-a1d5c8a507c3.jpeg",
+   "alt": "Baño completo imagen 2"
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/c44bc4dc-8d33-4920-b5aa-da191c97bec3.jpeg",
+   "alt": "Baño completo imagen 3"
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/82d1f242-b104-413a-9215-0d5639a5c175.jpeg",
+   "alt": "Para tu comodidad contamos con un restaurante en nuestro primer piso “YURAKUNA” favorito e"
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/909b85b3-cd00-4f4f-ae28-f0ba049569df.jpeg",
+   "alt": "Para tu comodidad contamos con un restaurante en nuestro primer piso “YURAKUNA” favorito e"
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/888bbdc7-c277-47b8-a470-d4fd118e4bf2.jpeg",
+   "alt": "Para tu comodidad contamos con un restaurante en nuestro primer piso “YURAKUNA” favorito e"
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/7058dd09-410d-4fed-981e-ba6a6e5be413.jpeg",
+   "alt": "Para tu comodidad contamos con un restaurante en nuestro primer piso “YURAKUNA” favorito e"
+  },
+  {
+   "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1353094020937867539/original/490f7d9b-0939-4093-83e9-430a2dfde015.jpeg",
+   "alt": "Para tu comodidad contamos con un restaurante en nuestro primer piso “YURAKUNA” favorito e"
+  }
+ ]
+}

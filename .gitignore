@@ -1,0 +1,15 @@
+# OS
+.DS_Store
+
+# local tooling
+.claude/settings.local.json
+.vercel
+
+# env — never commit secrets
+.env*
+!.env.example
+
+# future app scaffold
+node_modules/
+.next/
+out/
