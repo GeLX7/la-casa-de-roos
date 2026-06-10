@@ -12,16 +12,18 @@ const nav = [
   { href: "/contacto", label: "Contacto" },
 ] as const;
 
+/* Branded bar: deep roasted brown from the logo lockup; the rest of the
+   site stays white-first. Focus rings switch to white here for contrast. */
 export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-40 border-b border-sillar-200/80 bg-white/90 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-cacao-900/70 bg-cacao-800/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link
           href="/"
-          className="flex items-center gap-3 font-display text-lg font-bold text-tinta-900"
+          className="flex items-center gap-3 focus-visible:outline-white"
         >
           {/* Owner-provided brand lockup (docs/research/content-rights-checklist.md) */}
           <Image
@@ -29,11 +31,11 @@ export function Header() {
             alt=""
             width={40}
             height={40}
-            className="h-10 w-10 rounded-md border border-sillar-200 object-cover"
+            className="h-10 w-10 rounded-md border border-white/20 object-cover"
             priority
           />
-          <span>
-            La Casa de <span className="text-arcilla-500">Roos</span>
+          <span className="font-display text-sm font-bold uppercase tracking-[0.1em] text-white">
+            La Casa de <span className="text-sillar-300">Roos</span>
           </span>
         </Link>
 
@@ -42,10 +44,10 @@ export function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className={`border-b-2 pb-1 text-sm transition-colors hover:text-arcilla-600 ${
+              className={`border-b-2 pb-1 text-xs font-semibold uppercase tracking-[0.14em] transition-colors focus-visible:outline-white ${
                 pathname === item.href
-                  ? "border-arcilla-500 font-semibold text-tinta-900"
-                  : "border-transparent text-tinta-700"
+                  ? "border-sillar-300 text-white"
+                  : "border-transparent text-white/75 hover:text-white"
               }`}
             >
               {item.label}
@@ -53,7 +55,7 @@ export function Header() {
           ))}
           <Link
             href="/reservar"
-            className="bg-arcilla-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-arcilla-600"
+            className="bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] text-cacao-900 shadow-sm transition-colors hover:bg-sillar-100 focus-visible:outline-white"
           >
             Solicitar reserva
           </Link>
@@ -65,7 +67,7 @@ export function Header() {
           aria-expanded={open}
           aria-controls="mobile-nav"
           aria-label={open ? "Cerrar menú" : "Abrir menú"}
-          className="flex h-10 w-10 items-center justify-center rounded-lg text-tinta-900 sm:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-lg text-white focus-visible:outline-white sm:hidden"
         >
           <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             {open ? (
@@ -81,7 +83,7 @@ export function Header() {
         <nav
           id="mobile-nav"
           aria-label="Principal móvil"
-          className="border-t border-sillar-200 bg-white px-6 py-4 sm:hidden"
+          className="border-t border-white/10 bg-cacao-800 px-6 py-4 sm:hidden"
         >
           <ul className="flex flex-col gap-3">
             {nav.map((item) => (
@@ -89,10 +91,10 @@ export function Header() {
                 <Link
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className={`block border-l-2 py-1.5 pl-3 text-base ${
+                  className={`block border-l-2 py-1.5 pl-3 text-sm font-semibold uppercase tracking-[0.14em] focus-visible:outline-white ${
                     pathname === item.href
-                      ? "border-arcilla-500 font-semibold text-tinta-900"
-                      : "border-transparent text-tinta-700"
+                      ? "border-sillar-300 text-white"
+                      : "border-transparent text-white/75"
                   }`}
                 >
                   {item.label}
@@ -103,7 +105,7 @@ export function Header() {
               <Link
                 href="/reservar"
                 onClick={() => setOpen(false)}
-                className="mt-1 block bg-arcilla-500 px-4 py-2.5 text-center text-base font-semibold text-white"
+                className="mt-1 block bg-white px-4 py-2.5 text-center text-sm font-bold uppercase tracking-[0.1em] text-cacao-900 focus-visible:outline-white"
               >
                 Solicitar reserva
               </Link>

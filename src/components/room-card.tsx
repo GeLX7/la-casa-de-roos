@@ -33,10 +33,12 @@ export function RoomCard({
       <div className="flex flex-1 flex-col gap-3 p-5">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <h3 className="font-display text-lg font-bold leading-snug text-tinta-900">
+            <h3 className="font-display text-base font-bold leading-snug text-tinta-900">
               {listing.title}
             </h3>
-            <p className="mt-0.5 text-sm text-tinta-500">{listing.subtitle}</p>
+            <p className="mt-1 text-xs font-semibold uppercase tracking-[0.1em] text-tinta-500">
+              {listing.subtitle}
+            </p>
           </div>
           <p
             className="flex shrink-0 items-center gap-1 rounded-md bg-sillar-100 px-2.5 py-1 text-sm font-medium text-tinta-700"

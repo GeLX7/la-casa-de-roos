@@ -15,26 +15,34 @@ export function TrustStrip() {
             <Star className="h-5 w-5 text-arcilla-500" />
             {aggregate.rating.toFixed(2)}
           </p>
-          <p className="mt-1 text-xs text-tinta-500">calificación promedio</p>
+          <p className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-tinta-500">
+            calificación promedio
+          </p>
         </div>
         <div>
           <p className="font-display text-2xl font-bold text-tinta-900">
             +{aggregate.reviewCount}
           </p>
-          <p className="mt-1 text-xs text-tinta-500">reseñas en Airbnb</p>
+          <p className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-tinta-500">
+            reseñas en Airbnb
+          </p>
         </div>
         <div>
           <p className="flex items-center justify-center gap-1.5 font-display text-2xl font-bold text-tinta-900">
             <Key className="h-5 w-5 text-arcilla-500" />
             24/7
           </p>
-          <p className="mt-1 text-xs text-tinta-500">llegada autónoma</p>
+          <p className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-tinta-500">
+            llegada autónoma
+          </p>
         </div>
         <div>
           <p className="flex items-center justify-center gap-1.5 font-display text-2xl font-bold text-tinta-900">
             <MapPin className="h-5 w-5 text-arcilla-500" />1 cuadra
           </p>
-          <p className="mt-1 text-xs text-tinta-500">de la Calle Mercaderes</p>
+          <p className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-tinta-500">
+            de la Calle Mercaderes
+          </p>
         </div>
       </div>
       <p className="pb-4 text-center text-[11px] text-tinta-500/80">

@@ -24,7 +24,7 @@ export function Footer() {
             height={72}
             className="h-18 w-18 rounded-lg border border-sillar-200 object-cover"
           />
-          <p className="mt-4 font-display text-lg font-bold text-tinta-900">
+          <p className="mt-4 font-display text-base font-bold uppercase tracking-[0.1em] text-tinta-900">
             La Casa de <span className="text-arcilla-500">Roos</span>
           </p>
           <p className="mt-2 max-w-xs text-sm leading-relaxed text-tinta-700">

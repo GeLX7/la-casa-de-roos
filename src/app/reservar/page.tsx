@@ -28,7 +28,7 @@ export default async function ReservarPage({
       <p className="mt-5 text-sm leading-relaxed text-tinta-700">
         Elige tu suite y tus fechas; tu solicitud llega directo al WhatsApp de
         Roos, que la confirma personalmente. <strong>No es una reserva
-        instantánea</strong> — primero verificamos disponibilidad (también la
+        instantánea</strong>: primero verificamos disponibilidad (también la
         del calendario de Airbnb) y te respondemos, normalmente en minutos.
       </p>
 

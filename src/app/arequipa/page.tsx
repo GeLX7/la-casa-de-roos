@@ -49,13 +49,16 @@ export default function ArequipaPage() {
           (docs/research/content-rights-checklist.md). */}
       <section className="border-b border-sillar-200">
         <div className="mx-auto max-w-6xl px-6 pb-12 pt-14 lg:pt-20">
-          <div className="mx-auto max-w-3xl text-center">
+          <div className="mx-auto max-w-4xl text-center">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-arcilla-600">
               Guía local
             </p>
-            <h1 className="mt-4 font-display text-4xl font-extrabold leading-tight text-tinta-900 sm:text-5xl">
-              Descubre Arequipa: una ciudad que se camina.
+            <h1 className="mt-4 font-display text-3xl font-extrabold leading-[1.12] text-tinta-900 sm:text-4xl lg:text-5xl">
+              Descubre Arequipa
             </h1>
+            <p className="mt-3 text-sm font-bold uppercase tracking-[0.16em] text-tinta-500">
+              Una ciudad que se camina
+            </p>
             <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-tinta-700">
               Monasterios de colores, portales de sillar, picanterías y volcanes
               en el horizonte. La Casa de Roos está pensada como base tranquila
@@ -116,7 +119,7 @@ export default function ArequipaPage() {
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-arcilla-600">
               Por qué el centro
             </p>
-            <h2 className="mt-3 font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
+            <h2 className="mt-3 font-display text-2xl font-bold leading-snug text-tinta-900 sm:text-3xl">
               Base práctica, días más ligeros.
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-tinta-700">
@@ -157,11 +160,11 @@ export default function ArequipaPage() {
       {/* Must-see gallery — centered heading over a 3-column image grid. */}
       <section className="border-y border-sillar-200 bg-sillar-50/60">
         <div className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
-          <div className="mx-auto mb-12 max-w-2xl text-center">
+          <div className="mx-auto mb-12 max-w-3xl text-center">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-arcilla-600">
               Qué hacer
             </p>
-            <h2 className="mt-3 font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
+            <h2 className="mt-3 font-display text-2xl font-bold text-tinta-900 sm:text-3xl lg:text-4xl">
               Lugares imperdibles
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-tinta-700 sm:text-base">
@@ -208,11 +211,11 @@ export default function ArequipaPage() {
 
       {/* Near the house — walking decisions. */}
       <section className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
-        <div className="mx-auto mb-10 max-w-2xl text-center">
+        <div className="mx-auto mb-10 max-w-3xl text-center">
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-arcilla-600">
             Cerca de la casa
           </p>
-          <h2 className="mt-3 font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
+          <h2 className="mt-3 font-display text-2xl font-bold text-tinta-900 sm:text-3xl lg:text-4xl">
             A pasos de La Casa de Roos
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-tinta-700">
@@ -256,7 +259,7 @@ export default function ArequipaPage() {
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-arcilla-600">
               Guía breve
             </p>
-            <h2 className="mt-3 font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
+            <h2 className="mt-3 font-display text-2xl font-bold leading-snug text-tinta-900 sm:text-3xl">
               Lo útil antes de elegir fechas.
             </h2>
             <p className="mt-4 max-w-xl text-sm leading-relaxed text-tinta-700">
@@ -303,8 +306,8 @@ export default function ArequipaPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-tinta-900/80 via-tinta-900/35 to-transparent" />
         <div className="absolute inset-0 flex items-end justify-center pb-12">
-          <div className="px-6 text-center">
-            <h2 className="font-display text-3xl font-bold text-white sm:text-4xl">
+          <div className="max-w-3xl px-6 text-center">
+            <h2 className="font-display text-2xl font-bold leading-snug text-white sm:text-3xl">
               Despierta a tres minutos de todo esto.
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-white/90">

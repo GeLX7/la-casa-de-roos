@@ -68,7 +68,7 @@ export const arequipaExperiences = [
     text: "Terrazas, cóndores y uno de los cañones más profundos del mundo. Se visita en tour de un día o con una noche en el valle.",
     image: "/images/arequipa/canon-del-colca.jpg",
     alt: "Vista panorámica del Cañón del Colca con terrazas y el río al fondo",
-    distance: "excursión de 1–2 días",
+    distance: "excursión de 1 a 2 días",
   },
   {
     title: "Ruta del Sillar",

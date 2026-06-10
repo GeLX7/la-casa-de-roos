@@ -34,7 +34,7 @@ export async function generateMetadata({
   const listing = getListing(slug);
   if (!listing) return {};
   return {
-    title: `${listing.title} — ${listing.subtitle}`,
+    title: `${listing.title} · ${listing.subtitle}`,
     description: listing.shortDescription,
     alternates: { canonical: `/habitaciones/${listing.slug}` },
     openGraph: {
@@ -56,7 +56,7 @@ export default async function RoomPage({
   const accommodationJsonLd = {
     "@context": "https://schema.org",
     "@type": "Accommodation",
-    name: `${listing.title} — ${listing.subtitle}`,
+    name: `${listing.title} · ${listing.subtitle}`,
     description: listing.shortDescription,
     url: `${SITE_URL}/habitaciones/${listing.slug}`,
     occupancy: { "@type": "QuantitativeValue", maxValue: listing.capacity },
@@ -96,10 +96,12 @@ export default async function RoomPage({
 
       <header className="mb-8 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="font-display text-3xl font-extrabold leading-tight text-tinta-900 sm:text-4xl">
+          <h1 className="max-w-3xl font-display text-2xl font-extrabold leading-snug text-tinta-900 sm:text-3xl">
             {listing.title}
           </h1>
-          <p className="mt-1.5 text-lg text-tinta-500">{listing.subtitle}</p>
+          <p className="mt-2 text-sm font-semibold uppercase tracking-[0.12em] text-tinta-500">
+            {listing.subtitle}
+          </p>
         </div>
         <div className="text-right">
           <p className="flex items-center justify-end gap-1.5 text-lg font-semibold text-tinta-900">
@@ -169,7 +171,7 @@ export default async function RoomPage({
             </h3>
             <ul className="space-y-1.5">
               {listing.notIncluded.map((n) => (
-                <li key={n} className="text-sm text-tinta-500">— {n}</li>
+                <li key={n} className="text-sm text-tinta-500">· {n}</li>
               ))}
             </ul>
           </section>
@@ -202,7 +204,7 @@ export default async function RoomPage({
             )}
           </div>
           <p className="mt-1 text-xs text-tinta-500">
-            Te confirmamos tarifa y disponibilidad por WhatsApp — sin compromiso.
+            Te confirmamos tarifa y disponibilidad por WhatsApp, sin compromiso.
           </p>
           <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1.5 border-t border-sillar-200 pt-4 text-xs text-tinta-700">
             <span className="flex items-center gap-1.5">
@@ -261,7 +263,7 @@ export default async function RoomPage({
                   <Star className="h-3.5 w-3.5 text-arcilla-500" />
                   {l.rating.toFixed(2)} · {l.reviewCount} reseñas
                 </p>
-                <p className="mt-2 font-display text-base font-bold leading-snug text-tinta-900">
+                <p className="mt-2 font-display text-sm font-bold uppercase leading-snug tracking-[0.06em] text-tinta-900">
                   {l.subtitle}
                 </p>
                 <p className="mt-1 text-xs text-tinta-500">

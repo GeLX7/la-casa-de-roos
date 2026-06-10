@@ -119,8 +119,8 @@ export const listings: Listing[] = [
       { icon: "iron", label: "Plancha" },
     ],
     notIncluded: sharedNotIncluded,
-    rules: baseRules("23:00 – 06:00"),
-    quietHours: "23:00 – 06:00",
+    rules: baseRules("23:00 a 06:00"),
+    quietHours: "23:00 a 06:00",
     priceLabel: "Consultar precio",
     gallery: suiteGallery(
       "suite-queen-con-sala",
@@ -147,8 +147,8 @@ export const listings: Listing[] = [
     ],
     amenities: sharedAmenities,
     notIncluded: sharedNotIncluded,
-    rules: baseRules("23:00 – 06:00"),
-    quietHours: "23:00 – 06:00",
+    rules: baseRules("23:00 a 06:00"),
+    quietHours: "23:00 a 06:00",
     priceLabel: "Consultar precio",
     gallery: suiteGallery(
       "suite-queen-centro-historico",
@@ -175,8 +175,8 @@ export const listings: Listing[] = [
     ],
     amenities: sharedAmenities,
     notIncluded: sharedNotIncluded,
-    rules: baseRules("23:00 – 07:00"),
-    quietHours: "23:00 – 07:00",
+    rules: baseRules("23:00 a 07:00"),
+    quietHours: "23:00 a 07:00",
     priceLabel: "Consultar precio",
     gallery: suiteGallery(
       "suite-queen-con-vista",
@@ -208,8 +208,8 @@ export const listings: Listing[] = [
     ],
     notIncluded: sharedNotIncluded,
     // TODO(owner): confirm quiet hours for this suite (Airbnb page didn't expose it).
-    rules: baseRules("23:00 – 06:00"),
-    quietHours: "23:00 – 06:00",
+    rules: baseRules("23:00 a 06:00"),
+    quietHours: "23:00 a 06:00",
     priceLabel: "Consultar precio",
     gallery: suiteGallery(
       "mini-apartamento-familiar",

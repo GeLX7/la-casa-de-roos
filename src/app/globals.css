@@ -18,6 +18,12 @@
   --color-tinta-700: #453e36;
   --color-tinta-900: #292420;
 
+  /* Deep roasted browns sampled around the logo lockup's wordmark —
+     used for the branded header/nav only (site stays white-first). */
+  --color-cacao-700: #5d4430;
+  --color-cacao-800: #4a3424;
+  --color-cacao-900: #3b2a1d;
+
   --color-arcilla-50: #fbefe8;
   --color-arcilla-400: #d2693f;
   --color-arcilla-500: #c2552c;
@@ -39,11 +45,16 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Display rule: every heading level is uppercase (bold-organized hierarchy,
+   arequipa.com/lazzat pattern). Body copy stays sentence case. Uppercase
+   Montserrat needs slight positive tracking instead of the lowercase
+   negative tracking. */
 h1,
 h2,
 h3 {
   text-wrap: balance;
-  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 p {

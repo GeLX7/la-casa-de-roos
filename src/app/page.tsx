@@ -56,7 +56,7 @@ export default function HomePage() {
           (composition cue: lazzat.online's logo-led, centered hero). */}
       <section className="bg-white">
         <div className="mx-auto max-w-6xl px-6 pt-12 sm:pt-16">
-          <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
+          <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
             {/* Owner-provided brand lockup as a small crest above the title. */}
             <Image
               src="/images/brand/logo-mark.jpg"
@@ -70,14 +70,14 @@ export default function HomePage() {
               <MapPin className="h-3.5 w-3.5 text-arcilla-500" />
               Centro Histórico · Arequipa, Perú
             </p>
-            <h1 className="mt-4 font-display text-4xl font-extrabold leading-tight text-tinta-900 sm:text-5xl lg:text-6xl">
-              Tu suite privada en el corazón de la{" "}
+            <h1 className="mt-4 font-display text-3xl font-extrabold leading-[1.12] text-tinta-900 sm:text-4xl lg:text-5xl">
+              Tu suite privada en la{" "}
               <span className="text-arcilla-500">Ciudad Blanca</span>
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-tinta-700 sm:text-lg">
               A una cuadra de la Calle Mercaderes y a pasos de la Plaza de
-              Armas: cuatro suites privadas con baño propio, sala de estar y
-              kitchenette, llegada autónoma — y una anfitriona que responde en
+              Armas: cuatro suites privadas con baño propio, sala de estar,
+              kitchenette y llegada autónoma. Y una anfitriona que responde en
               minutos.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -132,11 +132,11 @@ export default function HomePage() {
 
       {/* Suites — centered heading, grid, centered closing action. */}
       <section className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
-        <div className="mx-auto mb-12 max-w-2xl text-center">
+        <div className="mx-auto mb-12 max-w-3xl text-center">
           <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
             La casa
           </p>
-          <h2 className="font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
+          <h2 className="font-display text-2xl font-bold text-tinta-900 sm:text-3xl lg:text-4xl">
             Nuestras suites
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-tinta-700 sm:text-base">
@@ -162,11 +162,11 @@ export default function HomePage() {
       {/* Why us — centered heading over a 4-column feature row. */}
       <section className="border-y border-sillar-200 bg-sillar-50/60">
         <div className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
-          <div className="mx-auto mb-12 max-w-2xl text-center">
+          <div className="mx-auto mb-12 max-w-4xl text-center">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
               Por qué nosotros
             </p>
-            <h2 className="font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
+            <h2 className="font-display text-2xl font-bold leading-snug text-tinta-900 sm:text-3xl lg:text-4xl">
               Hecho para descansar, pensado para confiar
             </h2>
           </div>
@@ -191,7 +191,7 @@ export default function HomePage() {
             <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
               Ubicación
             </p>
-            <h2 className="font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
+            <h2 className="font-display text-2xl font-bold text-tinta-900 sm:text-3xl">
               Todo Arequipa, a pie
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-tinta-700">
@@ -231,7 +231,7 @@ export default function HomePage() {
                 <strong>tapones para los oídos de cortesía</strong>.
               </li>
               <li>
-                No hay aire acondicionado ni calefacción — con el clima templado
+                No hay aire acondicionado ni calefacción. Con el clima templado
                 de Arequipa casi nunca se extrañan.
               </li>
               <li>
@@ -252,16 +252,16 @@ export default function HomePage() {
           (docs/research/content-rights-checklist.md). */}
       <section className="border-t border-sillar-200 bg-white">
         <div className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
-          <div className="mx-auto mb-10 max-w-2xl text-center">
+          <div className="mx-auto mb-10 max-w-3xl text-center">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
               Guía Arequipa
             </p>
-            <h2 className="font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
+            <h2 className="font-display text-2xl font-bold text-tinta-900 sm:text-3xl lg:text-4xl">
               Descubre Arequipa
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-tinta-700 sm:text-base">
               Monasterios, miradores, picanterías y el cañón a un par de horas:
-              la Ciudad Blanca se camina — y la casa queda justo en medio.
+              la Ciudad Blanca se camina, y la casa queda justo en medio.
             </p>
           </div>
 
@@ -327,11 +327,11 @@ export default function HomePage() {
               height={56}
               className="mx-auto h-14 w-14 rounded-lg border border-sillar-200 object-cover"
             />
-            <h2 className="mt-5 font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
+            <h2 className="mt-5 font-display text-2xl font-bold leading-snug text-tinta-900 sm:text-3xl">
               ¿Listo para despertar en el centro histórico?
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-sm text-tinta-700 sm:text-base">
-              Cuéntanos tus fechas y te confirmamos disponibilidad — normalmente
+              Cuéntanos tus fechas y te confirmamos disponibilidad, normalmente
               en minutos.
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-3">

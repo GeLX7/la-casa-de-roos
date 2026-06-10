@@ -6,18 +6,18 @@ import { RoomCard } from "@/components/room-card";
 export const metadata: Metadata = {
   title: "Habitaciones y suites en el Centro Histórico de Arequipa",
   description:
-    "Cuatro suites privadas con baño propio, sala y kitchenette en el Centro Histórico de Arequipa. Capacidad para 2–3 huéspedes, llegada autónoma.",
+    "Cuatro suites privadas con baño propio, sala y kitchenette en el Centro Histórico de Arequipa. Capacidad para 2 a 3 huéspedes, llegada autónoma.",
   alternates: { canonical: "/habitaciones" },
 };
 
 export default function HabitacionesPage() {
   return (
     <div className="mx-auto max-w-6xl px-6 py-14 lg:py-18">
-      <div className="mx-auto max-w-2xl text-center">
+      <div className="mx-auto max-w-4xl text-center">
         <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
           Habitaciones
         </p>
-        <h1 className="font-display text-4xl font-extrabold text-tinta-900">
+        <h1 className="font-display text-3xl font-extrabold leading-[1.15] text-tinta-900 sm:text-4xl">
           Cuatro suites en una misma casa del centro.
         </h1>
         <p className="mt-4 text-sm leading-relaxed text-tinta-700 sm:text-base">

@@ -20,7 +20,7 @@ export const site = {
   city: "Arequipa",
   region: "Arequipa",
   country: "PE",
-  neighborhood: "Cercado de Arequipa — Centro Histórico",
+  neighborhood: "Cercado de Arequipa, Centro Histórico",
   // TODO(owner): exact street address approved for publication (Q4), pending value.
   mapsUrl: "https://maps.app.goo.gl/EkTeDgo46YoJXW8o9",
   checkin: "14:00",

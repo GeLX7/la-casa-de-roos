@@ -6,7 +6,7 @@ import { WhatsApp, MapPin, ArrowRight } from "@/components/icons";
 export const metadata: Metadata = {
   title: "Contacto",
   description:
-    "Escríbenos por WhatsApp o redes sociales. La Casa de Roos — Centro Histórico de Arequipa, Perú.",
+    "Escríbenos por WhatsApp o redes sociales. La Casa de Roos, Centro Histórico de Arequipa, Perú.",
   alternates: { canonical: "/contacto" },
 };
 
@@ -19,7 +19,7 @@ export default function ContactoPage() {
         </p>
         <h1 className="font-display text-4xl font-extrabold text-tinta-900">Contacto</h1>
         <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-tinta-700">
-          El canal más rápido es WhatsApp — Roos responde normalmente en minutos.
+          El canal más rápido es WhatsApp: Roos responde normalmente en minutos.
         </p>
       </div>
 
