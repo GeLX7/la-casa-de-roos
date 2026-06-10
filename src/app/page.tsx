@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { listings } from "@/data/listings";
+import { listings, aggregate } from "@/data/listings";
 import { site, landmarks } from "@/data/site";
 import { RoomCard } from "@/components/room-card";
 import { TrustStrip } from "@/components/trust-strip";
+import { PlaceholderImage } from "@/components/placeholder-image";
 import { whatsappUrl, defaultWhatsappMessage } from "@/lib/whatsapp";
 import {
   WhatsApp,
@@ -42,53 +43,64 @@ export default function HomePage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-b from-sillar-100 via-sillar-50 to-sillar-50">
-        <div className="mx-auto grid max-w-6xl gap-10 px-6 pb-16 pt-14 sm:pt-20 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:pb-24">
+        <div className="mx-auto grid max-w-6xl gap-8 px-6 pb-8 pt-10 sm:gap-10 sm:pb-12 sm:pt-16 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:pb-14">
           <div>
             <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-sillar-300 bg-white/70 px-3.5 py-1.5 text-xs font-medium text-tinta-700">
               <MapPin className="h-3.5 w-3.5 text-arcilla-500" />
               Centro Histórico · Arequipa, Perú
             </p>
-            <h1 className="font-display text-4xl font-semibold leading-tight tracking-tight text-tinta-900 sm:text-5xl lg:text-6xl">
+            <h1 className="font-display text-4xl font-semibold leading-tight text-tinta-900 sm:text-5xl lg:text-6xl">
               Tu suite privada en el corazón de la{" "}
               <span className="text-arcilla-500">Ciudad Blanca</span>
             </h1>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-tinta-700 sm:text-lg">
-              {site.description} Cuatro suites con baño propio, sala de estar y
-              llegada autónoma — y una anfitriona que responde en minutos.
+              A una cuadra de la Calle Mercaderes y a pasos de la Plaza de
+              Armas: cuatro suites privadas con baño propio, sala de estar y
+              kitchenette, llegada autónoma — y una anfitriona que responde en
+              minutos.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/habitaciones"
-                className="inline-flex items-center gap-2 rounded-full bg-arcilla-500 px-6 py-3 text-base font-semibold text-white shadow-sm transition-colors hover:bg-arcilla-600"
+                aria-label="Ver habitaciones"
+                className="inline-flex items-center gap-2 rounded-full bg-arcilla-500 px-5 py-3 text-base font-semibold text-white shadow-sm transition-colors hover:bg-arcilla-600 sm:px-6"
               >
-                Ver habitaciones <ArrowRight className="h-4 w-4" />
+                <span className="sm:hidden">Ver suites</span>
+                <span className="hidden sm:inline">Ver habitaciones</span>
+                <ArrowRight className="h-4 w-4" />
               </Link>
               <a
                 href={whatsappUrl(defaultWhatsappMessage)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-sillar-300 bg-white px-6 py-3 text-base font-semibold text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
+                aria-label="Escribir por WhatsApp"
+                className="inline-flex items-center gap-2 rounded-full border border-sillar-300 bg-white px-5 py-3 text-base font-semibold text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600 sm:px-6"
               >
                 <WhatsApp className="h-5 w-5 text-[#25D366]" />
-                Escríbenos
+                <span className="sm:hidden">WhatsApp</span>
+                <span className="hidden sm:inline">Escríbenos</span>
               </a>
             </div>
           </div>
 
-          {/* Hero photo slot — replace with owner's best original (rights doc). */}
-          <div
-            role="img"
-            aria-label="Foto pendiente: fachada y suites de La Casa de Roos"
-            className="relative hidden aspect-[4/5] items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-sillar-200 via-sillar-300 to-arcilla-50 shadow-inner lg:flex"
-          >
-            <div className="px-8 text-center">
-              <p className="font-display text-xl font-medium text-tinta-700">
-                Aquí va la foto estrella de la casa
-              </p>
-              <p className="mt-2 text-sm text-tinta-500">
-                Esperando las fotos originales del propietario
-              </p>
-            </div>
+          {/* Hero photo slot — replace with owner's best original (rights doc).
+              Arch silhouette nods to Arequipa's sillar portales. */}
+          <div className="relative mx-auto w-full max-w-md lg:max-w-none">
+            <PlaceholderImage
+              photo={{
+                slot: "hero-casa",
+                label: "La foto estrella de la casa — fachada o la mejor suite",
+                src: null,
+              }}
+              variant={1}
+              className="aspect-[16/9] w-full rounded-3xl rounded-t-[5rem] shadow-sm sm:aspect-[4/3] sm:rounded-t-[7rem] lg:aspect-[4/5] lg:max-h-[520px] lg:rounded-t-[10rem]"
+              sizes="(min-width: 1024px) 45vw, 100vw"
+              priority
+            />
+            <p className="absolute -bottom-3 left-1/2 w-max -translate-x-1/2 rounded-full border border-sillar-200 bg-white px-4 py-1.5 text-xs font-medium text-tinta-700 shadow-sm">
+              ★ {aggregate.rating.toFixed(2)} · +{aggregate.reviewCount} reseñas
+              en Airbnb
+            </p>
           </div>
         </div>
       </section>
@@ -99,6 +111,9 @@ export default function HomePage() {
       <section className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-arcilla-500">
+              La casa
+            </p>
             <h2 className="font-display text-3xl font-semibold text-tinta-900">
               Nuestras suites
             </h2>
@@ -115,17 +130,20 @@ export default function HomePage() {
           </Link>
         </div>
         <div className="grid gap-6 sm:grid-cols-2">
-          {listings.slice(0, 4).map((l) => (
-            <RoomCard key={l.slug} listing={l} />
+          {listings.slice(0, 4).map((l, i) => (
+            <RoomCard key={l.slug} listing={l} variant={i} />
           ))}
         </div>
       </section>
 
       {/* Why us */}
-      <section className="bg-sillar-100">
+      <section className="bg-salvia-100/70">
         <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-arcilla-500">
+            Por qué nosotros
+          </p>
           <h2 className="font-display text-3xl font-semibold text-tinta-900">
-            Por qué La Casa de Roos
+            Hecho para descansar, pensado para confiar
           </h2>
           <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {reasons.map((r) => (
@@ -145,6 +163,9 @@ export default function HomePage() {
       <section className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-arcilla-500">
+              Ubicación
+            </p>
             <h2 className="font-display text-3xl font-semibold text-tinta-900">
               Todo Arequipa, a pie
             </h2>
@@ -173,7 +194,7 @@ export default function HomePage() {
           </div>
 
           {/* Honesty block — distinctive trust copy (design doc §honestidad). */}
-          <div className="rounded-3xl border border-sillar-200 bg-white p-8 shadow-sm">
+          <div className="rounded-3xl border border-salvia-100 bg-white p-8 shadow-sm">
             <h3 className="flex items-center gap-2 font-display text-xl font-semibold text-tinta-900">
               <Moon className="h-5 w-5 text-arcilla-500" />
               Hablemos claro

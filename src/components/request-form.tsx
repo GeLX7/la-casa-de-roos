@@ -64,13 +64,13 @@ export function RequestForm({ initialSlug }: { initialSlug?: string }) {
         <select id="suite" value={form.suite} onChange={set("suite")} className={inputCls}>
           {listings.map((l) => (
             <option key={l.slug} value={l.slug}>
-              {l.title} — {l.subtitle}
+              {l.subtitle}
             </option>
           ))}
         </select>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="checkin" className={labelCls}>Llegada</label>
           <input
@@ -87,7 +87,7 @@ export function RequestForm({ initialSlug }: { initialSlug?: string }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="guests" className={labelCls}>Huéspedes</label>
           <select id="guests" value={form.guests} onChange={set("guests")} className={inputCls}>
@@ -135,7 +135,8 @@ export function RequestForm({ initialSlug }: { initialSlug?: string }) {
         className="flex w-full items-center justify-center gap-2 rounded-full bg-arcilla-500 px-6 py-3.5 text-base font-semibold text-white shadow-sm transition-colors hover:bg-arcilla-600"
       >
         <WhatsApp className="h-5 w-5" />
-        Enviar solicitud por WhatsApp
+        <span className="sm:hidden">Enviar por WhatsApp</span>
+        <span className="hidden sm:inline">Enviar solicitud por WhatsApp</span>
       </button>
 
       <p className="text-center text-xs leading-relaxed text-tinta-500">

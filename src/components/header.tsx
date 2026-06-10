@@ -19,7 +19,7 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link
           href="/"
-          className="font-display text-lg font-semibold tracking-tight text-tinta-900"
+          className="font-display text-lg font-semibold text-tinta-900"
         >
           La Casa de <span className="text-arcilla-500">Roos</span>
         </Link>

@@ -24,6 +24,9 @@
   --color-salvia-100: #eaefe8;
   --color-salvia-500: #7e8f7c;
   --color-salvia-700: #5c6e5a;
+
+  --color-cielo-100: #eaf2f2;
+  --color-cielo-500: #6f9498;
 }
 
 body {
@@ -31,6 +34,11 @@ body {
   color: var(--color-tinta-900);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid var(--color-arcilla-500);
+  outline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {

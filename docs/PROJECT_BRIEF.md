@@ -1,6 +1,6 @@
 # La Casa de Roos — Project Brief
 
-**Date:** 2026-06-10 · **Status:** Planning reconciled with owner answers. Repo `GeLX7/la-casa-de-roos` + Vercel project `la-casa-de-roos` created (git deploys disabled — zero deployments). Next: scaffold.
+**Date:** 2026-06-10 · **Status:** Planning reconciled with owner answers. Repo `GeLX7/la-casa-de-roos` + Vercel project `la-casa-de-roos` created. Phase 1 web MVP scaffold is on PR #1 (`feat/scaffold-web-mvp`) with preview deployments enabled; production remains gated for `main`.
 
 ## What this is
 

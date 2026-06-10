@@ -5,7 +5,7 @@
 ## Phase 0 — Inputs & approvals (owner, ~1 week calendar time)
 
 - [x] Owner answered questions doc (2026-06-10 — Resolution log in `../questions-for-owner.md`)
-- [x] Repo `GeLX7/la-casa-de-roos` + Vercel project `la-casa-de-roos` created; git deploys disabled via `vercel.json` until scaffold
+- [x] Repo `GeLX7/la-casa-de-roos` + Vercel project `la-casa-de-roos` created; preview deployments enabled, production gated for `main` in `vercel.json`
 - [x] Domain approved: `lacasaderoos.com` — purchase deferred to launch
 - [ ] 🔑 Owner: exact street address · notification email · cancellation preset + min/max stay ("same as Airbnb" — need concrete values) · fixed nightly prices (else launch with "Consultar precio")
 - [ ] 🔑 Owner: 4 Airbnb iCal export URLs (needed before sync goes live in Phase 2, not before scaffold)

@@ -27,7 +27,7 @@ export default async function ReservarPage({
         del calendario de Airbnb) y te respondemos, normalmente en minutos.
       </p>
 
-      <div className="mt-8 rounded-3xl border border-sillar-200 bg-white p-6 shadow-sm sm:p-8">
+      <div className="mt-8 rounded-3xl border border-sillar-200 bg-white p-5 shadow-sm sm:p-8">
         <RequestForm initialSlug={suite} />
       </div>
 

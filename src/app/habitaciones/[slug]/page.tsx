@@ -125,10 +125,12 @@ export default async function RoomPage({
           sizes="(min-width: 640px) 50vw, 100vw"
           priority
         />
-        {listing.gallery.slice(1).map((photo) => (
+        {listing.gallery.slice(1).map((photo, i) => (
           <PlaceholderImage
             key={photo.slot}
             photo={photo}
+            variant={i + 1}
+            compact
             className="aspect-[4/3] rounded-xl"
             sizes="(min-width: 640px) 25vw, 50vw"
           />
@@ -189,12 +191,27 @@ export default async function RoomPage({
 
         {/* Booking panel */}
         <aside className="h-fit rounded-3xl border border-sillar-200 bg-white p-6 shadow-sm lg:sticky lg:top-24">
-          <p className="font-display text-2xl font-semibold text-arcilla-600">
-            {listing.priceLabel}
-          </p>
+          <div className="flex items-baseline justify-between gap-3">
+            <p className="font-display text-2xl font-semibold text-arcilla-600">
+              {listing.priceLabel}
+            </p>
+            {listing.guestFavorite && (
+              <span className="rounded-full bg-sillar-100 px-2.5 py-1 text-[10px] font-semibold text-tinta-700">
+                ❤ Favorito
+              </span>
+            )}
+          </div>
           <p className="mt-1 text-xs text-tinta-500">
             Te confirmamos tarifa y disponibilidad por WhatsApp — sin compromiso.
           </p>
+          <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1.5 border-t border-sillar-200 pt-4 text-xs text-tinta-700">
+            <span className="flex items-center gap-1.5">
+              <Users className="h-4 w-4 text-arcilla-500" /> {listing.capacity} huéspedes
+            </span>
+            <span className="flex items-center gap-1.5">
+              <Bed className="h-4 w-4 text-arcilla-500" /> {listing.beds}
+            </span>
+          </div>
           <div className="mt-5 space-y-3">
             <Link
               href={`/reservar?suite=${listing.slug}`}

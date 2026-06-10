@@ -21,8 +21,8 @@ export default function HabitacionesPage() {
         kitchenette. Elige la tuya y solicita tus fechas.
       </p>
       <div className="mt-10 grid gap-6 sm:grid-cols-2">
-        {listings.map((l) => (
-          <RoomCard key={l.slug} listing={l} />
+        {listings.map((l, i) => (
+          <RoomCard key={l.slug} listing={l} variant={i} />
         ))}
       </div>
     </div>
