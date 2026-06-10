@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -20,9 +21,20 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link
           href="/"
-          className="font-display text-lg font-bold text-tinta-900"
+          className="flex items-center gap-3 font-display text-lg font-bold text-tinta-900"
         >
-          La Casa de <span className="text-arcilla-500">Roos</span>
+          {/* Owner-provided brand lockup (docs/research/content-rights-checklist.md) */}
+          <Image
+            src="/images/brand/logo-mark.jpg"
+            alt=""
+            width={40}
+            height={40}
+            className="h-10 w-10 rounded-md border border-sillar-200 object-cover"
+            priority
+          />
+          <span>
+            La Casa de <span className="text-arcilla-500">Roos</span>
+          </span>
         </Link>
 
         <nav aria-label="Principal" className="hidden items-center gap-6 sm:flex">

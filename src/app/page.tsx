@@ -1,6 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import { listings, aggregate } from "@/data/listings";
-import { arequipaGuide } from "@/data/arequipa";
+import { arequipaExperiences } from "@/data/arequipa";
 import { site, landmarks } from "@/data/site";
 import { RoomCard } from "@/components/room-card";
 import { TrustStrip } from "@/components/trust-strip";
@@ -39,32 +40,51 @@ const reasons = [
   },
 ] as const;
 
+/* Home teaser: three walkable highlights from the curated guide. */
+const teaserExperiences = arequipaExperiences.filter((e) =>
+  [
+    "Monasterio de Santa Catalina",
+    "Mirador de Yanahuara",
+    "Cañón del Colca",
+  ].includes(e.title),
+);
+
 export default function HomePage() {
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-white">
-        <div className="mx-auto grid max-w-6xl gap-8 px-6 pb-8 pt-10 sm:gap-10 sm:pb-12 sm:pt-16 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:pb-14">
-          <div>
-            <p className="mb-4 inline-flex items-center gap-2 border-l-2 border-arcilla-500 pl-3 text-xs font-bold uppercase tracking-[0.16em] text-tinta-700">
+      {/* Hero — centered editorial stack over a wide photo
+          (composition cue: lazzat.online's logo-led, centered hero). */}
+      <section className="bg-white">
+        <div className="mx-auto max-w-6xl px-6 pt-12 sm:pt-16">
+          <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
+            {/* Owner-provided brand lockup as a small crest above the title. */}
+            <Image
+              src="/images/brand/logo-mark.jpg"
+              alt="Logo de La Casa de Roos"
+              width={88}
+              height={88}
+              priority
+              className="h-20 w-20 rounded-xl border border-sillar-200 object-cover sm:h-22 sm:w-22"
+            />
+            <p className="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-tinta-700">
               <MapPin className="h-3.5 w-3.5 text-arcilla-500" />
               Centro Histórico · Arequipa, Perú
             </p>
-            <h1 className="font-display text-4xl font-extrabold leading-tight text-tinta-900 sm:text-5xl lg:text-6xl">
+            <h1 className="mt-4 font-display text-4xl font-extrabold leading-tight text-tinta-900 sm:text-5xl lg:text-6xl">
               Tu suite privada en el corazón de la{" "}
               <span className="text-arcilla-500">Ciudad Blanca</span>
             </h1>
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-tinta-700 sm:text-lg">
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-tinta-700 sm:text-lg">
               A una cuadra de la Calle Mercaderes y a pasos de la Plaza de
               Armas: cuatro suites privadas con baño propio, sala de estar y
               kitchenette, llegada autónoma — y una anfitriona que responde en
               minutos.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
                 href="/habitaciones"
                 aria-label="Ver habitaciones"
-                className="inline-flex items-center gap-2 bg-arcilla-500 px-5 py-3 text-base font-semibold text-white shadow-sm transition-colors hover:bg-arcilla-600 sm:px-6"
+                className="inline-flex items-center gap-2 bg-arcilla-500 px-6 py-3 text-base font-semibold text-white shadow-sm transition-colors hover:bg-arcilla-600"
               >
                 <span className="sm:hidden">Ver suites</span>
                 <span className="hidden sm:inline">Ver habitaciones</span>
@@ -87,7 +107,7 @@ export default function HomePage() {
           {/* Hero photo — real suite shot from the owner's public Carrd site
               (stored locally; see content-rights checklist). Arch radius nods
               to Arequipa's sillar portales. */}
-          <div className="relative mx-auto w-full max-w-md lg:max-w-none">
+          <div className="relative mt-10 pb-10 sm:mt-12 sm:pb-12">
             <PlaceholderImage
               photo={{
                 slot: "hero-casa",
@@ -96,11 +116,11 @@ export default function HomePage() {
                 src: "/images/brand/casa-hero.jpg",
               }}
               variant={1}
-              className="aspect-[16/9] w-full rounded-lg rounded-t-[5rem] shadow-sm sm:aspect-[4/3] sm:rounded-t-[7rem] lg:aspect-[4/5] lg:max-h-[520px] lg:rounded-t-[10rem]"
-              sizes="(min-width: 1024px) 45vw, 100vw"
+              className="aspect-[16/10] w-full rounded-lg rounded-t-[5rem] shadow-sm sm:aspect-[21/9] sm:rounded-t-[8rem]"
+              sizes="(min-width: 1280px) 1152px, 100vw"
               priority
             />
-            <p className="absolute -bottom-3 left-1/2 w-max -translate-x-1/2 rounded-md border border-sillar-200 bg-white px-4 py-1.5 text-xs font-medium text-tinta-700 shadow-sm">
+            <p className="absolute bottom-7 left-1/2 w-max -translate-x-1/2 rounded-md border border-sillar-200 bg-white px-4 py-1.5 text-xs font-medium text-tinta-700 shadow-sm sm:bottom-9">
               ★ {aggregate.rating.toFixed(2)} · +{aggregate.reviewCount} reseñas
               en Airbnb
             </p>
@@ -110,49 +130,51 @@ export default function HomePage() {
 
       <TrustStrip />
 
-      {/* Suites */}
-      <section className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
-        <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
-              La casa
-            </p>
-            <h2 className="font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
-              Nuestras suites
-            </h2>
-            <p className="mt-2 max-w-lg text-sm text-tinta-700">
-              Cuatro espacios privados, cada uno con su propia personalidad y
-              la misma calidez.
-            </p>
-          </div>
-          <Link
-            href="/habitaciones"
-            className="flex items-center gap-1.5 text-sm font-semibold text-arcilla-600 hover:text-arcilla-500"
-          >
-            Ver todas <ArrowRight className="h-4 w-4" />
-          </Link>
+      {/* Suites — centered heading, grid, centered closing action. */}
+      <section className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
+        <div className="mx-auto mb-12 max-w-2xl text-center">
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
+            La casa
+          </p>
+          <h2 className="font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
+            Nuestras suites
+          </h2>
+          <p className="mt-3 text-sm leading-relaxed text-tinta-700 sm:text-base">
+            Cuatro espacios privados, cada uno con su propia personalidad y la
+            misma calidez.
+          </p>
         </div>
         <div className="grid gap-6 sm:grid-cols-2">
           {listings.slice(0, 4).map((l, i) => (
             <RoomCard key={l.slug} listing={l} variant={i} />
           ))}
         </div>
+        <div className="mt-10 text-center">
+          <Link
+            href="/habitaciones"
+            className="inline-flex items-center gap-2 border border-sillar-300 bg-white px-6 py-3 text-sm font-semibold text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
+          >
+            Ver todas las habitaciones <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
       </section>
 
-      {/* Why us */}
+      {/* Why us — centered heading over a 4-column feature row. */}
       <section className="border-y border-sillar-200 bg-sillar-50/60">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
-          <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
-            Por qué nosotros
-          </p>
-          <h2 className="font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
-            Hecho para descansar, pensado para confiar
-          </h2>
-          <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
+          <div className="mx-auto mb-12 max-w-2xl text-center">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
+              Por qué nosotros
+            </p>
+            <h2 className="font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
+              Hecho para descansar, pensado para confiar
+            </h2>
+          </div>
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {reasons.map((r) => (
-              <div key={r.title}>
-                <r.icon className="h-7 w-7 text-arcilla-500" />
-                <h3 className="mt-3 font-display text-lg font-bold text-tinta-900">
+              <div key={r.title} className="text-center">
+                <r.icon className="mx-auto h-7 w-7 text-arcilla-500" />
+                <h3 className="mt-4 font-display text-lg font-bold text-tinta-900">
                   {r.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-tinta-700">{r.text}</p>
@@ -162,8 +184,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Location */}
-      <section className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+      {/* Location — asymmetric split for rhythm between centered bands. */}
+      <section className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
             <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
@@ -225,70 +247,109 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Arequipa guide */}
+      {/* Arequipa — centered heading, wide panorama, three highlight cards.
+          Images: temporary tourism/reference assets from Arequipa.com
+          (docs/research/content-rights-checklist.md). */}
       <section className="border-t border-sillar-200 bg-white">
-        <div className="mx-auto grid max-w-6xl gap-8 px-6 py-16 lg:grid-cols-[0.8fr_1.2fr] lg:py-20">
-          <div>
-            <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
+        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
+          <div className="mx-auto mb-10 max-w-2xl text-center">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
               Guía Arequipa
             </p>
             <h2 className="font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
-              Una base céntrica cambia el viaje.
+              Descubre Arequipa
             </h2>
-            <p className="mt-4 text-sm leading-relaxed text-tinta-700">
-              Arequipa no se visita solo por una lista de lugares. Se camina,
-              se pausa y se vuelve a salir. Por eso la casa está pensada como
-              una base tranquila dentro del centro.
+            <p className="mt-3 text-sm leading-relaxed text-tinta-700 sm:text-base">
+              Monasterios, miradores, picanterías y el cañón a un par de horas:
+              la Ciudad Blanca se camina — y la casa queda justo en medio.
             </p>
-            <Link
-              href="/arequipa"
-              className="mt-6 inline-flex items-center gap-2 border-b border-arcilla-500 pb-1 text-sm font-semibold text-arcilla-600 hover:text-arcilla-500"
-            >
-              Ver guía de Arequipa <ArrowRight className="h-4 w-4" />
-            </Link>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {arequipaGuide.map((item) => (
-              <article key={item.title} className="border-t border-sillar-200 pt-5">
-                <h3 className="font-display text-xl font-bold text-tinta-900">
-                  {item.title}
+
+          <div className="relative">
+            <Image
+              src="/images/arequipa/plaza-de-armas.jpg"
+              alt="Plaza de Armas de Arequipa con la catedral y los volcanes al atardecer"
+              width={1440}
+              height={511}
+              className="w-full rounded-lg object-cover"
+              sizes="(min-width: 1280px) 1152px, 100vw"
+            />
+            <p className="absolute bottom-3 left-3 rounded-md bg-white/90 px-3 py-1 text-[11px] font-medium text-tinta-700 shadow-sm backdrop-blur">
+              Plaza de Armas · ± 3 min a pie de la casa
+            </p>
+          </div>
+
+          <div className="mt-6 grid gap-6 sm:grid-cols-3">
+            {teaserExperiences.map((e) => (
+              <article key={e.title} className="group">
+                <div className="relative overflow-hidden rounded-lg">
+                  <Image
+                    src={e.image}
+                    alt={e.alt}
+                    width={640}
+                    height={480}
+                    className="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                    sizes="(min-width: 640px) 33vw, 100vw"
+                  />
+                </div>
+                <h3 className="mt-4 font-display text-lg font-bold text-tinta-900">
+                  {e.title}
                 </h3>
+                <p className="mt-1 text-xs font-medium uppercase tracking-wide text-tinta-500">
+                  {e.distance}
+                </p>
                 <p className="mt-2 text-sm leading-relaxed text-tinta-700">
-                  {item.text}
+                  {e.text}
                 </p>
               </article>
             ))}
           </div>
+
+          <div className="mt-10 text-center">
+            <Link
+              href="/arequipa"
+              className="inline-flex items-center gap-2 border-b border-arcilla-500 pb-1 text-sm font-semibold text-arcilla-600 hover:text-arcilla-500"
+            >
+              Ver la guía completa de Arequipa <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* CTA */}
+      {/* CTA — centered card (composition cue: lazzat.online's app card). */}
       <section className="border-t border-sillar-200 bg-sillar-50/60">
-        <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 px-6 py-16 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 className="max-w-2xl font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
+        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+          <div className="mx-auto max-w-3xl rounded-xl border border-sillar-200 bg-white px-6 py-12 text-center shadow-sm sm:px-12">
+            <Image
+              src="/images/brand/logo-mark.jpg"
+              alt=""
+              width={56}
+              height={56}
+              className="mx-auto h-14 w-14 rounded-lg border border-sillar-200 object-cover"
+            />
+            <h2 className="mt-5 font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
               ¿Listo para despertar en el centro histórico?
             </h2>
-            <p className="mt-3 max-w-xl text-sm text-tinta-700">
+            <p className="mx-auto mt-3 max-w-xl text-sm text-tinta-700 sm:text-base">
               Cuéntanos tus fechas y te confirmamos disponibilidad — normalmente
               en minutos.
             </p>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <Link
-              href="/reservar"
-              className="bg-arcilla-500 px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-arcilla-600"
-            >
-              Solicitar reserva
-            </Link>
-            <a
-              href={whatsappUrl(defaultWhatsappMessage)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 border border-sillar-300 bg-white px-6 py-3 text-base font-semibold text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
-            >
-              <WhatsApp className="h-5 w-5 text-[#25D366]" /> WhatsApp directo
-            </a>
+            <div className="mt-7 flex flex-wrap justify-center gap-3">
+              <Link
+                href="/reservar"
+                className="bg-arcilla-500 px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-arcilla-600"
+              >
+                Solicitar reserva
+              </Link>
+              <a
+                href={whatsappUrl(defaultWhatsappMessage)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 border border-sillar-300 bg-white px-6 py-3 text-base font-semibold text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
+              >
+                <WhatsApp className="h-5 w-5 text-[#25D366]" /> WhatsApp directo
+              </a>
+            </div>
           </div>
         </div>
       </section>

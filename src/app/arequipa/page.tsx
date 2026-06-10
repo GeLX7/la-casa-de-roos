@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { arequipaFacts, arequipaGuide, arequipaNearby } from "@/data/arequipa";
+import {
+  arequipaFacts,
+  arequipaGuide,
+  arequipaNearby,
+  arequipaExperiences,
+} from "@/data/arequipa";
 import { site, landmarks } from "@/data/site";
 import { PlaceholderImage } from "@/components/placeholder-image";
 import { ArrowRight, CalendarIcon, MapPin, Moon, SharedKitchen } from "@/components/icons";
@@ -38,21 +44,25 @@ const reasons = [
 export default function ArequipaPage() {
   return (
     <article className="bg-white">
+      {/* Hero — centered editorial stack over a wide panorama.
+          Tourism images: temporary reference assets from Arequipa.com
+          (docs/research/content-rights-checklist.md). */}
       <section className="border-b border-sillar-200">
-        <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 lg:grid-cols-[1.15fr_0.85fr] lg:py-20">
-          <div>
-            <p className="text-sm font-bold uppercase tracking-[0.16em] text-arcilla-600">
+        <div className="mx-auto max-w-6xl px-6 pb-12 pt-14 lg:pt-20">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-arcilla-600">
               Guía local
             </p>
-            <h1 className="mt-4 max-w-3xl font-display text-4xl font-extrabold leading-tight text-tinta-900 sm:text-5xl">
-              Arequipa se disfruta mejor cuando puedes caminarla.
+            <h1 className="mt-4 font-display text-4xl font-extrabold leading-tight text-tinta-900 sm:text-5xl">
+              Descubre Arequipa: una ciudad que se camina.
             </h1>
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-tinta-700">
-              La Casa de Roos está pensada para viajeros que quieren vivir el
-              Centro Histórico con calma: salir temprano, volver a descansar y
-              tener Plaza de Armas, Mercaderes y Santa Catalina a pocos minutos.
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-tinta-700">
+              Monasterios de colores, portales de sillar, picanterías y volcanes
+              en el horizonte. La Casa de Roos está pensada como base tranquila
+              para vivir el Centro Histórico con calma: salir temprano, volver a
+              descansar y salir otra vez.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
                 href="/habitaciones"
                 className="inline-flex items-center gap-2 bg-arcilla-500 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-arcilla-600"
@@ -68,31 +78,42 @@ export default function ArequipaPage() {
             </div>
           </div>
 
-          <aside className="self-end border-l-2 border-arcilla-500 pl-6">
-            <p className="font-display text-2xl font-bold leading-snug text-tinta-900">
-              Ciudad Blanca: sillar, cielo seco y una escala natural entre costa,
-              sierra y Colca.
+          <div className="relative mt-10">
+            <Image
+              src="/images/arequipa/plaza-de-armas.jpg"
+              alt="Plaza de Armas de Arequipa con la catedral, los portales y los volcanes al fondo"
+              width={1440}
+              height={511}
+              priority
+              className="w-full rounded-lg rounded-t-[4rem] object-cover sm:rounded-t-[6rem]"
+              sizes="(min-width: 1280px) 1152px, 100vw"
+            />
+            <p className="absolute bottom-3 left-3 rounded-md bg-white/90 px-3 py-1 text-[11px] font-medium text-tinta-700 shadow-sm backdrop-blur">
+              Plaza de Armas · ± 3 min a pie de la casa
             </p>
-            <dl className="mt-6 grid grid-cols-2 gap-4">
-              {arequipaFacts.map((fact) => (
-                <div key={fact.label} className="border-t border-sillar-200 pt-3">
-                  <dt className="text-xs font-bold uppercase tracking-[0.16em] text-tinta-500">
-                    {fact.label}
-                  </dt>
-                  <dd className="mt-1 text-sm font-semibold text-tinta-900">
-                    {fact.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </aside>
+          </div>
+
+          {/* Quick facts band under the panorama. */}
+          <dl className="mt-8 grid grid-cols-2 gap-6 border-t border-sillar-200 pt-6 text-center sm:grid-cols-4">
+            {arequipaFacts.map((fact) => (
+              <div key={fact.label}>
+                <dt className="text-xs font-bold uppercase tracking-[0.16em] text-tinta-500">
+                  {fact.label}
+                </dt>
+                <dd className="mt-1.5 font-display text-base font-bold text-tinta-900">
+                  {fact.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+      {/* Why the center — asymmetric split with the owner's interior shot. */}
+      <section className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
         <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr]">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.16em] text-arcilla-600">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-arcilla-600">
               Por qué el centro
             </p>
             <h2 className="mt-3 font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
@@ -133,78 +154,178 @@ export default function ArequipaPage() {
         </div>
       </section>
 
+      {/* Must-see gallery — centered heading over a 3-column image grid. */}
       <section className="border-y border-sillar-200 bg-sillar-50/60">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
-          <div className="flex flex-wrap items-end justify-between gap-5">
-            <div>
-              <p className="text-sm font-bold uppercase tracking-[0.16em] text-arcilla-600">
-                Cerca de la casa
-              </p>
-              <h2 className="mt-3 font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
-                Caminatas que ayudan a decidir.
-              </h2>
-            </div>
-            <a
-              href={site.mapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 border border-sillar-300 bg-white px-4 py-2.5 text-sm font-semibold text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
-            >
-              Ver ubicación <ArrowRight className="h-4 w-4" />
-            </a>
+        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
+          <div className="mx-auto mb-12 max-w-2xl text-center">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-arcilla-600">
+              Qué hacer
+            </p>
+            <h2 className="mt-3 font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
+              Lugares imperdibles
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-tinta-700 sm:text-base">
+              Una selección corta y honesta: lo que de verdad vale tu tiempo en
+              una primera visita, ordenado desde la puerta de la casa.
+            </p>
           </div>
 
-          <div className="mt-10 grid gap-5 md:grid-cols-4">
-            {arequipaNearby.map((item) => (
-              <article key={item.title} className="bg-white p-5 shadow-[0_18px_40px_-34px_rgba(41,36,32,0.55)]">
-                <h3 className="font-display text-lg font-bold leading-snug text-tinta-900">
-                  {item.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-tinta-700">
-                  {item.text}
-                </p>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {arequipaExperiences.map((e) => (
+              <article
+                key={e.title}
+                className="group overflow-hidden rounded-lg border border-sillar-200 bg-white shadow-sm transition-shadow hover:shadow-md"
+              >
+                <div className="relative overflow-hidden">
+                  <Image
+                    src={e.image}
+                    alt={e.alt}
+                    width={640}
+                    height={480}
+                    className="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  />
+                  <span className="absolute left-3 top-3 rounded-md bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-tinta-900 shadow-sm backdrop-blur">
+                    {e.tag}
+                  </span>
+                </div>
+                <div className="p-5">
+                  <h3 className="font-display text-lg font-bold leading-snug text-tinta-900">
+                    {e.title}
+                  </h3>
+                  <p className="mt-1 text-xs font-medium uppercase tracking-wide text-tinta-500">
+                    {e.distance}
+                  </p>
+                  <p className="mt-2.5 text-sm leading-relaxed text-tinta-700">
+                    {e.text}
+                  </p>
+                </div>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-6xl gap-10 px-6 py-16 lg:grid-cols-[1fr_1fr] lg:py-20">
-        <div>
-          <p className="text-sm font-bold uppercase tracking-[0.16em] text-arcilla-600">
-            Guía breve
+      {/* Near the house — walking decisions. */}
+      <section className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
+        <div className="mx-auto mb-10 max-w-2xl text-center">
+          <p className="text-xs font-bold uppercase tracking-[0.16em] text-arcilla-600">
+            Cerca de la casa
           </p>
           <h2 className="mt-3 font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
-            Lo útil antes de elegir fechas.
+            A pasos de La Casa de Roos
           </h2>
-          <p className="mt-4 max-w-xl text-sm leading-relaxed text-tinta-700">
-            No hace falta convertir tu estadía en una agenda rígida. Basta con
-            ubicarte bien, saber cómo moverte y separar tiempo para descansar.
+          <p className="mt-3 text-sm leading-relaxed text-tinta-700">
+            Caminatas que ayudan a decidir: lo esencial queda tan cerca que
+            puedes improvisar el día sin organizar traslados.
           </p>
-          <ul className="mt-6 space-y-3">
-            {landmarks.map((landmark) => (
-              <li key={landmark.name} className="flex items-start gap-3 text-sm text-tinta-700">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-arcilla-500" />
-                <span>
-                  <span className="font-semibold text-tinta-900">{landmark.name}</span>
-                  <span className="text-tinta-500"> · {landmark.walk}</span>
-                </span>
-              </li>
-            ))}
-          </ul>
         </div>
 
-        <div className="divide-y divide-sillar-200 border-y border-sillar-200">
-          {arequipaGuide.map((item) => (
-            <section key={item.title} className="py-6">
-              <h3 className="font-display text-xl font-bold text-tinta-900">
+        <div className="grid gap-5 md:grid-cols-4">
+          {arequipaNearby.map((item) => (
+            <article
+              key={item.title}
+              className="border-t-2 border-arcilla-500 bg-white pt-4"
+            >
+              <h3 className="font-display text-lg font-bold leading-snug text-tinta-900">
                 {item.title}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-tinta-700">
+              <p className="mt-3 text-sm leading-relaxed text-tinta-700">
                 {item.text}
               </p>
-            </section>
+            </article>
           ))}
+        </div>
+
+        <div className="mt-10 text-center">
+          <a
+            href={site.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 border border-sillar-300 bg-white px-5 py-3 text-sm font-semibold text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
+          >
+            Ver ubicación en Google Maps <ArrowRight className="h-4 w-4" />
+          </a>
+        </div>
+      </section>
+
+      {/* Practical guide — split layout for rhythm. */}
+      <section className="border-t border-sillar-200">
+        <div className="mx-auto grid max-w-6xl gap-10 px-6 py-16 lg:grid-cols-[1fr_1fr] lg:py-24">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-arcilla-600">
+              Guía breve
+            </p>
+            <h2 className="mt-3 font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
+              Lo útil antes de elegir fechas.
+            </h2>
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-tinta-700">
+              No hace falta convertir tu estadía en una agenda rígida. Basta con
+              ubicarte bien, saber cómo moverte y separar tiempo para descansar.
+            </p>
+            <ul className="mt-6 space-y-3">
+              {landmarks.map((landmark) => (
+                <li key={landmark.name} className="flex items-start gap-3 text-sm text-tinta-700">
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-arcilla-500" />
+                  <span>
+                    <span className="font-semibold text-tinta-900">{landmark.name}</span>
+                    <span className="text-tinta-500"> · {landmark.walk}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="divide-y divide-sillar-200 border-y border-sillar-200">
+            {arequipaGuide.map((item) => (
+              <section key={item.title} className="py-6">
+                <h3 className="font-display text-xl font-bold text-tinta-900">
+                  {item.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-tinta-700">
+                  {item.text}
+                </p>
+              </section>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Closing — sunset band with centered overlay CTA. */}
+      <section className="relative overflow-hidden">
+        <Image
+          src="/images/arequipa/atardecer-ciudad.jpg"
+          alt="Atardecer sobre Arequipa con la catedral y los volcanes de fondo"
+          width={1440}
+          height={600}
+          className="h-[26rem] w-full object-cover sm:h-[24rem]"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-tinta-900/80 via-tinta-900/35 to-transparent" />
+        <div className="absolute inset-0 flex items-end justify-center pb-12">
+          <div className="px-6 text-center">
+            <h2 className="font-display text-3xl font-bold text-white sm:text-4xl">
+              Despierta a tres minutos de todo esto.
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-white/90">
+              Cuéntanos tus fechas y arma tus días en Arequipa desde una base
+              céntrica y tranquila.
+            </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              <Link
+                href="/reservar"
+                className="bg-white px-6 py-3 text-sm font-semibold text-tinta-900 transition-colors hover:bg-sillar-100"
+              >
+                Solicitar reserva
+              </Link>
+              <Link
+                href="/habitaciones"
+                className="inline-flex items-center gap-2 border border-white/70 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white hover:bg-white/10"
+              >
+                Ver suites <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </article>

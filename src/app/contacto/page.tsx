@@ -13,10 +13,15 @@ export const metadata: Metadata = {
 export default function ContactoPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-14">
-      <h1 className="font-display text-4xl font-extrabold text-tinta-900">Contacto</h1>
-      <p className="mt-3 text-sm leading-relaxed text-tinta-700">
-        El canal más rápido es WhatsApp — Roos responde normalmente en minutos.
-      </p>
+      <div className="text-center">
+        <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
+          Estamos para ayudarte
+        </p>
+        <h1 className="font-display text-4xl font-extrabold text-tinta-900">Contacto</h1>
+        <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-tinta-700">
+          El canal más rápido es WhatsApp — Roos responde normalmente en minutos.
+        </p>
+      </div>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">
         <a
@@ -55,9 +60,11 @@ export default function ContactoPage() {
         </a>
       </div>
 
-      <section className="mt-10">
-        <h2 className="font-display text-xl font-bold text-tinta-900">Síguenos</h2>
-        <ul className="mt-4 flex flex-wrap gap-3 text-sm">
+      <section className="mt-12">
+        <h2 className="text-center text-xs font-bold uppercase tracking-[0.16em] text-tinta-900">
+          Síguenos
+        </h2>
+        <ul className="mt-4 grid grid-cols-1 gap-3 text-sm sm:grid-cols-3">
           {(
             [
               ["Instagram", site.social.instagram],
@@ -70,7 +77,7 @@ export default function ContactoPage() {
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block rounded-md border border-sillar-300 bg-white px-5 py-2.5 font-medium text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
+                className="flex items-center justify-center border border-sillar-200 bg-sillar-50/60 px-5 py-3.5 font-semibold text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
               >
                 {name}
               </a>

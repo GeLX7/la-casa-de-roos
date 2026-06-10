@@ -17,7 +17,9 @@
 | 11 | "Estudio Museo Lozada Tamayo Coworking" mention | House rules | ⚠️ third-party | Text mention OK for key return instructions |
 | 12 | Carrd `card.jpg` OG image | Carrd assets | ⚠️ presumably owner's photo | Replace with original anyway |
 | 13 | Guest-facing prices/policies | Not extracted | n/a | Owner provides authoritative values (source of truth = website DB, mirrored manually on Airbnb) |
-| 14 | Arequipa travel guide facts | Arequipa.com public info page (checked 2026-06-10) | ⚠️ use as public research only | Website copy is rewritten original text; no Arequipa.com images, paragraphs, or branding reused. Font observed: Montserrat via Google Fonts. |
+| 14 | Arequipa travel guide facts | Arequipa.com public info page (checked 2026-06-10) | ⚠️ use as public research only | Website copy is rewritten original text; no Arequipa.com paragraphs or branding reused. Font observed: Montserrat via Google Fonts. |
+| 15 | Logo image (arch + flower lockup) | Owner's public Facebook photo (provided by owner, 2026-06-10) | ✅ owner's brand asset | Stored locally (`public/images/brand/logo.jpg`, tight crop `logo-mark.jpg`). Ask owner for original export files (vector/PNG with transparency) for production quality |
+| 16 | Arequipa tourism photos (10) | Arequipa.com public pages (`/` and `/info/`, checked 2026-06-10) | ⚠️ **temporary tourism/reference assets for preview/MVP only** — licensing not cleared | Production gate: replace with owner-shot/licensed photos **or** obtain written permission from Arequipa.com before public launch; record outcome here |
 
 ## Photos needed from owner (production launch gate)
 
@@ -52,4 +54,32 @@ All owner-related public sources, downloaded once, resized/compressed locally, n
 | `public/images/listings/suite-queen-con-vista/cover.jpg` | Owner's Airbnb listing og:image (Hosting-1352529733779964415) | Room card + gallery hero |
 | `public/images/listings/mini-apartamento-familiar/cover.jpg` | Owner's Airbnb listing og:image (Hosting-1352501815600410248) | Room card + gallery hero |
 
-Blocked/limited sources (no bypass attempted): Facebook share link (login-walled, no public og:image); Google Maps photos (JS-only, not politely extractable); full Airbnb galleries (client-rendered — only the public og:image cover per listing was taken). No standalone logo file exists on any public source — Carrd `card.jpg` is a baked screenshot of the wordmark, not a clean asset; the site keeps its typographic wordmark until the owner sends logo files.
+Blocked/limited sources (no bypass attempted): Facebook share link (login-walled, no public og:image); Google Maps photos (JS-only, not politely extractable); full Airbnb galleries (client-rendered — only the public og:image cover per listing was taken).
+
+### Logo (2026-06-10, row 15)
+
+Owner provided a direct Facebook CDN URL to the brand lockup (arch + flower, "LA CASA de ROOS"). Downloaded once and stored locally:
+
+| Local file | Notes |
+|---|---|
+| `public/images/brand/logo.jpg` | Full 1024×1024 lockup, cream background |
+| `public/images/brand/logo-mark.jpg` | 512×512 tight crop for header/footer/crest placements |
+
+JPEG on cream — no transparency. Request original export (SVG/PNG) from owner for production.
+
+### Arequipa.com tourism images (2026-06-10, row 16 — TEMPORARY)
+
+Public images from `https://www.arequipa.com/` and `/info/`, downloaded once, recompressed locally, never hotlinked. **Preview/MVP reference assets only — licensing review or replacement required before public launch.**
+
+| Local file | Source file | Used on |
+|---|---|---|
+| `public/images/arequipa/plaza-de-armas.jpg` | `arequipa-main-e1700501027346.jpg` | Home Arequipa section + /arequipa hero |
+| `public/images/arequipa/catedral-misti.jpg` | `arequipa-history.jpg` | Experience card (Plaza/Catedral) |
+| `public/images/arequipa/santa-catalina.jpg` | `article-must-do-things.jpg` | Experience card + home teaser |
+| `public/images/arequipa/canon-del-colca.jpg` | `explore-colca-canyon.jpg` | Experience card + home teaser |
+| `public/images/arequipa/mirador-yanahuara.jpg` | `cityfacts.jpg` | Experience card + home teaser |
+| `public/images/arequipa/ruta-del-sillar.jpg` | `ruta-del-sillar-thumbnail.jpg` | Experience card |
+| `public/images/arequipa/gastronomia-rocoto.jpg` | `useful-dishes.jpg` | Experience card |
+| `public/images/arequipa/atardecer-ciudad.jpg` | `arequipa-info.jpg` | /arequipa closing CTA band |
+| `public/images/arequipa/festival-arequipeno.jpg` | `celebrations-in-arequipa.jpg` | (reserved, not yet placed) |
+| `public/images/arequipa/rafting-rio-chili.jpg` | `rafting-thumbnail.jpg` | (reserved, not yet placed) |

@@ -169,6 +169,26 @@ export const WhatsApp = (p: P) => (
   </svg>
 );
 
+export const Instagram = (p: P) => (
+  <Base {...p}>
+    <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
+    <circle cx="12" cy="12" r="3.8" />
+    <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none" />
+  </Base>
+);
+
+export const TikTok = (p: P) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...p}>
+    <path d="M16.6 3c.4 2 1.7 3.4 3.9 3.6v2.8c-1.5 0-2.8-.4-3.9-1.2v5.8a5.6 5.6 0 1 1-5.6-5.6c.3 0 .6 0 .9.1v2.9a2.7 2.7 0 1 0 1.9 2.6V3h2.8z" />
+  </svg>
+);
+
+export const Facebook = (p: P) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...p}>
+    <path d="M13.5 21v-7h2.4l.4-2.8h-2.8V9.4c0-.8.2-1.4 1.4-1.4h1.5V5.5c-.3 0-1.2-.1-2.2-.1a3.4 3.4 0 0 0-3.7 3.7v2.1H8v2.8h2.5v7h3z" />
+  </svg>
+);
+
 const map = {
   wifi: Wifi,
   tv: Tv,

@@ -245,7 +245,7 @@ export default async function RoomPage({
 
       {/* Cross-links */}
       <section className="mt-16 border-t border-sillar-200 pt-10">
-        <h2 className="mb-6 font-display text-xl font-bold text-tinta-900">
+        <h2 className="mb-6 text-center font-display text-xl font-bold text-tinta-900">
           Otras suites de la casa
         </h2>
         <div className="grid gap-4 sm:grid-cols-3">

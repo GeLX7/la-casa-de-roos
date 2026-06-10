@@ -41,3 +41,16 @@ Navbar (transparent→solid on scroll) · RoomCard · TrustBadges · Availabilit
 ## Voice
 
 Warm second-person plural like the owner's own writing ("¡Bienvenidos!"), short sentences, zero corporate filler, light emoji only where the brand already uses them (hero badges, FAQ). English copy later mirrors tone, not literal translation.
+
+## Composition pass (2026-06-10) — layout rhythm reference
+
+Organizational reference studied: `https://lazzat.online/` (Arequipa optical brand; structure/composition inspiration only — no code, branding, colors, or copy reused). Patterns adopted:
+
+- **Centered section heading stacks** (kicker → title → subtitle, max-w-2xl) for full-width sections: suites, why-us, Arequipa guide, contact, habitaciones index.
+- **Title → subtitle → media** vertical flow: home and /arequipa heroes are now a centered editorial stack with a wide photo below (logo crest above the H1 on home).
+- **Centered closing actions** after grids (outline button or underline link) instead of corner links.
+- **Card CTA block**: final home CTA is a centered card with crest, title, sub, mixed buttons (echoes Lazzat's app-invite card).
+- **Boxed social band** in the footer ("Síguenos" + 4 bordered tiles) and on /contacto.
+- **Alternating rhythm**: split/asymmetric sections (location + honesty block, guía breve) intentionally kept left-aligned between centered bands so the page doesn't read as one centered column.
+
+Buttons stay mixed by design: solid rectangles, outline rectangles, and underline text links — no pill-only system.

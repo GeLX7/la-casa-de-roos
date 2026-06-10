@@ -17,10 +17,15 @@ export default async function ReservarPage({
 
   return (
     <div className="mx-auto max-w-2xl px-6 py-14">
-      <h1 className="font-display text-4xl font-extrabold text-tinta-900">
-        Solicita tu reserva
-      </h1>
-      <p className="mt-3 text-sm leading-relaxed text-tinta-700">
+      <div className="text-center">
+        <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
+          Respuesta en minutos
+        </p>
+        <h1 className="font-display text-4xl font-extrabold text-tinta-900">
+          Solicita tu reserva
+        </h1>
+      </div>
+      <p className="mt-5 text-sm leading-relaxed text-tinta-700">
         Elige tu suite y tus fechas; tu solicitud llega directo al WhatsApp de
         Roos, que la confirma personalmente. <strong>No es una reserva
         instantánea</strong> — primero verificamos disponibilidad (también la
