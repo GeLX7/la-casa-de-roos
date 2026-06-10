@@ -132,7 +132,7 @@ export function RequestForm({ initialSlug }: { initialSlug?: string }) {
 
       <button
         type="submit"
-        className="flex w-full items-center justify-center gap-2 rounded-lg bg-arcilla-500 px-6 py-3.5 text-base font-semibold text-white shadow-sm transition-colors hover:bg-arcilla-600"
+        className="flex w-full items-center justify-center gap-2 bg-arcilla-500 px-6 py-3.5 text-base font-semibold text-white shadow-sm transition-colors hover:bg-arcilla-600"
       >
         <WhatsApp className="h-5 w-5" />
         <span className="sm:hidden">Enviar por WhatsApp</span>

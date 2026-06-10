@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { arequipaFacts, arequipaGuide, arequipaNearby } from "@/data/arequipa";
 import { site, landmarks } from "@/data/site";
+import { PlaceholderImage } from "@/components/placeholder-image";
 import { ArrowRight, CalendarIcon, MapPin, Moon, SharedKitchen } from "@/components/icons";
 
 export const metadata: Metadata = {
@@ -40,10 +41,10 @@ export default function ArequipaPage() {
       <section className="border-b border-sillar-200">
         <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 lg:grid-cols-[1.15fr_0.85fr] lg:py-20">
           <div>
-            <p className="text-sm font-semibold uppercase text-arcilla-600">
+            <p className="text-sm font-bold uppercase tracking-[0.16em] text-arcilla-600">
               Guía local
             </p>
-            <h1 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-tight text-tinta-900 sm:text-5xl">
+            <h1 className="mt-4 max-w-3xl font-display text-4xl font-extrabold leading-tight text-tinta-900 sm:text-5xl">
               Arequipa se disfruta mejor cuando puedes caminarla.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-tinta-700">
@@ -54,7 +55,7 @@ export default function ArequipaPage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/habitaciones"
-                className="inline-flex items-center gap-2 rounded-lg bg-arcilla-500 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-arcilla-600"
+                className="inline-flex items-center gap-2 bg-arcilla-500 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-arcilla-600"
               >
                 Ver suites <ArrowRight className="h-4 w-4" />
               </Link>
@@ -68,14 +69,14 @@ export default function ArequipaPage() {
           </div>
 
           <aside className="self-end border-l-2 border-arcilla-500 pl-6">
-            <p className="font-display text-2xl font-semibold leading-snug text-tinta-900">
+            <p className="font-display text-2xl font-bold leading-snug text-tinta-900">
               Ciudad Blanca: sillar, cielo seco y una escala natural entre costa,
               sierra y Colca.
             </p>
             <dl className="mt-6 grid grid-cols-2 gap-4">
               {arequipaFacts.map((fact) => (
                 <div key={fact.label} className="border-t border-sillar-200 pt-3">
-                  <dt className="text-xs font-semibold uppercase text-tinta-500">
+                  <dt className="text-xs font-bold uppercase tracking-[0.16em] text-tinta-500">
                     {fact.label}
                   </dt>
                   <dd className="mt-1 text-sm font-semibold text-tinta-900">
@@ -91,10 +92,10 @@ export default function ArequipaPage() {
       <section className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
         <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr]">
           <div>
-            <p className="text-sm font-semibold uppercase text-arcilla-600">
+            <p className="text-sm font-bold uppercase tracking-[0.16em] text-arcilla-600">
               Por qué el centro
             </p>
-            <h2 className="mt-3 font-display text-3xl font-semibold text-tinta-900">
+            <h2 className="mt-3 font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
               Base práctica, días más ligeros.
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-tinta-700">
@@ -103,12 +104,24 @@ export default function ArequipaPage() {
               esencial a pie y guardar los traslados para Colca, Ruta del Sillar
               o miradores.
             </p>
+            {/* Real interior shot from the owner's public Carrd site (local
+                copy; see content-rights checklist). */}
+            <PlaceholderImage
+              photo={{
+                slot: "sala-cuadro",
+                label:
+                  "Sala de una suite de La Casa de Roos con pintura arequipeña",
+                src: "/images/brand/sala-cuadro.jpg",
+              }}
+              className="mt-8 aspect-[5/4] w-full rounded-lg"
+              sizes="(min-width: 1024px) 35vw, 100vw"
+            />
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             {reasons.map((item) => (
               <section key={item.title} className="border-t border-sillar-200 pt-5">
                 <item.icon className="h-6 w-6 text-arcilla-500" />
-                <h3 className="mt-4 font-display text-xl font-semibold text-tinta-900">
+                <h3 className="mt-4 font-display text-xl font-bold text-tinta-900">
                   {item.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-tinta-700">
@@ -124,10 +137,10 @@ export default function ArequipaPage() {
         <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
           <div className="flex flex-wrap items-end justify-between gap-5">
             <div>
-              <p className="text-sm font-semibold uppercase text-arcilla-600">
+              <p className="text-sm font-bold uppercase tracking-[0.16em] text-arcilla-600">
                 Cerca de la casa
               </p>
-              <h2 className="mt-3 font-display text-3xl font-semibold text-tinta-900">
+              <h2 className="mt-3 font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
                 Caminatas que ayudan a decidir.
               </h2>
             </div>
@@ -135,7 +148,7 @@ export default function ArequipaPage() {
               href={site.mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg border border-sillar-300 bg-white px-4 py-2.5 text-sm font-semibold text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
+              className="inline-flex items-center gap-2 border border-sillar-300 bg-white px-4 py-2.5 text-sm font-semibold text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
             >
               Ver ubicación <ArrowRight className="h-4 w-4" />
             </a>
@@ -144,7 +157,7 @@ export default function ArequipaPage() {
           <div className="mt-10 grid gap-5 md:grid-cols-4">
             {arequipaNearby.map((item) => (
               <article key={item.title} className="bg-white p-5 shadow-[0_18px_40px_-34px_rgba(41,36,32,0.55)]">
-                <h3 className="font-display text-lg font-semibold leading-snug text-tinta-900">
+                <h3 className="font-display text-lg font-bold leading-snug text-tinta-900">
                   {item.title}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-tinta-700">
@@ -158,10 +171,10 @@ export default function ArequipaPage() {
 
       <section className="mx-auto grid max-w-6xl gap-10 px-6 py-16 lg:grid-cols-[1fr_1fr] lg:py-20">
         <div>
-          <p className="text-sm font-semibold uppercase text-arcilla-600">
+          <p className="text-sm font-bold uppercase tracking-[0.16em] text-arcilla-600">
             Guía breve
           </p>
-          <h2 className="mt-3 font-display text-3xl font-semibold text-tinta-900">
+          <h2 className="mt-3 font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
             Lo útil antes de elegir fechas.
           </h2>
           <p className="mt-4 max-w-xl text-sm leading-relaxed text-tinta-700">
@@ -184,7 +197,7 @@ export default function ArequipaPage() {
         <div className="divide-y divide-sillar-200 border-y border-sillar-200">
           {arequipaGuide.map((item) => (
             <section key={item.title} className="py-6">
-              <h3 className="font-display text-xl font-semibold text-tinta-900">
+              <h3 className="font-display text-xl font-bold text-tinta-900">
                 {item.title}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-tinta-700">

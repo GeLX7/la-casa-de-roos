@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function ContactoPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-14">
-      <h1 className="font-display text-4xl font-semibold text-tinta-900">Contacto</h1>
+      <h1 className="font-display text-4xl font-extrabold text-tinta-900">Contacto</h1>
       <p className="mt-3 text-sm leading-relaxed text-tinta-700">
         El canal más rápido es WhatsApp — Roos responde normalmente en minutos.
       </p>
@@ -26,7 +26,7 @@ export default function ContactoPage() {
           className="group rounded-lg border border-sillar-200 bg-white p-6 shadow-sm transition-colors hover:border-arcilla-400"
         >
           <WhatsApp className="h-8 w-8 text-[#25D366]" />
-          <h2 className="mt-3 font-display text-xl font-semibold text-tinta-900">
+          <h2 className="mt-3 font-display text-xl font-bold text-tinta-900">
             WhatsApp
           </h2>
           <p className="mt-1 text-sm text-tinta-700">{site.whatsappDisplay}</p>
@@ -43,7 +43,7 @@ export default function ContactoPage() {
           className="group rounded-lg border border-sillar-200 bg-white p-6 shadow-sm transition-colors hover:border-arcilla-400"
         >
           <MapPin className="h-8 w-8 text-arcilla-500" />
-          <h2 className="mt-3 font-display text-xl font-semibold text-tinta-900">
+          <h2 className="mt-3 font-display text-xl font-bold text-tinta-900">
             Ubicación
           </h2>
           <p className="mt-1 text-sm text-tinta-700">{site.neighborhood}</p>
@@ -56,7 +56,7 @@ export default function ContactoPage() {
       </div>
 
       <section className="mt-10">
-        <h2 className="font-display text-xl font-semibold text-tinta-900">Síguenos</h2>
+        <h2 className="font-display text-xl font-bold text-tinta-900">Síguenos</h2>
         <ul className="mt-4 flex flex-wrap gap-3 text-sm">
           {(
             [

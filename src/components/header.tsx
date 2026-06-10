@@ -20,7 +20,7 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link
           href="/"
-          className="font-display text-lg font-semibold text-tinta-900"
+          className="font-display text-lg font-bold text-tinta-900"
         >
           La Casa de <span className="text-arcilla-500">Roos</span>
         </Link>
@@ -41,7 +41,7 @@ export function Header() {
           ))}
           <Link
             href="/reservar"
-            className="rounded-lg bg-arcilla-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-arcilla-600"
+            className="bg-arcilla-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-arcilla-600"
           >
             Solicitar reserva
           </Link>
@@ -91,7 +91,7 @@ export function Header() {
               <Link
                 href="/reservar"
                 onClick={() => setOpen(false)}
-                className="mt-1 block rounded-lg bg-arcilla-500 px-4 py-2.5 text-center text-base font-semibold text-white"
+                className="mt-1 block bg-arcilla-500 px-4 py-2.5 text-center text-base font-semibold text-white"
               >
                 Solicitar reserva
               </Link>

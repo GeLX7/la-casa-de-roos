@@ -17,7 +17,7 @@ export default async function ReservarPage({
 
   return (
     <div className="mx-auto max-w-2xl px-6 py-14">
-      <h1 className="font-display text-4xl font-semibold text-tinta-900">
+      <h1 className="font-display text-4xl font-extrabold text-tinta-900">
         Solicita tu reserva
       </h1>
       <p className="mt-3 text-sm leading-relaxed text-tinta-700">

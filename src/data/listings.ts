@@ -6,10 +6,12 @@
  * docs/research/content-inventory.md (checked 2026-06-10). Copy is written
  * fresh for this site — never paste Airbnb text verbatim.
  *
- * PHOTOS: every gallery entry is a placeholder slot. Production images must
- * be owner-provided originals (docs/research/content-rights-checklist.md →
- * "Photos needed from owner"). When originals arrive, set `src` to the asset
- * path and the placeholder renders the real photo instead.
+ * PHOTOS: each suite's hero slot shows a TEMPORARY cover exported from the
+ * owner's own public Airbnb listing (downloaded 2026-06-10, stored locally
+ * under public/images/listings/<slug>/ — never hotlinked). They must be
+ * replaced with owner-provided originals once the owner sends files or
+ * confirms permission (docs/research/content-rights-checklist.md → "Photos
+ * needed from owner"). The remaining slots stay as placeholders until then.
  *
  * PRICES: owner decision 2026-06-10 — no fixed rates yet and iCal cannot
  * sync Airbnb prices, so every suite shows `priceLabel` ("Consultar precio").
@@ -20,7 +22,7 @@ export type GallerySlot = {
   slot: string;
   /** Spanish label shown inside the placeholder and used as alt text. */
   label: string;
-  /** Owner-provided original (e.g. "/photos/suite-1/hero.jpg"). null = pending. */
+  /** Local asset path (e.g. "/images/listings/<slug>/cover.jpg"). null = pending. */
   src: string | null;
 };
 
@@ -79,9 +81,13 @@ const baseRules = (quietHours: string) => [
   "Penalidad de S/ 350 por incumplir las normas de la casa",
 ];
 
-/** Standard five photo slots per suite — all pending owner originals. */
-const pendingGallery = (suite: string): GallerySlot[] => [
-  { slot: "hero", label: `Vista general de la ${suite}`, src: null },
+/**
+ * Standard five photo slots per suite. The hero slot renders the temporary
+ * Airbnb-derived cover stored locally; the other four stay pending owner
+ * originals.
+ */
+const suiteGallery = (slug: string, heroLabel: string): GallerySlot[] => [
+  { slot: "hero", label: heroLabel, src: `/images/listings/${slug}/cover.jpg` },
   { slot: "dormitorio", label: "Dormitorio con cama queen", src: null },
   { slot: "sala", label: "Sala de estar privada", src: null },
   { slot: "bano", label: "Baño privado", src: null },
@@ -116,7 +122,10 @@ export const listings: Listing[] = [
     rules: baseRules("23:00 – 06:00"),
     quietHours: "23:00 – 06:00",
     priceLabel: "Consultar precio",
-    gallery: pendingGallery("suite con sala"),
+    gallery: suiteGallery(
+      "suite-queen-con-sala",
+      "Sala de estar de la suite, con TV y detalles en madera",
+    ),
   },
   {
     slug: "suite-queen-centro-historico",
@@ -141,7 +150,10 @@ export const listings: Listing[] = [
     rules: baseRules("23:00 – 06:00"),
     quietHours: "23:00 – 06:00",
     priceLabel: "Consultar precio",
-    gallery: pendingGallery("suite"),
+    gallery: suiteGallery(
+      "suite-queen-centro-historico",
+      "Sala de estar privada de la suite con lámparas colgantes",
+    ),
   },
   {
     slug: "suite-queen-con-vista",
@@ -166,7 +178,10 @@ export const listings: Listing[] = [
     rules: baseRules("23:00 – 07:00"),
     quietHours: "23:00 – 07:00",
     priceLabel: "Consultar precio",
-    gallery: pendingGallery("suite con vista"),
+    gallery: suiteGallery(
+      "suite-queen-con-vista",
+      "Rincón de TV de la suite con repisa de madera y plantas",
+    ),
   },
   {
     slug: "mini-apartamento-familiar",
@@ -196,7 +211,10 @@ export const listings: Listing[] = [
     rules: baseRules("23:00 – 06:00"),
     quietHours: "23:00 – 06:00",
     priceLabel: "Consultar precio",
-    gallery: pendingGallery("suite familiar"),
+    gallery: suiteGallery(
+      "mini-apartamento-familiar",
+      "Sala amplia del mini apartamento con pintura arequipeña",
+    ),
   },
 ];
 

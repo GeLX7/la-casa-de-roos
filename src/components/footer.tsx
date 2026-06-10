@@ -7,7 +7,7 @@ export function Footer() {
     <footer className="border-t border-sillar-200 bg-white">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 sm:grid-cols-3">
         <div>
-          <p className="font-display text-lg font-semibold text-tinta-900">
+          <p className="font-display text-lg font-bold text-tinta-900">
             La Casa de <span className="text-arcilla-500">Roos</span>
           </p>
           <p className="mt-2 max-w-xs text-sm leading-relaxed text-tinta-700">

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Montserrat } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { WhatsAppFab } from "@/components/whatsapp-fab";
@@ -8,16 +8,12 @@ import { site, SITE_URL } from "@/data/site";
 import { listings } from "@/data/listings";
 import "./globals.css";
 
+/* Single-family system following arequipa.com: Montserrat for everything,
+   with 700/800 reserved for the heavier editorial headings. */
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
-  weight: ["400", "500", "600", "700"],
-});
-
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  variable: "--font-fraunces",
-  axes: ["SOFT", "WONK", "opsz"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -78,7 +74,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es" className={`${montserrat.variable} ${fraunces.variable}`}>
+    <html lang="es" className={montserrat.variable}>
       <body className="flex min-h-dvh flex-col">
         <JsonLd data={lodgingJsonLd} />
         <Header />

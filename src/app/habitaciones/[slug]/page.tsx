@@ -96,7 +96,7 @@ export default async function RoomPage({
 
       <header className="mb-8 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="font-display text-3xl font-semibold leading-tight text-tinta-900 sm:text-4xl">
+          <h1 className="font-display text-3xl font-extrabold leading-tight text-tinta-900 sm:text-4xl">
             {listing.title}
           </h1>
           <p className="mt-1.5 text-lg text-tinta-500">{listing.subtitle}</p>
@@ -149,7 +149,7 @@ export default async function RoomPage({
           </section>
 
           <section>
-            <h2 className="font-display text-2xl font-semibold text-tinta-900">
+            <h2 className="font-display text-2xl font-bold text-tinta-900">
               La suite
             </h2>
             {listing.longDescription.map((p) => (
@@ -160,7 +160,7 @@ export default async function RoomPage({
           </section>
 
           <section>
-            <h2 className="mb-4 font-display text-2xl font-semibold text-tinta-900">
+            <h2 className="mb-4 font-display text-2xl font-bold text-tinta-900">
               Qué incluye
             </h2>
             <AmenityList items={listing.amenities} />
@@ -175,7 +175,7 @@ export default async function RoomPage({
           </section>
 
           <section>
-            <h2 className="mb-4 font-display text-2xl font-semibold text-tinta-900">
+            <h2 className="mb-4 font-display text-2xl font-bold text-tinta-900">
               Normas de la casa
             </h2>
             <ul className="space-y-2.5">
@@ -192,7 +192,7 @@ export default async function RoomPage({
         {/* Booking panel */}
         <aside className="h-fit rounded-lg border border-sillar-200 bg-white p-6 shadow-sm lg:sticky lg:top-24">
           <div className="flex items-baseline justify-between gap-3">
-            <p className="font-display text-2xl font-semibold text-arcilla-600">
+            <p className="font-display text-2xl font-bold text-arcilla-600">
               {listing.priceLabel}
             </p>
             {listing.guestFavorite && (
@@ -215,7 +215,7 @@ export default async function RoomPage({
           <div className="mt-5 space-y-3">
             <Link
               href={`/reservar?suite=${listing.slug}`}
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-arcilla-500 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-arcilla-600"
+              className="flex w-full items-center justify-center gap-2 bg-arcilla-500 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-arcilla-600"
             >
               Solicitar reserva <ArrowRight className="h-4 w-4" />
             </Link>
@@ -223,7 +223,7 @@ export default async function RoomPage({
               href={whatsappUrl(roomWhatsappMessage(listing.subtitle))}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex w-full items-center justify-center gap-2 rounded-lg border border-sillar-300 px-5 py-3 text-sm font-semibold text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
+              className="flex w-full items-center justify-center gap-2 border border-sillar-300 px-5 py-3 text-sm font-semibold text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
             >
               <WhatsApp className="h-4.5 w-4.5 text-[#25D366]" /> Consultar por WhatsApp
             </a>
@@ -245,7 +245,7 @@ export default async function RoomPage({
 
       {/* Cross-links */}
       <section className="mt-16 border-t border-sillar-200 pt-10">
-        <h2 className="mb-6 font-display text-xl font-semibold text-tinta-900">
+        <h2 className="mb-6 font-display text-xl font-bold text-tinta-900">
           Otras suites de la casa
         </h2>
         <div className="grid gap-4 sm:grid-cols-3">
@@ -261,7 +261,7 @@ export default async function RoomPage({
                   <Star className="h-3.5 w-3.5 text-arcilla-500" />
                   {l.rating.toFixed(2)} · {l.reviewCount} reseñas
                 </p>
-                <p className="mt-2 font-display text-base font-semibold leading-snug text-tinta-900">
+                <p className="mt-2 font-display text-base font-bold leading-snug text-tinta-900">
                   {l.subtitle}
                 </p>
                 <p className="mt-1 text-xs text-tinta-500">

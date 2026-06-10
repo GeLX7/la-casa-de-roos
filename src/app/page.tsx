@@ -46,11 +46,11 @@ export default function HomePage() {
       <section className="relative overflow-hidden bg-white">
         <div className="mx-auto grid max-w-6xl gap-8 px-6 pb-8 pt-10 sm:gap-10 sm:pb-12 sm:pt-16 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:pb-14">
           <div>
-            <p className="mb-4 inline-flex items-center gap-2 border-l-2 border-arcilla-500 pl-3 text-xs font-semibold uppercase text-tinta-700">
+            <p className="mb-4 inline-flex items-center gap-2 border-l-2 border-arcilla-500 pl-3 text-xs font-bold uppercase tracking-[0.16em] text-tinta-700">
               <MapPin className="h-3.5 w-3.5 text-arcilla-500" />
               Centro Histórico · Arequipa, Perú
             </p>
-            <h1 className="font-display text-4xl font-semibold leading-tight text-tinta-900 sm:text-5xl lg:text-6xl">
+            <h1 className="font-display text-4xl font-extrabold leading-tight text-tinta-900 sm:text-5xl lg:text-6xl">
               Tu suite privada en el corazón de la{" "}
               <span className="text-arcilla-500">Ciudad Blanca</span>
             </h1>
@@ -64,7 +64,7 @@ export default function HomePage() {
               <Link
                 href="/habitaciones"
                 aria-label="Ver habitaciones"
-                className="inline-flex items-center gap-2 rounded-lg bg-arcilla-500 px-5 py-3 text-base font-semibold text-white shadow-sm transition-colors hover:bg-arcilla-600 sm:px-6"
+                className="inline-flex items-center gap-2 bg-arcilla-500 px-5 py-3 text-base font-semibold text-white shadow-sm transition-colors hover:bg-arcilla-600 sm:px-6"
               >
                 <span className="sm:hidden">Ver suites</span>
                 <span className="hidden sm:inline">Ver habitaciones</span>
@@ -84,14 +84,16 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Hero photo slot — replace with owner's best original (rights doc).
-              Arch silhouette nods to Arequipa's sillar portales. */}
+          {/* Hero photo — real suite shot from the owner's public Carrd site
+              (stored locally; see content-rights checklist). Arch radius nods
+              to Arequipa's sillar portales. */}
           <div className="relative mx-auto w-full max-w-md lg:max-w-none">
             <PlaceholderImage
               photo={{
                 slot: "hero-casa",
-                label: "La foto estrella de la casa — fachada o la mejor suite",
-                src: null,
+                label:
+                  "Suite de La Casa de Roos: cama queen y sala de estar luminosa",
+                src: "/images/brand/casa-hero.jpg",
               }}
               variant={1}
               className="aspect-[16/9] w-full rounded-lg rounded-t-[5rem] shadow-sm sm:aspect-[4/3] sm:rounded-t-[7rem] lg:aspect-[4/5] lg:max-h-[520px] lg:rounded-t-[10rem]"
@@ -112,10 +114,10 @@ export default function HomePage() {
       <section className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="mb-2 text-xs font-semibold uppercase text-arcilla-500">
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
               La casa
             </p>
-            <h2 className="font-display text-3xl font-semibold text-tinta-900">
+            <h2 className="font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
               Nuestras suites
             </h2>
             <p className="mt-2 max-w-lg text-sm text-tinta-700">
@@ -140,17 +142,17 @@ export default function HomePage() {
       {/* Why us */}
       <section className="border-y border-sillar-200 bg-sillar-50/60">
         <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
-          <p className="mb-2 text-xs font-semibold uppercase text-arcilla-500">
+          <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
             Por qué nosotros
           </p>
-          <h2 className="font-display text-3xl font-semibold text-tinta-900">
+          <h2 className="font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
             Hecho para descansar, pensado para confiar
           </h2>
           <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {reasons.map((r) => (
               <div key={r.title}>
                 <r.icon className="h-7 w-7 text-arcilla-500" />
-                <h3 className="mt-3 font-display text-lg font-semibold text-tinta-900">
+                <h3 className="mt-3 font-display text-lg font-bold text-tinta-900">
                   {r.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-tinta-700">{r.text}</p>
@@ -164,10 +166,10 @@ export default function HomePage() {
       <section className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
-            <p className="mb-2 text-xs font-semibold uppercase text-arcilla-500">
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
               Ubicación
             </p>
-            <h2 className="font-display text-3xl font-semibold text-tinta-900">
+            <h2 className="font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
               Todo Arequipa, a pie
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-tinta-700">
@@ -196,7 +198,7 @@ export default function HomePage() {
 
           {/* Honesty block — distinctive trust copy (design doc §honestidad). */}
           <div className="border-l-2 border-arcilla-500 bg-white py-2 pl-7">
-            <h3 className="flex items-center gap-2 font-display text-xl font-semibold text-tinta-900">
+            <h3 className="flex items-center gap-2 font-display text-xl font-bold text-tinta-900">
               <Moon className="h-5 w-5 text-arcilla-500" />
               Hablemos claro
             </h3>
@@ -227,10 +229,10 @@ export default function HomePage() {
       <section className="border-t border-sillar-200 bg-white">
         <div className="mx-auto grid max-w-6xl gap-8 px-6 py-16 lg:grid-cols-[0.8fr_1.2fr] lg:py-20">
           <div>
-            <p className="mb-2 text-xs font-semibold uppercase text-arcilla-500">
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
               Guía Arequipa
             </p>
-            <h2 className="font-display text-3xl font-semibold text-tinta-900">
+            <h2 className="font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
               Una base céntrica cambia el viaje.
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-tinta-700">
@@ -248,7 +250,7 @@ export default function HomePage() {
           <div className="grid gap-4 sm:grid-cols-2">
             {arequipaGuide.map((item) => (
               <article key={item.title} className="border-t border-sillar-200 pt-5">
-                <h3 className="font-display text-xl font-semibold text-tinta-900">
+                <h3 className="font-display text-xl font-bold text-tinta-900">
                   {item.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-tinta-700">
@@ -264,7 +266,7 @@ export default function HomePage() {
       <section className="border-t border-sillar-200 bg-sillar-50/60">
         <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 px-6 py-16 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="max-w-2xl font-display text-3xl font-semibold text-tinta-900">
+            <h2 className="max-w-2xl font-display text-3xl font-bold text-tinta-900 sm:text-4xl">
               ¿Listo para despertar en el centro histórico?
             </h2>
             <p className="mt-3 max-w-xl text-sm text-tinta-700">
@@ -275,7 +277,7 @@ export default function HomePage() {
           <div className="flex flex-wrap gap-3">
             <Link
               href="/reservar"
-              className="rounded-lg bg-arcilla-500 px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-arcilla-600"
+              className="bg-arcilla-500 px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-arcilla-600"
             >
               Solicitar reserva
             </Link>
@@ -283,7 +285,7 @@ export default function HomePage() {
               href={whatsappUrl(defaultWhatsappMessage)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg border border-sillar-300 bg-white px-6 py-3 text-base font-semibold text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
+              className="inline-flex items-center gap-2 border border-sillar-300 bg-white px-6 py-3 text-base font-semibold text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
             >
               <WhatsApp className="h-5 w-5 text-[#25D366]" /> WhatsApp directo
             </a>

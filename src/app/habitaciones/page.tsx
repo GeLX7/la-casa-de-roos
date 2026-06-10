@@ -15,10 +15,10 @@ export default function HabitacionesPage() {
     <div className="mx-auto max-w-6xl px-6 py-14 lg:py-18">
       <div className="grid gap-8 lg:grid-cols-[1fr_0.65fr] lg:items-end">
         <div>
-          <p className="mb-2 text-xs font-semibold uppercase text-arcilla-500">
+          <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
             Habitaciones
           </p>
-          <h1 className="font-display text-4xl font-semibold text-tinta-900">
+          <h1 className="font-display text-4xl font-extrabold text-tinta-900">
             Cuatro suites en una misma casa del centro.
           </h1>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-tinta-700">

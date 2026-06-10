@@ -38,3 +38,18 @@ Shared, once:
 - [ ] YURAKUNA photo only with that business's permission (text mention is fine)
 
 Until these arrive: layouts use extracted Airbnb image URLs as placeholders in local/preview builds only — **never on the production domain**.
+
+## Extracted assets in the repo (2026-06-10)
+
+All owner-related public sources, downloaded once, resized/compressed locally, never hotlinked. **Status: temporary pending owner originals or explicit approval (row 3).**
+
+| Local file | Source | Used on |
+|---|---|---|
+| `public/images/brand/casa-hero.jpg` | Owner's Carrd site (`assets/images/bg.jpg`) | Home hero |
+| `public/images/brand/sala-cuadro.jpg` | Owner's Carrd site (`assets/images/container03.jpg`) | /arequipa |
+| `public/images/listings/suite-queen-con-sala/cover.jpg` | Owner's Airbnb listing og:image (Hosting-1352543068552764001) | Room card + gallery hero |
+| `public/images/listings/suite-queen-centro-historico/cover.jpg` | Owner's Airbnb listing og:image (Hosting-1353094020937867539) | Room card + gallery hero |
+| `public/images/listings/suite-queen-con-vista/cover.jpg` | Owner's Airbnb listing og:image (Hosting-1352529733779964415) | Room card + gallery hero |
+| `public/images/listings/mini-apartamento-familiar/cover.jpg` | Owner's Airbnb listing og:image (Hosting-1352501815600410248) | Room card + gallery hero |
+
+Blocked/limited sources (no bypass attempted): Facebook share link (login-walled, no public og:image); Google Maps photos (JS-only, not politely extractable); full Airbnb galleries (client-rendered — only the public og:image cover per listing was taken). No standalone logo file exists on any public source — Carrd `card.jpg` is a baked screenshot of the wordmark, not a clean asset; the site keeps its typographic wordmark until the owner sends logo files.

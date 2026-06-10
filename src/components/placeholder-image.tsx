@@ -2,9 +2,9 @@ import Image from "next/image";
 import type { GallerySlot } from "@/data/listings";
 
 /**
- * Photo slot. Renders the owner-provided original when `src` is set;
- * otherwise a warm, intentional placeholder with an Arequipa-arch motif.
- * Airbnb images are never used here
+ * Photo slot. Renders the local asset when `src` is set; otherwise a warm,
+ * intentional placeholder with an Arequipa-arch motif. All real sources are
+ * owner-related and stored locally — remote images are never hotlinked
  * (docs/research/content-rights-checklist.md).
  *
  * `variant` cycles three warm tints so grids of pending photos don't
