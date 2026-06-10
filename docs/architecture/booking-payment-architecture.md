@@ -8,7 +8,7 @@ Recommendation doc, 2026-06-10. No payment is implemented in MVP — this define
 |---|---|---|
 | 1 (launch) | **Request form → email/WhatsApp to owner → manual confirm** | Zero payment risk, matches owner's current WhatsApp workflow, closes the iCal sync gap (see booking-calendar-options.md) |
 | 2 | Same + **admin mini-dashboard** (confirm/decline buttons, auto emails, iCal feed updates) | Removes copy-paste work, single source of truth |
-| 3 | Confirm **with payment**: deposit (e.g. first night or 30–50 %) or full prepay via local provider | Real commitment, fewer no-shows |
+| 3 | Confirm **with payment**: deposit (e.g. first night or 30–50 %) or full prepay via **Culqi** (owner's pick, 2026-06-10; fallback Mercado Pago) | Real commitment, fewer no-shows |
 | 4 (optional) | Instant book + channel manager | Only if volume demands |
 
 ## Booking states
@@ -27,7 +27,8 @@ Rules: only `confirmed`+ block dates in the public calendar and the exported iCa
   - **Culqi** (Peruvian gateway): cards + Yape integration, developer-friendly API, needs RUC. Strong Phase 3 candidate for embedded checkout.
   - **Izipay / Niubiz:** bank-affiliated acquirers, more paperwork; fine alternatives if owner already banks there.
   - **PayPal:** useful for foreign guests (US/EU) who distrust unknown forms; high fees; manual invoice flow works.
-- Recommendation: **Phase 1–2: Yape/Plin/transfer + Mercado Pago payment link sent on confirmation. Phase 3: Culqi or Mercado Pago Checkout embedded, charging a deposit.** Decide deposit policy with owner (suggest: 1 night or 30 % to confirm; balance at check-in).
+- Owner decision (2026-06-10): **Culqi is the target online provider** — Phase 3 research item, no implementation now; owner has no Culqi account or API keys yet. Phase 1–2 stay fully manual (Yape/Plin/transfer, optional Mercado Pago link).
+- **Phase 3 prerequisite/risk:** Culqi business onboarding generally requires a **RUC — the owner has none (Q18)**. Resolve RUC first or fall back to Mercado Pago. No payment code before the owner has a provider account + keys. Deposit policy still to define (suggest: 1 night or 30 % to confirm; balance at check-in).
 
 ## Email notifications (Phase 1)
 

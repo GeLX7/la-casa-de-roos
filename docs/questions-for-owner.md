@@ -56,3 +56,40 @@ Si puedes mostrarla pero preferiría que incluyas reseñas directamente en la we
 ## 🇬🇧 English (mirror)
 
 1. 🔑 Original photo files for all 4 suites (8–12 each); confirm you own the rights. 2. Logo/brand assets or design a wordmark? 3. Website room names: Carrd names vs Airbnb titles? 4. Publish exact address or area-only until confirmation? 5. Canonical Facebook URL? 6. 🔑 Nightly prices (PEN?), cleaning fee, weekly/monthly discounts. 7. 🔑 Direct-booking cancellation policy. 8. Min/max stay, booking window. 9. Quiet hours end 6 or 7 a.m.? 10. Keep S/350 penalty for direct bookings? 11. 🔑 Preferred payment collection at launch (Yape/Plin/transfer/Mercado Pago link/cash) + deposit policy. 12. 🔑 Notification email; WhatsApp stays primary? 13. Commit to <24 h response SLA? 14. 🔑 Send the 4 private Airbnb iCal **export** URLs. 15. OK to **import** our per-room calendar into each Airbnb listing at launch? 16. Instant Book on? Guest Favorite badge on all 4? 17. 🔑 Buy `lacasaderoos.com` (~$11/yr) — under whose account? Also `.pe`? 18. RUC/legal name for footer/invoicing. 19. Adapt your privacy policy PDF for the site? 20. OK to show aggregate Airbnb ratings with link-out (verbatim review quotes only with per-guest permission later)?
+
+---
+
+## Resolution log (2026-06-10)
+
+Owner's raw answers are inline above. Decisions recorded into the planning docs:
+
+| Q | Decision |
+|---|---|
+| 1 | Owner has originals but asked to pull photos from Airbnb web → extracted Airbnb URLs are **internal placeholders only**; production gate = originals or explicit owner approval (`research/content-rights-checklist.md`) |
+| 2 | Logo: source from owner's socials (Facebook/Instagram) — need original export files, not screenshots |
+| 3 | Room names: **Airbnb titles as H1**, Carrd "Suite Queen…" names as subtitles |
+| 4 | Address: publish exact address on site **and** repeat in confirmation — exact street address still needed |
+| 5 | Canonical Facebook: `facebook.com/profile.php?id=61579891154411` |
+| 6 | Prices: owner expects Airbnb sync → **not possible via iCal** (availability only). Site shows **"Consultar precio"** until owner fixes rates; true price sync = channel manager later (`architecture/booking-calendar-options.md`) |
+| 7–8 | Cancellation, min/max stay: "same as Airbnb" — need the concrete preset/values to mirror |
+| 9 | Quiet hours: mirror each suite's own Airbnb value (suites 1–2: 6 a.m.; suite 3: 7 a.m.; suite 4: confirm) |
+| 10 | S/ 350 penalty kept for direct bookings |
+| 11 | Payments: **Culqi** chosen for online checkout → Phase 3; no account/API yet; **RUC prerequisite risk** (see Q18). MVP = manual payment instructions after confirmation |
+| 12 | Notification email: none given — check socials at build time, confirm with owner |
+| 13 | Web chat + admin replies: wanted → scoped to **Phase 2**, approval-gated (`roadmap/MVP_PLAN.md` sizing note) |
+| 14–15 | iCal export URLs arrive later; import into Airbnb done at launch — build everything ready to plug |
+| 16 | Instant Book / Guest Favorite status: confirm later |
+| 17 | Domain `lacasaderoos.com` approved — **purchase deferred to launch** |
+| 18 | No RUC → footer shows trade name only; blocks Culqi business onboarding (Phase 3 risk) |
+| 19 | Privacy policy: adapt the Drive PDF for the website |
+| 20 | Show aggregate Airbnb rating with attribution now; build **own on-site reviews** later; verbatim Airbnb quotes only with per-guest permission |
+
+### Still needed from owner (🔑 = launch blocker)
+
+- 🔑 Exact street address (Q4)
+- 🔑 Fixed nightly prices per suite — until then "Consultar precio" (Q6)
+- 🔑 Cancellation preset + min/max stay values from Airbnb (Q7–8)
+- 🔑 Notification email (Q12)
+- 🔑 4 Airbnb iCal export URLs (Q14) — needed before two-way sync goes live, not before scaffold
+- Original photos per suite + logo files (Q1–2) — placeholder preview OK meanwhile
+- Instant Book / Guest Favorite confirmation (Q16)

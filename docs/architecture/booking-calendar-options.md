@@ -54,6 +54,15 @@ Airbnb (4 listings)                    Website (Next.js + Supabase)
                                     → blocked on Airbnb at next pull
 ```
 
+## What iCal does NOT sync (owner expectation, 2026-06-10)
+
+iCal carries **availability only** — no prices, minimum stays, fees, or policies. The owner expects Airbnb price sync; **this architecture cannot deliver it**, and the website must never promise live Airbnb price parity. Handling:
+
+- MVP: prices are owner-entered in the website DB. Until the owner fixes rates, rooms show **"Consultar precio"** with the request/WhatsApp CTA.
+- Optional interim: display Airbnb reference pricing clearly labeled "precio referencial según Airbnb" with a last-checked date, updated manually.
+- If a rate changes on Airbnb, the website follows only when the owner updates it.
+- Automatic two-way price sync = Option C (channel manager/PMS). This is now an explicit Option C trigger.
+
 ## When to move to Option C
 
-Any of: ≥2 near-misses/double bookings in a season · direct bookings > ~30 %/mo and owner wants instant confirmation · owner adds Booking.com or more units · owner wants dynamic pricing sync. Migration is clean: the website keeps its UI and swaps the availability source from iCal tables to the channel manager's API.
+Any of: ≥2 near-misses/double bookings in a season · direct bookings > ~30 %/mo and owner wants instant confirmation · owner adds Booking.com or more units · **owner insists on automatic Airbnb price sync** (iCal can't — see above). Migration is clean: the website keeps its UI and swaps the availability source from iCal tables to the channel manager's API.

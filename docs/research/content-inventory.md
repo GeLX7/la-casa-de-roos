@@ -15,7 +15,7 @@ Extracted 2026-06-10 from the public Carrd site and the four public Airbnb listi
 **Contact & links:**
 - WhatsApp: `wa.me/51967757040` with prefilled text "Hola Roos, me das informacion sobre tus airbnb" → **+51 967 757 040**
 - Google Maps: `https://maps.app.goo.gl/EkTeDgo46YoJXW8o9` (exact address not published — ask owner)
-- Instagram: `instagram.com/lacasaderoosaqp` · TikTok: `tiktok.com/@lacasaderoos` · Facebook: share links (2 different ones — get canonical page URL from owner)
+- Instagram: `instagram.com/lacasaderoosaqp` · TikTok: `tiktok.com/@lacasaderoos` · Facebook canonical (owner-confirmed 2026-06-10): `facebook.com/profile.php?id=61579891154411`
 - Privacy policy: PDF on Google Drive (`drive.google.com/file/d/1ce2dYDO5UY5DV0huKO6gzZuRnXk4_1ix/view`) — owner already has one; needs adaptation for the website
 
 **Room links (Carrd label → Airbnb):**
@@ -84,23 +84,23 @@ Recurring blocks:
 
 ## 4. Not available from public pages (owner or manual export must provide)
 
-- **Nightly prices** (date-dependent, JS-loaded — intentionally not captured), cleaning fees, discounts (weekly/monthly), currency of record (PEN vs USD)
+- **Nightly prices** (date-dependent, JS-loaded — intentionally not captured), cleaning fees, discounts. Owner decision 2026-06-10: defer — site shows **"Consultar precio"** until fixed rates arrive (iCal cannot sync Airbnb prices, see `../architecture/booking-calendar-options.md`)
 - **Cancellation policy** name/terms per listing (loads client-side)
 - **Individual review texts** (lazy-loaded; only counts/ratings/percentages were server-rendered)
 - **Host profile** (display name, photo, superhost status, response rate)
 - **Exact street address** (Airbnb hides it; Maps short-link not resolved on purpose)
 - **Min/max stay rules**, advance-notice and preparation-time settings
-- **Original photo files** (Airbnb serves processed copies on muscache.com — do not hotlink or download for production; owner has originals)
+- **Original photo files** — owner confirmed originals exist (2026-06-10) but asked us to pull from Airbnb web; policy: extracted muscache.com URLs are **internal placeholders only**, production needs originals or explicit owner sign-off (photo checklist in `content-rights-checklist.md`)
 - **Airbnb iCal export URLs** (private, per listing, from host dashboard)
 
 ## 5. Website copy possibilities (draft angles, ES-first)
 
 - Hero: "La Casa de Roos — Suites y minidepartamentos en el corazón del Centro Histórico de Arequipa" + "A una cuadra de Calle Mercaderes, a pasos de la Plaza de Armas".
 - Trust strip: "★4.85 promedio · +340 reseñas en Airbnb · Favorito entre huéspedes" (link out to listings; see rights checklist).
-- Per-room pages using Carrd names (clearer than Airbnb titles) + amenity icons + "Lo que no incluimos" honesty block (earplugs note converts skeptics).
+- Per-room pages: **Airbnb title as H1** (owner decision 2026-06-10), Carrd "Suite Queen…" name as subtitle + amenity icons + "Lo que no incluimos" honesty block (earplugs note converts skeptics).
 - Location section: walking times to Plaza de Armas, Santa Catalina, Mercaderes; YURAKUNA mention.
 - Booking CTA: "Consulta disponibilidad" + WhatsApp fallback button everywhere.
 
 ## 6. Questions raised (full list in `docs/questions-for-owner.md`)
 
-Naming mismatch Carrd vs Airbnb titles (which wins on the website?) · quiet-hours discrepancy (6 vs 7 a.m.) · prices · cancellation terms · address publication preference · photo originals · iCal URLs.
+Answered 2026-06-10 — see Resolution log in `../questions-for-owner.md`. Still pending from owner: exact address, fixed prices, cancellation preset + min/max stay, notification email, iCal export URLs, photo originals + logo files.
