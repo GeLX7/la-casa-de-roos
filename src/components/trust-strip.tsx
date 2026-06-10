@@ -8,7 +8,7 @@ import { Star, Key, MapPin } from "@/components/icons";
  */
 export function TrustStrip() {
   return (
-    <section aria-label="Reputación" className="border-y border-sillar-200 bg-sillar-100">
+    <section aria-label="Reputación" className="border-y border-sillar-200 bg-white">
       <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-6 py-8 text-center sm:grid-cols-4 sm:divide-x sm:divide-sillar-200">
         <div>
           <p className="flex items-center justify-center gap-1.5 font-display text-2xl font-semibold text-tinta-900">

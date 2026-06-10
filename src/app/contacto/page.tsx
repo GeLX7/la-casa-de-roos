@@ -23,7 +23,7 @@ export default function ContactoPage() {
           href={whatsappUrl(defaultWhatsappMessage)}
           target="_blank"
           rel="noopener noreferrer"
-          className="group rounded-3xl border border-sillar-200 bg-white p-6 shadow-sm transition-colors hover:border-arcilla-400"
+          className="group rounded-lg border border-sillar-200 bg-white p-6 shadow-sm transition-colors hover:border-arcilla-400"
         >
           <WhatsApp className="h-8 w-8 text-[#25D366]" />
           <h2 className="mt-3 font-display text-xl font-semibold text-tinta-900">
@@ -40,7 +40,7 @@ export default function ContactoPage() {
           href={site.mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="group rounded-3xl border border-sillar-200 bg-white p-6 shadow-sm transition-colors hover:border-arcilla-400"
+          className="group rounded-lg border border-sillar-200 bg-white p-6 shadow-sm transition-colors hover:border-arcilla-400"
         >
           <MapPin className="h-8 w-8 text-arcilla-500" />
           <h2 className="mt-3 font-display text-xl font-semibold text-tinta-900">
@@ -70,7 +70,7 @@ export default function ContactoPage() {
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block rounded-full border border-sillar-300 bg-white px-5 py-2.5 font-medium text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
+                className="inline-block rounded-md border border-sillar-300 bg-white px-5 py-2.5 font-medium text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
               >
                 {name}
               </a>
@@ -79,7 +79,7 @@ export default function ContactoPage() {
         </ul>
       </section>
 
-      <section className="mt-10 rounded-2xl bg-sillar-100 p-5 text-xs leading-relaxed text-tinta-500">
+      <section className="mt-10 border-l-2 border-arcilla-500 bg-sillar-50 p-5 text-xs leading-relaxed text-tinta-500">
         Para llegadas: el check-in es autónomo con caja de seguridad desde las{" "}
         {site.checkin}; las llaves se devuelven en el segundo piso (Estudio
         Museo Lozada Tamayo Coworking). Te enviamos las instrucciones completas

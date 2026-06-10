@@ -27,11 +27,11 @@ export default async function ReservarPage({
         del calendario de Airbnb) y te respondemos, normalmente en minutos.
       </p>
 
-      <div className="mt-8 rounded-3xl border border-sillar-200 bg-white p-5 shadow-sm sm:p-8">
+      <div className="mt-8 rounded-lg border border-sillar-200 bg-white p-5 shadow-sm sm:p-8">
         <RequestForm initialSlug={suite} />
       </div>
 
-      <div className="mt-6 rounded-2xl bg-sillar-100 p-5 text-xs leading-relaxed text-tinta-500">
+      <div className="mt-6 border-l-2 border-arcilla-500 bg-sillar-50 p-5 text-xs leading-relaxed text-tinta-500">
         <p>
           <strong className="text-tinta-700">Cómo sigue:</strong> Roos confirma
           la disponibilidad y coordina contigo el pago y los detalles de

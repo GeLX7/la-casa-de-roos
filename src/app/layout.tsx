@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Fraunces, Montserrat } from "next/font/google";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { WhatsAppFab } from "@/components/whatsapp-fab";
@@ -8,9 +8,10 @@ import { site, SITE_URL } from "@/data/site";
 import { listings } from "@/data/listings";
 import "./globals.css";
 
-const inter = Inter({
+const montserrat = Montserrat({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-montserrat",
+  weight: ["400", "500", "600", "700"],
 });
 
 const fraunces = Fraunces({
@@ -44,7 +45,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#fbf8f3",
+  themeColor: "#ffffff",
 };
 
 /* LodgingBusiness JSON-LD. Street address intentionally omitted until the
@@ -77,7 +78,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es" className={`${inter.variable} ${fraunces.variable}`}>
+    <html lang="es" className={`${montserrat.variable} ${fraunces.variable}`}>
       <body className="flex min-h-dvh flex-col">
         <JsonLd data={lodgingJsonLd} />
         <Header />

@@ -16,7 +16,7 @@
 ## Phase 1 — Premium static site + availability display (≈1–1.5 weeks dev)
 
 - Next.js scaffold per `../architecture/recommended-stack.md`; GitHub repo; Vercel previews
-- Pages: home, 4 room pages (**Airbnb title as H1, Carrd suite name as subtitle** — owner decision), ubicación, contacto, FAQ — full design per `../design/design-direction.md`, Spanish copy (rewritten, owner-approved)
+- Pages: home, habitaciones, 4 room pages (**Airbnb title as H1, Carrd suite name as subtitle** — owner decision), Arequipa guest guide, reservar, contacto, privacidad — full design per `../design/design-direction.md`, Spanish copy (rewritten, owner-approved)
 - Prices: **"Consultar precio"** per room until owner provides fixed rates (no Airbnb price sync — iCal is availability-only, see `../architecture/booking-calendar-options.md`); photos: Airbnb-URL placeholders in previews only, swapped for owner originals before the production domain goes live
 - Supabase project (free tier): `rooms`, `airbnb_blocks` cache; lazy iCal import of the 4 Airbnb feeds (read-only)
 - **Read-only availability calendar** per room (Airbnb blocks visible)

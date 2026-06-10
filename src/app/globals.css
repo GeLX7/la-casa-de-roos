@@ -4,7 +4,7 @@
    sillar (warm whites of Arequipa's volcanic stone), tinta (volcanic ink),
    arcilla (terracotta accent), salvia (muted sage secondary). */
 @theme inline {
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-montserrat);
   --font-display: var(--font-fraunces);
 
   --color-sillar-50: #fbf8f3;
@@ -30,10 +30,20 @@
 }
 
 body {
-  background-color: var(--color-sillar-50);
+  background-color: #ffffff;
   color: var(--color-tinta-900);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 :where(a, button, input, select, textarea):focus-visible {

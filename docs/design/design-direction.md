@@ -6,9 +6,9 @@
 
 Arequipa is *la Ciudad Blanca* — white volcanic sillar stone, warm Andean light. The palette and texture come straight from that:
 
-- **Base:** warm off-whites / sillar cream (#FAF6F0 family), generous whitespace.
+- **Base:** mostly white, with warm off-white / sillar cream used as quiet section bands.
 - **Accents:** terracotta/clay for CTAs, deep volcanic charcoal for text, a muted sage or Misti-sky blue as secondary.
-- **Type:** expressive serif for display (Fraunces or Lora) + clean sans for UI (Inter or Figtree). Spanish diacritics checked at display sizes.
+- **Type:** expressive serif for display (Fraunces) + Montserrat for UI/body. Montserrat is a public Google Font and also appears on Arequipa.com; it gives a subtle local-reference bridge without copying assets.
 - **Texture:** subtle paper/stone grain on section backgrounds; no glassmorphism, no neon, no generic AI-gradient look.
 
 ## Page anatomy (home)
@@ -19,7 +19,8 @@ Arequipa is *la Ciudad Blanca* — white volcanic sillar stone, warm Andean ligh
 4. **La casa:** shared kitchen, concierge digital, building security, YURAKUNA mention — the "why us" section.
 5. **Ubicación:** map embed + walking-time chips (Plaza de Armas, Santa Catalina, Mercaderes).
 6. **Honestidad block:** historic-center noise + free earplugs + what's *not* included (no A/C…). Builds disproportionate trust.
-7. **FAQ teaser + footer:** contact, socials, privacy policy, "Síguenos".
+7. **Arequipa guide teaser:** practical travel context: Centro Histórico, walkability, sillar, weather, how to move.
+8. **Footer:** contact, socials, privacy policy, "Síguenos".
 
 ## Room page anatomy
 

@@ -11,7 +11,8 @@ The owner currently sells exclusively through Airbnb (4 listings) plus a one-pag
 1. Presents the same four units beautifully, in Spanish first.
 2. Lets visitors check availability and request a reservation directly.
 3. Keeps availability in sync with Airbnb in both directions (Airbnb booking blocks the website; website booking blocks Airbnb).
-4. Lives on GitHub, deploys on Vercel.
+4. Gives guests practical Arequipa context so they understand why the Centro Histórico location matters.
+5. Lives on GitHub, deploys on Vercel.
 
 ## The business today
 

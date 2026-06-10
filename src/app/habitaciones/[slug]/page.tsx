@@ -121,7 +121,7 @@ export default async function RoomPage({
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <PlaceholderImage
           photo={listing.gallery[0]}
-          className="col-span-2 row-span-2 aspect-[4/3] rounded-2xl sm:aspect-auto"
+            className="col-span-2 row-span-2 aspect-[4/3] rounded-lg sm:aspect-auto"
           sizes="(min-width: 640px) 50vw, 100vw"
           priority
         />
@@ -131,7 +131,7 @@ export default async function RoomPage({
             photo={photo}
             variant={i + 1}
             compact
-            className="aspect-[4/3] rounded-xl"
+            className="aspect-[4/3] rounded-md"
             sizes="(min-width: 640px) 25vw, 50vw"
           />
         ))}
@@ -190,13 +190,13 @@ export default async function RoomPage({
         </div>
 
         {/* Booking panel */}
-        <aside className="h-fit rounded-3xl border border-sillar-200 bg-white p-6 shadow-sm lg:sticky lg:top-24">
+        <aside className="h-fit rounded-lg border border-sillar-200 bg-white p-6 shadow-sm lg:sticky lg:top-24">
           <div className="flex items-baseline justify-between gap-3">
             <p className="font-display text-2xl font-semibold text-arcilla-600">
               {listing.priceLabel}
             </p>
             {listing.guestFavorite && (
-              <span className="rounded-full bg-sillar-100 px-2.5 py-1 text-[10px] font-semibold text-tinta-700">
+              <span className="rounded-md bg-sillar-100 px-2.5 py-1 text-[10px] font-semibold text-tinta-700">
                 ❤ Favorito
               </span>
             )}
@@ -215,7 +215,7 @@ export default async function RoomPage({
           <div className="mt-5 space-y-3">
             <Link
               href={`/reservar?suite=${listing.slug}`}
-              className="flex w-full items-center justify-center gap-2 rounded-full bg-arcilla-500 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-arcilla-600"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-arcilla-500 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-arcilla-600"
             >
               Solicitar reserva <ArrowRight className="h-4 w-4" />
             </Link>
@@ -223,7 +223,7 @@ export default async function RoomPage({
               href={whatsappUrl(roomWhatsappMessage(listing.subtitle))}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex w-full items-center justify-center gap-2 rounded-full border border-sillar-300 px-5 py-3 text-sm font-semibold text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
+              className="flex w-full items-center justify-center gap-2 rounded-lg border border-sillar-300 px-5 py-3 text-sm font-semibold text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
             >
               <WhatsApp className="h-4.5 w-4.5 text-[#25D366]" /> Consultar por WhatsApp
             </a>
@@ -231,7 +231,7 @@ export default async function RoomPage({
               href={listing.airbnbUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex w-full items-center justify-center gap-2 rounded-full px-5 py-2.5 text-xs font-medium text-tinta-500 transition-colors hover:text-arcilla-600"
+              className="flex w-full items-center justify-center gap-2 px-5 py-2.5 text-xs font-medium text-tinta-500 transition-colors hover:text-arcilla-600"
             >
               Ver anuncio en Airbnb <ExternalLink className="h-3.5 w-3.5" />
             </a>
@@ -255,7 +255,7 @@ export default async function RoomPage({
               <Link
                 key={l.slug}
                 href={`/habitaciones/${l.slug}`}
-                className="rounded-2xl border border-sillar-200 bg-white p-5 transition-colors hover:border-arcilla-400"
+                className="rounded-lg border border-sillar-200 bg-white p-5 transition-colors hover:border-arcilla-400"
               >
                 <p className="flex items-center gap-1 text-xs font-medium text-tinta-500">
                   <Star className="h-3.5 w-3.5 text-arcilla-500" />

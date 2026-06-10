@@ -4,7 +4,7 @@ import { whatsappUrl, defaultWhatsappMessage } from "@/lib/whatsapp";
 
 export function Footer() {
   return (
-    <footer className="border-t border-sillar-200 bg-sillar-100">
+    <footer className="border-t border-sillar-200 bg-white">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 sm:grid-cols-3">
         <div>
           <p className="font-display text-lg font-semibold text-tinta-900">
@@ -20,6 +20,7 @@ export function Footer() {
           <p className="mb-3 font-semibold text-tinta-900">Explora</p>
           <ul className="space-y-2 text-tinta-700">
             <li><Link href="/habitaciones" className="hover:text-arcilla-600">Habitaciones</Link></li>
+            <li><Link href="/arequipa" className="hover:text-arcilla-600">Arequipa</Link></li>
             <li><Link href="/reservar" className="hover:text-arcilla-600">Solicitar reserva</Link></li>
             <li><Link href="/contacto" className="hover:text-arcilla-600">Contacto</Link></li>
             <li><Link href="/privacidad" className="hover:text-arcilla-600">Política de privacidad</Link></li>
@@ -47,7 +48,7 @@ export function Footer() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-sillar-200 px-6 py-4">
+      <div className="border-t border-sillar-200 bg-sillar-50/60 px-6 py-4">
         <p className="mx-auto max-w-6xl text-xs leading-relaxed text-tinta-500">
           © {new Date().getFullYear()} La Casa de Roos, Arequipa. Sitio
           independiente: Airbnb es una marca de Airbnb, Inc.; este sitio no está

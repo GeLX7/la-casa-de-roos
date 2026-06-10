@@ -12,7 +12,7 @@ export default function NotFound() {
       </p>
       <Link
         href="/habitaciones"
-        className="mt-6 rounded-full bg-arcilla-500 px-6 py-3 text-sm font-semibold text-white hover:bg-arcilla-600"
+        className="mt-6 rounded-lg bg-arcilla-500 px-6 py-3 text-sm font-semibold text-white hover:bg-arcilla-600"
       >
         Ver habitaciones
       </Link>

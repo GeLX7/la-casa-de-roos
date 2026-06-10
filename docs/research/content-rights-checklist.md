@@ -17,6 +17,7 @@
 | 11 | "Estudio Museo Lozada Tamayo Coworking" mention | House rules | ⚠️ third-party | Text mention OK for key return instructions |
 | 12 | Carrd `card.jpg` OG image | Carrd assets | ⚠️ presumably owner's photo | Replace with original anyway |
 | 13 | Guest-facing prices/policies | Not extracted | n/a | Owner provides authoritative values (source of truth = website DB, mirrored manually on Airbnb) |
+| 14 | Arequipa travel guide facts | Arequipa.com public info page (checked 2026-06-10) | ⚠️ use as public research only | Website copy is rewritten original text; no Arequipa.com images, paragraphs, or branding reused. Font observed: Montserrat via Google Fonts. |
 
 ## Photos needed from owner (production launch gate)
 

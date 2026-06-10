@@ -4,6 +4,8 @@ Direct-booking website for **La Casa de Roos**: four suite/mini-apartment lofts 
 
 **Status (2026-06-10):** Phase 1 web MVP scaffold is live on PR #1 (`feat/scaffold-web-mvp`) with Vercel preview deployments enabled. Production remains gated for `main` in `vercel.json`; no database, no payments, no domain purchase.
 
+Current MVP routes include home, habitaciones, four suite pages, reservar, contacto, privacidad, sitemap/robots, 404, and a new `/arequipa` guest guide based on public research rewritten for the site.
+
 ## Start here
 
 1. [`docs/PROJECT_BRIEF.md`](docs/PROJECT_BRIEF.md) — what we're building and the core decisions

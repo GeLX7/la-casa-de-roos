@@ -76,7 +76,7 @@ export function PlaceholderImage({
             <p className="max-w-[16rem] text-xs font-medium leading-snug text-tinta-700/80">
               {photo.label}
             </p>
-            <p className="text-[10px] uppercase tracking-[0.14em] text-tinta-500/60">
+            <p className="text-[10px] uppercase text-tinta-500/60">
               Foto original en camino
             </p>
           </>

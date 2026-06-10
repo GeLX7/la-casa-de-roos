@@ -11,7 +11,7 @@ export function RoomCard({
   variant?: number;
 }) {
   return (
-    <article className="group flex flex-col overflow-hidden rounded-2xl border border-sillar-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+    <article className="group flex flex-col overflow-hidden rounded-lg border border-sillar-200 bg-white shadow-sm transition-shadow hover:shadow-md">
       <Link
         href={`/habitaciones/${listing.slug}`}
         aria-label={`Ver ${listing.subtitle}`}
@@ -25,7 +25,7 @@ export function RoomCard({
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
         />
         {listing.guestFavorite && (
-          <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold text-tinta-900 shadow-sm backdrop-blur">
+          <span className="absolute left-3 top-3 rounded-md bg-white/90 px-3 py-1 text-[11px] font-semibold text-tinta-900 shadow-sm backdrop-blur">
             ❤ Favorito entre huéspedes
           </span>
         )}
@@ -39,7 +39,7 @@ export function RoomCard({
             <p className="mt-0.5 text-sm text-tinta-500">{listing.subtitle}</p>
           </div>
           <p
-            className="flex shrink-0 items-center gap-1 rounded-full bg-sillar-100 px-2.5 py-1 text-sm font-medium text-tinta-700"
+            className="flex shrink-0 items-center gap-1 rounded-md bg-sillar-100 px-2.5 py-1 text-sm font-medium text-tinta-700"
             title={`${listing.reviewCount} reseñas en Airbnb`}
           >
             <Star className="h-3.5 w-3.5 text-arcilla-500" />

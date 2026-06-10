@@ -54,7 +54,7 @@ export function RequestForm({ initialSlug }: { initialSlug?: string }) {
   }
 
   const inputCls =
-    "w-full rounded-lg border border-sillar-300 bg-white px-3.5 py-2.5 text-sm text-tinta-900 placeholder:text-tinta-500/60 focus:border-arcilla-400 focus:outline-none focus:ring-2 focus:ring-arcilla-400/30";
+    "w-full rounded-md border border-sillar-300 bg-white px-3.5 py-2.5 text-sm text-tinta-900 placeholder:text-tinta-500/60 focus:border-arcilla-400 focus:outline-none focus:ring-2 focus:ring-arcilla-400/30";
   const labelCls = "mb-1.5 block text-sm font-medium text-tinta-900";
 
   return (
@@ -132,7 +132,7 @@ export function RequestForm({ initialSlug }: { initialSlug?: string }) {
 
       <button
         type="submit"
-        className="flex w-full items-center justify-center gap-2 rounded-full bg-arcilla-500 px-6 py-3.5 text-base font-semibold text-white shadow-sm transition-colors hover:bg-arcilla-600"
+        className="flex w-full items-center justify-center gap-2 rounded-lg bg-arcilla-500 px-6 py-3.5 text-base font-semibold text-white shadow-sm transition-colors hover:bg-arcilla-600"
       >
         <WhatsApp className="h-5 w-5" />
         <span className="sm:hidden">Enviar por WhatsApp</span>
