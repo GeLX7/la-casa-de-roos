@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+/* "Sillar y calidez" — palette from docs/design/design-direction.md:
+   sillar (warm whites of Arequipa's volcanic stone), tinta (volcanic ink),
+   arcilla (terracotta accent), salvia (muted sage secondary). */
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-fraunces);
+
+  --color-sillar-50: #fbf8f3;
+  --color-sillar-100: #f6f0e6;
+  --color-sillar-200: #ede3d3;
+  --color-sillar-300: #dfd0b8;
+
+  --color-tinta-500: #6b6258;
+  --color-tinta-700: #453e36;
+  --color-tinta-900: #292420;
+
+  --color-arcilla-50: #fbefe8;
+  --color-arcilla-400: #d2693f;
+  --color-arcilla-500: #c2552c;
+  --color-arcilla-600: #a84a23;
+
+  --color-salvia-100: #eaefe8;
+  --color-salvia-500: #7e8f7c;
+  --color-salvia-700: #5c6e5a;
+}
+
+body {
+  background-color: var(--color-sillar-50);
+  color: var(--color-tinta-900);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
