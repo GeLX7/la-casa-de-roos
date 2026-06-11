@@ -2,7 +2,9 @@
 
 Direct-booking website for **La Casa de Roos**: four suite/mini-apartment lofts in the historic center of Arequipa, Peru, currently sold via Airbnb (≈★4.85, 346 reviews across 4 listings).
 
-**Status (2026-06-10):** planning reconciled with owner answers. Repo + Vercel project live (`vercel.json` disables git deploys — zero deployments yet), no app code, no database, no domain purchase. Next: scaffold the Next.js MVP.
+**Status (2026-06-10):** Phase 1 web MVP scaffold is live on PR #1 (`feat/scaffold-web-mvp`) with Vercel preview deployments enabled. Production remains gated for `main` in `vercel.json`; no database, no payments, no domain purchase. Latest pass: real owner-sourced images (Carrd hero + four Airbnb listing covers, stored locally, temporary pending owner originals — see rights checklist) and an arequipa.com-faithful typography pass (all-Montserrat, 700/800 headings, rectangular primary CTAs).
+
+Current MVP routes include home, habitaciones, four suite pages, reservar, contacto, privacidad, sitemap/robots, 404, and a new `/arequipa` guest guide based on public research rewritten for the site.
 
 ## Start here
 

@@ -9,7 +9,9 @@
 .env*
 !.env.example
 
-# future app scaffold
+# app
 node_modules/
 .next/
 out/
+next-env.d.ts
+*.tsbuildinfo

@@ -76,7 +76,7 @@ Recurring blocks:
 ### Listing 4 — Mini Apartamento Cerca a Plaza de Armas
 - **URL:** https://www.airbnb.com.pe/rooms/1352501815600410248 · Carrd: "Suite Queen Familiar con Vista al Centro Histórico + Cama Extra"
 - **Type:** entire loft · **3 guests** · 1 bedroom · **2 beds (queen + single)** · 1 private bath · kitchenette · workspace
-- **Rating:** ★4.82 · 96 reviews · 84% five-star · cleanliness 4.9, accuracy 4.9, check-in 4.9, communication 4.9, location 4.9, value 4.8 · **"Favorito entre huéspedes" badge confirmed in page**
+- **Rating:** ★4.82 · 97 reviews (re-checked 2026-06-10) · 84% five-star · cleanliness 4.93, accuracy 4.93, check-in 4.92, communication 4.92, location 4.89, value 4.85 · **"Favorito entre huéspedes" badge confirmed in page**
 - **Images:** 30 owner photos in SSR (sala ×7, habitación ×9, baño ×4, cocina, YURAKUNA ×5).
 - Note: some description text auto-translated flag present ("Se tradujo automáticamente") — original may be mixed-language; confirm final copy with owner.
 

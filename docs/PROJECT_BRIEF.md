@@ -1,6 +1,6 @@
 # La Casa de Roos — Project Brief
 
-**Date:** 2026-06-10 · **Status:** Planning reconciled with owner answers. Repo `GeLX7/la-casa-de-roos` + Vercel project `la-casa-de-roos` created (git deploys disabled — zero deployments). Next: scaffold.
+**Date:** 2026-06-10 · **Status:** Planning reconciled with owner answers. Repo `GeLX7/la-casa-de-roos` + Vercel project `la-casa-de-roos` created. Phase 1 web MVP scaffold is on PR #1 (`feat/scaffold-web-mvp`) with preview deployments enabled; production remains gated for `main`.
 
 ## What this is
 
@@ -11,7 +11,8 @@ The owner currently sells exclusively through Airbnb (4 listings) plus a one-pag
 1. Presents the same four units beautifully, in Spanish first.
 2. Lets visitors check availability and request a reservation directly.
 3. Keeps availability in sync with Airbnb in both directions (Airbnb booking blocks the website; website booking blocks Airbnb).
-4. Lives on GitHub, deploys on Vercel.
+4. Gives guests practical Arequipa context so they understand why the Centro Histórico location matters.
+5. Lives on GitHub, deploys on Vercel.
 
 ## The business today
 

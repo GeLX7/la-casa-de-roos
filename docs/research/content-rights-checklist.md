@@ -17,6 +17,9 @@
 | 11 | "Estudio Museo Lozada Tamayo Coworking" mention | House rules | ⚠️ third-party | Text mention OK for key return instructions |
 | 12 | Carrd `card.jpg` OG image | Carrd assets | ⚠️ presumably owner's photo | Replace with original anyway |
 | 13 | Guest-facing prices/policies | Not extracted | n/a | Owner provides authoritative values (source of truth = website DB, mirrored manually on Airbnb) |
+| 14 | Arequipa travel guide facts | Arequipa.com public info page (checked 2026-06-10) | ⚠️ use as public research only | Website copy is rewritten original text; no Arequipa.com paragraphs or branding reused. Font observed: Montserrat via Google Fonts. |
+| 15 | Logo image (arch + flower lockup) | Owner's public Facebook photo (provided by owner, 2026-06-10) | ✅ owner's brand asset | Stored locally (`public/images/brand/logo.jpg`, tight crop `logo-mark.jpg`). Ask owner for original export files (vector/PNG with transparency) for production quality |
+| 16 | Arequipa tourism photos (10) | Arequipa.com public pages (`/` and `/info/`, checked 2026-06-10) | ⚠️ **temporary tourism/reference assets for preview/MVP only** — licensing not cleared | Production gate: replace with owner-shot/licensed photos **or** obtain written permission from Arequipa.com before public launch; record outcome here |
 
 ## Photos needed from owner (production launch gate)
 
@@ -37,3 +40,70 @@ Shared, once:
 - [ ] YURAKUNA photo only with that business's permission (text mention is fine)
 
 Until these arrive: layouts use extracted Airbnb image URLs as placeholders in local/preview builds only — **never on the production domain**.
+
+## Extracted assets in the repo (2026-06-10)
+
+All owner-related public sources, downloaded once, resized/compressed locally, never hotlinked. **Status: temporary pending owner originals or explicit approval (row 3).**
+
+| Local file | Source | Used on |
+|---|---|---|
+| `public/images/brand/casa-hero.jpg` | Owner's Carrd site (`assets/images/bg.jpg`) | Home hero |
+| `public/images/brand/sala-cuadro.jpg` | Owner's Carrd site (`assets/images/container03.jpg`) | /arequipa |
+
+### Full Airbnb listing galleries (2026-06-10 — TEMPORARY, owner-source-derived)
+
+Extracted from the public HTML of the owner's own four Airbnb listing pages
+(the embedded room-tour data each page serves to any anonymous visitor — no
+login, no private API, one fetch per page). Downloaded once at `im_w=1440`,
+recompressed locally (JPEG q60, max 1440px), never hotlinked. Categories and
+alt text come from Airbnb's own public room-tour labels ("Sala imagen 2",
+"Baño completo imagen 1", …). **Temporary pending owner originals or
+explicit approval (row 3).** The old `cover.jpg` files were removed: each
+cover was pixel-identical to that suite's `sala-01.jpg`.
+
+| Suite (listing) | Files under `public/images/listings/` | Own photos |
+|---|---|---|
+| suite-queen-con-sala (Hosting-1352543068552764001) | `sala-01..05`, `habitacion-01..05`, `bano-01..05` | 15 |
+| suite-queen-centro-historico (Hosting-1353094020937867539) | `sala-01..04`, `habitacion-01..03`, `bano-01..03` | 10 |
+| suite-queen-con-vista (Hosting-1352529733779964415) | `sala-01..05`, `habitacion-01..03`, `bano-01..02` | 10 |
+| mini-apartamento-familiar (Hosting-1352501815600410248) | `sala-01..07`, `habitacion-01..09`, `bano-01..04`, `area-comun-01` | 21 |
+| comunes (photos repeated on all four listings, pooled once) | `area-comun-01..05` (cocina de huéspedes), `entorno-01..06` (restaurante YURAKUNA) | 11 |
+
+67 files, ≈9.7 MB total. Per-category ratings (limpieza, llegada,
+comunicación, ubicación, veracidad, calidad-precio) were also read from the
+same public pages and shown attributed on each suite page.
+
+Blocked/limited sources (no bypass attempted): Facebook share link
+(login-walled, no public og:image); Google Maps photos (JS-only, not
+politely extractable); **Airbnb review texts** (loaded by a client-side API
+after page load — not present in the public HTML, so no review quotes are
+shown; only Airbnb's published per-category scores, attributed, with a link
+to the listing for full reviews).
+
+### Logo (2026-06-10, row 15)
+
+Owner provided a direct Facebook CDN URL to the brand lockup (arch + flower, "LA CASA de ROOS"). Downloaded once and stored locally:
+
+| Local file | Notes |
+|---|---|
+| `public/images/brand/logo.jpg` | Full 1024×1024 lockup, cream background |
+| `public/images/brand/logo-mark.jpg` | 512×512 tight crop for header/footer/crest placements |
+
+JPEG on cream — no transparency. Request original export (SVG/PNG) from owner for production.
+
+### Arequipa.com tourism images (2026-06-10, row 16 — TEMPORARY)
+
+Public images from `https://www.arequipa.com/` and `/info/`, downloaded once, recompressed locally, never hotlinked. **Preview/MVP reference assets only — licensing review or replacement required before public launch.**
+
+| Local file | Source file | Used on |
+|---|---|---|
+| `public/images/arequipa/plaza-de-armas.jpg` | `arequipa-main-e1700501027346.jpg` | Home Arequipa section + /arequipa hero |
+| `public/images/arequipa/catedral-misti.jpg` | `arequipa-history.jpg` | Experience card (Plaza/Catedral) |
+| `public/images/arequipa/santa-catalina.jpg` | `article-must-do-things.jpg` | Experience card + home teaser |
+| `public/images/arequipa/canon-del-colca.jpg` | `explore-colca-canyon.jpg` | Experience card + home teaser |
+| `public/images/arequipa/mirador-yanahuara.jpg` | `cityfacts.jpg` | Experience card + home teaser |
+| `public/images/arequipa/ruta-del-sillar.jpg` | `ruta-del-sillar-thumbnail.jpg` | Experience card |
+| `public/images/arequipa/gastronomia-rocoto.jpg` | `useful-dishes.jpg` | Experience card |
+| `public/images/arequipa/atardecer-ciudad.jpg` | `arequipa-info.jpg` | /arequipa closing CTA band |
+| `public/images/arequipa/festival-arequipeno.jpg` | `celebrations-in-arequipa.jpg` | (reserved, not yet placed) |
+| `public/images/arequipa/rafting-rio-chili.jpg` | `rafting-thumbnail.jpg` | (reserved, not yet placed) |

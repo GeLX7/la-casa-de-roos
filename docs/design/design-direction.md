@@ -6,9 +6,10 @@
 
 Arequipa is *la Ciudad Blanca* — white volcanic sillar stone, warm Andean light. The palette and texture come straight from that:
 
-- **Base:** warm off-whites / sillar cream (#FAF6F0 family), generous whitespace.
+- **Base:** mostly white, with warm off-white / sillar cream used as quiet section bands.
 - **Accents:** terracotta/clay for CTAs, deep volcanic charcoal for text, a muted sage or Misti-sky blue as secondary.
-- **Type:** expressive serif for display (Fraunces or Lora) + clean sans for UI (Inter or Figtree). Spanish diacritics checked at display sizes.
+- **Type:** all-Montserrat system following arequipa.com's typography (revised 2026-06-10; Fraunces dropped — the dual-family mix read generic). Arequipa.com uses Montserrat for everything: hero h1 64px/700, h2 40px/700, h3 24px/700, h4 20px/600, body 16px/400 at 145% line-height. We mirror that: headings 700–800 weight with slight negative tracking, body 400 at 1.45, hierarchy from weight not typeface.
+- **Buttons:** arequipa.com uses sharp rectangular buttons (no border-radius, solid fill, 600 weight). Ours: primary CTAs rectangular solid terracotta, secondary rectangular bordered, tertiary underlined text links. Cards/inputs keep a soft radius — intentional mix, no pills.
 - **Texture:** subtle paper/stone grain on section backgrounds; no glassmorphism, no neon, no generic AI-gradient look.
 
 ## Page anatomy (home)
@@ -19,7 +20,8 @@ Arequipa is *la Ciudad Blanca* — white volcanic sillar stone, warm Andean ligh
 4. **La casa:** shared kitchen, concierge digital, building security, YURAKUNA mention — the "why us" section.
 5. **Ubicación:** map embed + walking-time chips (Plaza de Armas, Santa Catalina, Mercaderes).
 6. **Honestidad block:** historic-center noise + free earplugs + what's *not* included (no A/C…). Builds disproportionate trust.
-7. **FAQ teaser + footer:** contact, socials, privacy policy, "Síguenos".
+7. **Arequipa guide teaser:** practical travel context: Centro Histórico, walkability, sillar, weather, how to move.
+8. **Footer:** contact, socials, privacy policy, "Síguenos".
 
 ## Room page anatomy
 
@@ -39,3 +41,16 @@ Navbar (transparent→solid on scroll) · RoomCard · TrustBadges · Availabilit
 ## Voice
 
 Warm second-person plural like the owner's own writing ("¡Bienvenidos!"), short sentences, zero corporate filler, light emoji only where the brand already uses them (hero badges, FAQ). English copy later mirrors tone, not literal translation.
+
+## Composition pass (2026-06-10) — layout rhythm reference
+
+Organizational reference studied: `https://lazzat.online/` (Arequipa optical brand; structure/composition inspiration only — no code, branding, colors, or copy reused). Patterns adopted:
+
+- **Centered section heading stacks** (kicker → title → subtitle, max-w-2xl) for full-width sections: suites, why-us, Arequipa guide, contact, habitaciones index.
+- **Title → subtitle → media** vertical flow: home and /arequipa heroes are now a centered editorial stack with a wide photo below (logo crest above the H1 on home).
+- **Centered closing actions** after grids (outline button or underline link) instead of corner links.
+- **Card CTA block**: final home CTA is a centered card with crest, title, sub, mixed buttons (echoes Lazzat's app-invite card).
+- **Boxed social band** in the footer ("Síguenos" + 4 bordered tiles) and on /contacto.
+- **Alternating rhythm**: split/asymmetric sections (location + honesty block, guía breve) intentionally kept left-aligned between centered bands so the page doesn't read as one centered column.
+
+Buttons stay mixed by design: solid rectangles, outline rectangles, and underline text links — no pill-only system.
