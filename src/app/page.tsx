@@ -6,7 +6,13 @@ import { site, landmarks } from "@/data/site";
 import { RoomCard } from "@/components/room-card";
 import { TrustStrip } from "@/components/trust-strip";
 import { PlaceholderImage } from "@/components/placeholder-image";
-import { SectionMotifs } from "@/components/motifs";
+import {
+  SectionMotifs,
+  MotifCantuta,
+  MotifFlower,
+  MotifLlamita,
+  MotifSprig,
+} from "@/components/motifs";
 import { whatsappUrl, defaultWhatsappMessage } from "@/lib/whatsapp";
 import {
   WhatsApp,
@@ -50,48 +56,81 @@ const teaserExperiences = arequipaExperiences.filter((e) =>
   ].includes(e.title),
 );
 
+/* Hero actions — rendered twice: overlaid inside the artwork's empty cream
+   quarter on large screens, below the artwork on smaller ones. */
+function HeroActions() {
+  return (
+    <>
+      <Link
+        href="/habitaciones"
+        className="inline-flex items-center justify-center gap-2 bg-arcilla-500 px-7 py-3.5 text-sm font-bold uppercase tracking-[0.12em] text-white shadow-sm transition-colors hover:bg-arcilla-600"
+      >
+        Ver habitaciones
+        <ArrowRight className="h-4 w-4" />
+      </Link>
+      <a
+        href={whatsappUrl(defaultWhatsappMessage)}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Escríbenos por WhatsApp"
+        className="inline-flex items-center justify-center gap-2 border border-sillar-300 bg-white px-7 py-3.5 text-sm font-bold uppercase tracking-[0.12em] text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
+      >
+        <WhatsApp className="h-5 w-5 text-[#25D366]" />
+        Escríbenos
+      </a>
+    </>
+  );
+}
+
 export default function HomePage() {
   return (
     <>
-      {/* Hero — brand-led stack: name, lockup, the two actions, then the
-          photo and review proof (composition cue: lazzat.online's logo-led,
-          centered hero). The opening stack fills the first viewport
-          (minus the 5rem header) so the photo and trust strip arrive on
-          scroll; the location pitch lives in the band below. */}
-      <section className="relative overflow-hidden bg-white">
+      {/* Hero — the owner's landing artwork is the brand piece: cathedral,
+          Misti and the wordmark all live inside the illustration, so the
+          section only gives it a matching cream canvas (crema-200, sampled
+          from the artwork's background) and the two actions. The artwork
+          fills the first viewport (minus the 5rem header); the photo and
+          review proof arrive on scroll. */}
+      <section className="relative overflow-hidden bg-crema-200">
         <SectionMotifs variant="hero" />
         <div className="relative mx-auto max-w-6xl px-6">
-          <div className="mx-auto flex min-h-[calc(100svh-5rem)] max-w-4xl flex-col items-center justify-center py-14 text-center">
-            <h1 className="font-display text-4xl font-extrabold leading-[1.05] text-tinta-900 sm:text-5xl lg:text-7xl">
-              La Casa de <span className="text-arcilla-500">Roos</span>
-            </h1>
-            {/* Owner-provided brand lockup as the crest under the name. */}
-            <Image
-              src="/images/brand/logo-mark.jpg"
-              alt="Logo de La Casa de Roos"
-              width={160}
-              height={160}
-              priority
-              className="mt-8 h-28 w-28 rounded-2xl border border-sillar-200 object-cover shadow-sm sm:h-36 sm:w-36 lg:h-40 lg:w-40"
-            />
-            <div className="mt-10 flex flex-wrap justify-center gap-3">
-              <Link
-                href="/habitaciones"
-                className="inline-flex items-center gap-2 bg-arcilla-500 px-7 py-3.5 text-sm font-bold uppercase tracking-[0.12em] text-white shadow-sm transition-colors hover:bg-arcilla-600"
-              >
-                Ver habitaciones
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <a
-                href={whatsappUrl(defaultWhatsappMessage)}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Escríbenos por WhatsApp"
-                className="inline-flex items-center gap-2 border border-sillar-300 bg-white px-7 py-3.5 text-sm font-bold uppercase tracking-[0.12em] text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
-              >
-                <WhatsApp className="h-5 w-5 text-[#25D366]" />
-                Escríbenos
-              </a>
+          <h1 className="sr-only">La Casa de Roos — Suites privadas en Arequipa, Perú</h1>
+          <div className="flex min-h-[calc(100svh-5rem)] flex-col items-center justify-center pb-12 pt-4 sm:pb-14">
+            <div className="relative -mx-6 w-[calc(100%+3rem)] sm:mx-0 sm:w-full">
+              <Image
+                src="/images/brand/landing-page.jpg"
+                alt="La Casa de Roos, Arequipa, Perú — ilustración de la catedral y el volcán Misti"
+                width={1672}
+                height={941}
+                priority
+                sizes="(min-width: 1280px) 1104px, 100vw"
+                className="w-full"
+              />
+              {/* Soft cream vignette: melts the JPEG's edges into the section
+                  even when image optimization shifts its background a hair. */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 shadow-[inset_0_0_28px_12px_var(--color-crema-200)]"
+              />
+              {/* Large screens: the actions hang in the illustration's empty
+                  cream quarter, stacked right under its wordmark. */}
+              <div className="absolute left-3/4 top-[46%] hidden w-max -translate-x-1/2 flex-col items-stretch gap-3 lg:flex">
+                <HeroActions />
+              </div>
+              {/* Artwork-anchored florals — pinned to the banner's own box so
+                  they flank it from the outside at every width and never get
+                  cut by its invisible cream edge (aria-hidden; the section
+                  motif field handles smaller screens). */}
+              <div aria-hidden="true" className="pointer-events-none absolute inset-0 hidden select-none xl:block">
+                <MotifSprig className="motif-drift-c absolute -left-28 top-[36%] w-20 text-salvia-500/[0.17] [--motif-rot:-6deg]" />
+                <MotifCantuta className="motif-drift-b absolute -right-40 top-[30%] w-32 text-arcilla-500/[0.13] [--motif-rot:11deg]" />
+                <MotifLlamita className="motif-drift-a absolute -left-24 top-[70%] w-10 text-arcilla-400/[0.16] [--motif-rot:9deg]" />
+                <MotifFlower className="motif-drift-a absolute -right-32 top-[58%] w-32 text-cacao-700/[0.1] [--motif-rot:-10deg]" />
+                <MotifLlamita className="motif-drift-b absolute -right-20 top-[8%] w-9 text-cacao-700/[0.13] [--motif-rot:-7deg]" />
+              </div>
+            </div>
+            <div className="mt-8 flex w-full max-w-xs flex-col items-stretch gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-center lg:hidden">
+              <HeroActions />
             </div>
           </div>
 
@@ -145,31 +184,34 @@ export default function HomePage() {
       </section>
 
       {/* Suites — centered heading, grid, centered closing action. */}
-      <section className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
-        <div className="mx-auto mb-12 max-w-3xl text-center">
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
-            La casa
-          </p>
-          <h2 className="font-display text-2xl font-bold text-tinta-900 sm:text-3xl lg:text-4xl">
-            Nuestras suites
-          </h2>
-          <p className="mt-3 text-sm leading-relaxed text-tinta-700 sm:text-base">
-            Cuatro espacios privados, cada uno con su propia personalidad y la
-            misma calidez.
-          </p>
-        </div>
-        <div className="grid gap-6 sm:grid-cols-2">
-          {listings.slice(0, 4).map((l, i) => (
-            <RoomCard key={l.slug} listing={l} variant={i} />
-          ))}
-        </div>
-        <div className="mt-10 text-center">
-          <Link
-            href="/habitaciones"
-            className="inline-flex items-center gap-2 border border-sillar-300 bg-white px-6 py-3 text-sm font-semibold text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
-          >
-            Ver todas las habitaciones <ArrowRight className="h-4 w-4" />
-          </Link>
+      <section className="relative overflow-hidden bg-white">
+        <SectionMotifs variant="garden" />
+        <div className="relative mx-auto max-w-6xl px-6 py-16 lg:py-24">
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
+              La casa
+            </p>
+            <h2 className="font-display text-2xl font-bold text-tinta-900 sm:text-3xl lg:text-4xl">
+              Nuestras suites
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-tinta-700 sm:text-base">
+              Cuatro espacios privados, cada uno con su propia personalidad y la
+              misma calidez.
+            </p>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2">
+            {listings.slice(0, 4).map((l, i) => (
+              <RoomCard key={l.slug} listing={l} variant={i} />
+            ))}
+          </div>
+          <div className="mt-10 text-center">
+            <Link
+              href="/habitaciones"
+              className="inline-flex items-center gap-2 border border-sillar-300 bg-white px-6 py-3 text-sm font-semibold text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
+            >
+              Ver todas las habitaciones <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -200,7 +242,9 @@ export default function HomePage() {
       </section>
 
       {/* Location — asymmetric split for rhythm between centered bands. */}
-      <section className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
+      <section className="relative overflow-hidden bg-white">
+        <SectionMotifs variant="aside" />
+        <div className="relative mx-auto max-w-6xl px-6 py-16 lg:py-24">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
             <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
@@ -260,13 +304,15 @@ export default function HomePage() {
             </p>
           </div>
         </div>
+        </div>
       </section>
 
       {/* Arequipa — centered heading, wide panorama, three highlight cards.
           Images: temporary tourism/reference assets from Arequipa.com
           (docs/research/content-rights-checklist.md). */}
-      <section className="border-t border-sillar-200 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
+      <section className="relative overflow-hidden border-t border-sillar-200 bg-white">
+        <SectionMotifs variant="garden" />
+        <div className="relative mx-auto max-w-6xl px-6 py-16 lg:py-24">
           <div className="mx-auto mb-10 max-w-3xl text-center">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
               Guía Arequipa

@@ -29,6 +29,10 @@
      JPG mark merges seamlessly with the bar. */
   --color-crema-50: #fdf2e0;
   --color-crema-100: #f8ecd6;
+  /* Canvas cream sampled from landing-page.jpg's background (corner/edge
+     avg) — the hero section uses it so the artwork blends edge-free into
+     the page. */
+  --color-crema-200: #f2efe4;
 
   --color-arcilla-50: #fbefe8;
   --color-arcilla-400: #d2693f;

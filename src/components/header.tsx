@@ -14,36 +14,31 @@ const nav = [
 
 /* Branded bar in the logo's own background cream (crema-50, sampled from
    logo-mark.jpg) so the mark merges seamlessly with the bar and can sit
-   large on the left as the brand anchor. Layout: brand left, nav centered,
-   reserve CTA right. Text drops to the lockup's cacao brown for contrast
-   on cream; the CTA keeps white-on-arcilla. */
+   on the left as the brand anchor. Layout: mark left, nav centered, reserve
+   CTA right. The wordmark text stays out of the bar — the hero artwork
+   already carries the name — so the mark alone anchors the brand. */
 export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
   return (
     <header className="sticky top-0 z-40 border-b border-sillar-300/70 bg-crema-50/95 backdrop-blur">
-      {/* Column track is asymmetric on purpose: the wider first track lets
-          the brand hug the left edge while the nav sits right of center,
-          between brand and CTA. */}
-      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6 md:grid md:grid-cols-[1.35fr_auto_1fr]">
+      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6 md:grid md:grid-cols-[1fr_auto_1fr]">
         <Link
           href="/"
-          className="flex shrink-0 items-center gap-5 md:-ml-2 md:justify-self-start"
+          aria-label="La Casa de Roos — Inicio"
+          className="flex shrink-0 items-center md:-ml-2 md:justify-self-start"
         >
           {/* Owner-provided brand lockup (docs/research/content-rights-checklist.md);
               borderless so it blends into the matching cream bar. */}
           <Image
             src="/images/brand/logo-mark.jpg"
-            alt=""
+            alt="La Casa de Roos"
             width={56}
             height={56}
             className="h-14 w-14 rounded-md object-cover"
             priority
           />
-          <span className="font-display text-sm font-extrabold uppercase leading-tight tracking-[0.08em] text-cacao-900 sm:text-[15px]">
-            La Casa de <span className="text-arcilla-600">Roos</span>
-          </span>
         </Link>
 
         <nav
