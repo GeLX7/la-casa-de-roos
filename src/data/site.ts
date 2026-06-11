@@ -17,7 +17,7 @@ export const SITE_URL =
    site stays out of Google until the custom domain resolves and the SEO
    launch plan (docs/seo/SEO_LAUNCH_PLAN.md) is approved. Flip to true,
    redeploy, then follow the plan's go-live checklist. */
-export const INDEXABLE = false;
+export const INDEXABLE = true;
 
 export const site = {
   name: "La Casa de Roos",
