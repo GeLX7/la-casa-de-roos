@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { listings } from "@/data/listings";
+import { getRooms } from "@/lib/catalog/data";
 import { landmarks, site } from "@/data/site";
 import { RoomCard } from "@/components/room-card";
 import { SectionMotifs } from "@/components/motifs";
@@ -53,7 +53,10 @@ const faqJsonLd = {
   })),
 };
 
-export default function HabitacionesPage() {
+export default async function HabitacionesPage() {
+  /* Static listings by default; Supabase only when CATALOG_DATA_SOURCE=supabase
+     (src/lib/catalog/data.ts). */
+  const rooms = await getRooms();
   return (
     <div className="relative overflow-hidden">
       <SectionMotifs variant="band" />
@@ -80,7 +83,7 @@ export default function HabitacionesPage() {
           ))}
         </ul>
         <div className="mt-10 grid gap-6 sm:grid-cols-2">
-          {listings.map((l, i) => (
+          {rooms.map((l, i) => (
             <RoomCard key={l.slug} listing={l} variant={i} />
           ))}
         </div>
