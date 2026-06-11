@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { listings, getListing } from "@/data/listings";
+import { listings } from "@/data/listings";
+import { getRoomBySlug, getRooms } from "@/lib/catalog/data";
 import { site, SITE_URL } from "@/data/site";
 import { SuiteGallery } from "@/components/suite-gallery";
 import { AmenityList } from "@/components/amenity-list";
@@ -22,6 +23,8 @@ import {
 
 type Params = { slug: string };
 
+/* Build-time params come from the static catalog; DB-only slugs (added later
+   through the admin) still render on demand via dynamicParams. */
 export function generateStaticParams(): Params[] {
   return listings.map((l) => ({ slug: l.slug }));
 }
@@ -32,7 +35,7 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const listing = getListing(slug);
+  const listing = await getRoomBySlug(slug);
   if (!listing) return {};
   return {
     /* Listing titles already carry the location keywords; the layout
@@ -54,8 +57,9 @@ export default async function RoomPage({
   params: Promise<Params>;
 }) {
   const { slug } = await params;
-  const listing = getListing(slug);
+  const listing = await getRoomBySlug(slug);
   if (!listing) notFound();
+  const allRooms = await getRooms();
 
   const accommodationJsonLd = {
     "@context": "https://schema.org",
@@ -306,7 +310,7 @@ export default async function RoomPage({
           Otras suites de la casa
         </h2>
         <div className="grid gap-4 sm:grid-cols-3">
-          {listings
+          {allRooms
             .filter((l) => l.slug !== listing.slug)
             .map((l) => (
               <Link

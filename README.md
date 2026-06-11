@@ -4,6 +4,8 @@ Direct-booking website for **La Casa de Roos**: four suite/mini-apartment lofts 
 
 **Status (2026-06-11):** Marketing site is live and indexable at `https://lacasaderoos.com`. Phase 2 booking-calendar foundation is prepared in code, but booking sync is not live until Supabase credentials, four Airbnb iCal URLs, notification email, and owner approval are provided. No payments are live.
 
+**Phase 2 Admin Mode (this branch):** a Supabase-backed owner panel at `/admin` (dashboard with stats + setup warnings, catalog management, per-room editor in 9 cards: basics, facts, description, features, not-included notes, house rules, gallery metadata, Airbnb ratings, calendar status). Migrations and a seed generated from the static catalog are prepared but **not applied** — without Supabase env vars the admin shows a safe setup-needed state and the public site keeps serving `src/data/listings.ts` (which stays the automatic fallback even after setup, behind the `CATALOG_DATA_SOURCE` flag). See `docs/architecture/admin-mode.md` and `docs/runbooks/admin-supabase-setup.md`.
+
 Current MVP routes include home, habitaciones, four suite pages, reservar, contacto, privacidad, sitemap/robots, 404, and a new `/arequipa` guest guide based on public research rewritten for the site.
 
 ## Start here
@@ -30,10 +32,11 @@ docs/
 ├── questions-for-owner.md
 ├── research/        content-inventory · airbnb-calendar-sync-research · content-rights-checklist
 │                    seo-strategy · tooling-audit · raw/ (extraction JSON)
-├── architecture/    booking-calendar-options · booking-calendar-sync · booking-payment-architecture
-│                    culqi-payments · owner-admin-panel · recommended-stack
+├── architecture/    admin-mode · booking-calendar-options · booking-calendar-sync
+│                    booking-payment-architecture · culqi-payments · owner-admin-panel
+│                    recommended-stack
 ├── design/          design-direction
 ├── fixtures/        sample Airbnb iCal
-├── runbooks/        booking setup checklist
+├── runbooks/        booking setup checklist · admin-supabase-setup · catalog-management
 └── roadmap/         MVP_PLAN · github-vercel-plan
 ```

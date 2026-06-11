@@ -38,7 +38,8 @@ export type GalleryCategory =
   | "Cocina"
   | "Baño"
   | "Áreas comunes"
-  | "Entorno";
+  | "Entorno"
+  | "Detalles";
 
 export type GalleryPhoto = {
   /** Local asset path — Airbnb-derived photos are stored locally, never hotlinked. */
