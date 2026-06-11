@@ -4,8 +4,9 @@ import type { SVGProps } from "react";
  * Decorative background motif system.
  *
  * Original line-art drawn for La Casa de Roos — a flower sketch echoing the
- * logo lockup, a sillar arch, the Misti silhouette and a drifting tile
- * cluster. Conceptually inspired by lazzat.online's floating background
+ * logo lockup, a sillar arch, the Misti silhouette, a llamita flame flick
+ * and a drifting tile cluster. Conceptually inspired by lazzat.online's
+ * floating background
  * squares and by botanical/city-poster references; nothing is copied,
  * every path is authored here and recolored to the brand palette.
  *
@@ -75,6 +76,19 @@ export function MotifMisti(p: P) {
   );
 }
 
+/* Llamita — a small flame flick (candle/volcanic ember), two tongues
+   and a spark, for tiny warm accents between the larger motifs. */
+export function MotifLlamita(p: P) {
+  return (
+    <Sketch viewBox="0 0 64 96" {...p}>
+      <path d="M32 6C24 18 14 31 14 48c0 14 8 24 18 26 10-2 18-12 18-26 0-17-10-30-18-42z" />
+      <path d="M32 40c-4 8-8 12-8 19 0 6 3 10 8 11 5-1 8-5 8-11 0-7-4-11-8-19z" />
+      <circle cx="49" cy="14" r="1.4" fill="currentColor" stroke="none" />
+      <circle cx="13" cy="28" r="1.1" fill="currentColor" stroke="none" />
+    </Sketch>
+  );
+}
+
 /* Drifting tile cluster — the lazzat square rhythm, as sillar tiles. */
 export function MotifTiles(p: P) {
   return (
@@ -101,20 +115,27 @@ export function SectionMotifs({ variant }: { variant: Variant }) {
       {variant === "hero" && (
         <>
           <MotifFlower className="motif-drift-a absolute -right-8 top-10 w-44 text-arcilla-500/[0.13] [--motif-rot:9deg] sm:right-6 sm:top-14 sm:w-56" />
+          <MotifFlower className="motif-drift-c absolute -left-12 top-[34rem] hidden w-48 text-arcilla-400/[0.12] [--motif-rot:-14deg] md:block lg:left-0" />
           <MotifArch className="motif-drift-b absolute -left-6 top-24 hidden w-36 text-cacao-700/[0.1] [--motif-rot:-7deg] sm:block lg:left-2" />
           <MotifTiles className="motif-drift-c absolute left-10 top-2 hidden w-28 text-salvia-500/[0.16] [--motif-rot:4deg] lg:block" />
+          <MotifLlamita className="motif-drift-b absolute right-10 top-[28rem] hidden w-12 text-arcilla-500/[0.16] [--motif-rot:8deg] sm:block lg:right-24" />
+          <MotifLlamita className="motif-drift-a absolute left-24 top-16 hidden w-10 text-cacao-700/[0.14] [--motif-rot:-6deg] lg:block" />
+          <MotifLlamita className="motif-drift-c absolute -left-1 top-[30rem] w-9 text-arcilla-400/[0.14] [--motif-rot:-10deg] sm:hidden" />
         </>
       )}
       {variant === "band" && (
         <>
           <MotifArch className="motif-drift-a absolute -left-8 -top-6 w-36 text-cacao-700/[0.09] [--motif-rot:-6deg] sm:left-4 sm:w-44" />
           <MotifFlower className="motif-drift-b absolute -bottom-10 -right-6 hidden w-44 text-arcilla-500/[0.11] [--motif-rot:-10deg] sm:block lg:right-8" />
+          <MotifLlamita className="motif-drift-c absolute right-10 top-8 hidden w-10 text-arcilla-500/[0.14] [--motif-rot:10deg] sm:block" />
         </>
       )}
       {variant === "panel" && (
         <>
           <MotifMisti className="motif-drift-b absolute -right-10 top-6 w-52 text-cacao-700/[0.1] [--motif-rot:2deg] sm:right-4 sm:w-64" />
           <MotifTiles className="motif-drift-a absolute -left-8 bottom-4 hidden w-32 text-arcilla-500/[0.11] [--motif-rot:-5deg] sm:block sm:left-2" />
+          {/* Ember beside the volcano line. */}
+          <MotifLlamita className="motif-drift-c absolute bottom-8 left-[20%] hidden w-10 text-arcilla-400/[0.15] [--motif-rot:-7deg] lg:block" />
         </>
       )}
       {variant === "cta" && (
@@ -122,6 +143,7 @@ export function SectionMotifs({ variant }: { variant: Variant }) {
           <MotifTiles className="motif-drift-a absolute -left-10 top-8 w-36 text-arcilla-500/[0.12] [--motif-rot:6deg] sm:left-6" />
           <MotifTiles className="motif-drift-c absolute -right-10 bottom-6 w-32 text-cacao-700/[0.1] [--motif-rot:-9deg] sm:right-8" />
           <MotifFlower className="motif-drift-b absolute right-1/4 -top-12 hidden w-36 text-salvia-500/[0.14] [--motif-rot:12deg] lg:block" />
+          <MotifLlamita className="motif-drift-b absolute left-1/4 bottom-10 hidden w-9 text-arcilla-500/[0.15] [--motif-rot:-8deg] md:block" />
         </>
       )}
     </div>

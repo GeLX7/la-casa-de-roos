@@ -55,24 +55,26 @@ export default function HomePage() {
     <>
       {/* Hero — brand-led stack: name, lockup, the two actions, then the
           photo and review proof (composition cue: lazzat.online's logo-led,
-          centered hero). The location pitch moved to the band below. */}
+          centered hero). The opening stack fills the first viewport
+          (minus the 5rem header) so the photo and trust strip arrive on
+          scroll; the location pitch lives in the band below. */}
       <section className="relative overflow-hidden bg-white">
         <SectionMotifs variant="hero" />
-        <div className="relative mx-auto max-w-6xl px-6 pt-12 sm:pt-16">
-          <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-            <h1 className="font-display text-4xl font-extrabold leading-[1.05] text-tinta-900 sm:text-5xl lg:text-6xl">
+        <div className="relative mx-auto max-w-6xl px-6">
+          <div className="mx-auto flex min-h-[calc(100svh-5rem)] max-w-4xl flex-col items-center justify-center py-14 text-center">
+            <h1 className="font-display text-4xl font-extrabold leading-[1.05] text-tinta-900 sm:text-5xl lg:text-7xl">
               La Casa de <span className="text-arcilla-500">Roos</span>
             </h1>
             {/* Owner-provided brand lockup as the crest under the name. */}
             <Image
               src="/images/brand/logo-mark.jpg"
               alt="Logo de La Casa de Roos"
-              width={128}
-              height={128}
+              width={160}
+              height={160}
               priority
-              className="mt-7 h-28 w-28 rounded-2xl border border-sillar-200 object-cover shadow-sm sm:h-32 sm:w-32"
+              className="mt-8 h-28 w-28 rounded-2xl border border-sillar-200 object-cover shadow-sm sm:h-36 sm:w-36 lg:h-40 lg:w-40"
             />
-            <div className="mt-9 flex flex-wrap justify-center gap-3">
+            <div className="mt-10 flex flex-wrap justify-center gap-3">
               <Link
                 href="/habitaciones"
                 className="inline-flex items-center gap-2 bg-arcilla-500 px-7 py-3.5 text-sm font-bold uppercase tracking-[0.12em] text-white shadow-sm transition-colors hover:bg-arcilla-600"
@@ -95,8 +97,9 @@ export default function HomePage() {
 
           {/* Hero photo — real suite shot from the owner's public Carrd site
               (stored locally; see content-rights checklist). Arch radius nods
-              to Arequipa's sillar portales. */}
-          <div className="relative mt-10 pb-10 sm:mt-12 sm:pb-12">
+              to Arequipa's sillar portales. Sits past the first viewport so
+              it reveals on scroll. */}
+          <div className="relative pb-12 sm:pb-14">
             <PlaceholderImage
               photo={{
                 slot: "hero-casa",

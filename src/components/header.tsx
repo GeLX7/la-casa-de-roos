@@ -23,10 +23,13 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-sillar-300/70 bg-crema-50/95 backdrop-blur">
-      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6 md:grid md:grid-cols-[1fr_auto_1fr]">
+      {/* Column track is asymmetric on purpose: the wider first track lets
+          the brand hug the left edge while the nav sits right of center,
+          between brand and CTA. */}
+      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6 md:grid md:grid-cols-[1.35fr_auto_1fr]">
         <Link
           href="/"
-          className="flex shrink-0 items-center gap-3 md:justify-self-start"
+          className="flex shrink-0 items-center gap-5 md:-ml-2 md:justify-self-start"
         >
           {/* Owner-provided brand lockup (docs/research/content-rights-checklist.md);
               borderless so it blends into the matching cream bar. */}
@@ -51,7 +54,7 @@ export function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className={`border-b-2 pb-1 text-xs font-bold uppercase tracking-[0.14em] transition-colors ${
+              className={`border-b-2 pb-1 text-sm font-bold uppercase tracking-[0.14em] transition-colors ${
                 pathname === item.href
                   ? "border-arcilla-500 text-cacao-900"
                   : "border-transparent text-cacao-800/70 hover:text-cacao-900"
