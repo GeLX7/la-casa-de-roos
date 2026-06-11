@@ -13,9 +13,9 @@ import { SectionMotifs } from "@/components/motifs";
 import { ArrowRight, CalendarIcon, MapPin, Moon, SharedKitchen } from "@/components/icons";
 
 export const metadata: Metadata = {
-  title: "Guía de Arequipa para hospedarte en el Centro Histórico",
+  title: "Qué hacer en Arequipa y dónde hospedarte · Guía local",
   description:
-    "Una guía breve para elegir dónde hospedarte en Arequipa: centro histórico, sillar, caminatas, clima, movilidad y lugares cerca de La Casa de Roos.",
+    "Guía local de Arequipa: qué hacer en el Centro Histórico, las mejores zonas donde hospedarte (Centro, Yanahuara, Vallecito) y caminatas desde La Casa de Roos.",
   alternates: { canonical: "/arequipa" },
 };
 
@@ -251,6 +251,87 @@ export default function ArequipaPage() {
           >
             Ver ubicación en Google Maps <ArrowRight className="h-4 w-4" />
           </a>
+        </div>
+      </section>
+
+      {/* Where to stay — the zone comparison travelers research before
+          choosing. Honest framing: we argue for the center because that is
+          where the house is, and we still name the alternatives fairly. */}
+      <section className="border-t border-sillar-200 bg-white">
+        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
+          <div className="mx-auto mb-10 max-w-3xl text-center">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-arcilla-600">
+              ¿Dónde hospedarte?
+            </p>
+            <h2 className="mt-3 font-display text-2xl font-bold text-tinta-900 sm:text-3xl lg:text-4xl">
+              Las zonas de Arequipa, sin vueltas
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-tinta-700 sm:text-base">
+              Tres zonas concentran casi todo el alojamiento de la ciudad. Cuál
+              conviene depende de cómo viajas.
+            </p>
+          </div>
+          <div className="grid gap-5 md:grid-cols-3">
+            <article className="rounded-lg border-2 border-arcilla-500 bg-white p-6">
+              <h3 className="font-display text-lg font-bold text-tinta-900">
+                Centro Histórico
+              </h3>
+              <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-arcilla-600">
+                Para conocer la ciudad a pie
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-tinta-700">
+                Plaza de Armas, Santa Catalina, picanterías y cafés a minutos
+                caminando, sin taxis ni traslados. De noche hay movimiento: es
+                la contraparte de dormir donde pasa todo. Aquí está La Casa de
+                Roos, a una cuadra de la Calle Mercaderes.
+              </p>
+            </article>
+            <article className="rounded-lg border border-sillar-200 bg-white p-6">
+              <h3 className="font-display text-lg font-bold text-tinta-900">
+                Yanahuara
+              </h3>
+              <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-tinta-500">
+                Para un ritmo de barrio
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-tinta-700">
+                Callecitas de sillar, el mirador con vista al Misti y un
+                ambiente residencial tranquilo. Estás a 15–20 minutos a pie del
+                centro, así que casi todo plan implica cruzar el puente.
+              </p>
+            </article>
+            <article className="rounded-lg border border-sillar-200 bg-white p-6">
+              <h3 className="font-display text-lg font-bold text-tinta-900">
+                Vallecito
+              </h3>
+              <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-tinta-500">
+                Para estadías largas
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-tinta-700">
+                Zona residencial moderna con buenos precios por noche y
+                tranquilidad de día y de noche. Cómoda en estadías largas o con
+                auto; para turismo diario queda algo retirada del casco
+                histórico.
+              </p>
+            </article>
+          </div>
+          <p className="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-tinta-700">
+            ¿Vienes pocos días y quieres caminarlo todo? El centro gana. Mira
+            nuestras{" "}
+            <Link
+              href="/habitaciones"
+              className="font-semibold text-arcilla-600 underline-offset-2 hover:underline"
+            >
+              suites con baño privado en el Centro Histórico
+            </Link>{" "}
+            o{" "}
+            <Link
+              href="/reservar"
+              className="font-semibold text-arcilla-600 underline-offset-2 hover:underline"
+            >
+              consulta tus fechas
+            </Link>
+            .
+          </p>
         </div>
       </section>
 

@@ -11,13 +11,17 @@ go-live (§8) y tener la aprobación del dueño del proyecto.
 
 ## 1. Situación
 
-- Producción: `https://la-casa-de-roos.vercel.app` (canonical actual, veraz).
-- `lacasaderoos.com` **aún no está registrado** (verificado contra el registry
-  de Verisign, junio 2026): fue añadido al proyecto de Vercel pero nadie lo
-  compró. Hasta tenerlo comprado + DNS válido + HTTPS, el dominio canónico
-  sigue siendo el subdominio de Vercel.
+- **Dominio comprado** (2026-06-11, vía Vercel; registrar Name.com, DNS
+  gestionado por Vercel, vence 2027-06-11). Apex y www sirven con HTTPS.
+- Canonical primario: `https://lacasaderoos.com` (apex). Desde el pase
+  `seo/competitive-arequipa-research`, `SITE_URL` apunta al apex; el
+  subdominio `*.vercel.app` y `www` consolidan vía canonical.
+- Pendiente de 1 clic en el dashboard de Vercel (Settings → Domains):
+  marcar `www.lacasaderoos.com` como "Redirect to lacasaderoos.com" (308)
+  — hoy ambos hosts sirven 200 y solo el canonical los consolida.
 - 4 suites privadas, sin dirección exacta publicada (pendiente del dueño),
   reservas por WhatsApp, prueba social de Airbnb (★ ~4.9, +347 reseñas).
+- Investigación competitiva detallada: `SEO_COMPETITIVE_RESEARCH.md`.
 
 ## 2. Hallazgos de la investigación (junio 2026)
 
@@ -110,7 +114,7 @@ Deuda aceptada conscientemente (no bloquea indexación):
 | `/` | La Casa de Roos · Suites en el Centro Histórico de Arequipa | ~60 chars; keyword + marca |
 | `/habitaciones` | Habitaciones y suites en el Centro Histórico de Arequipa · La Casa de Roos | ok |
 | `/habitaciones/[slug]` | {título del listing} · La Casa de Roos | listing titles ya geo-cargados |
-| `/arequipa` | Guía de Arequipa para hospedarte en el Centro Histórico · La Casa de Roos | ok |
+| `/arequipa` | Qué hacer en Arequipa y dónde hospedarte · Guía local · La Casa de Roos | cubre ambos clusters informacionales |
 | `/reservar` | Solicitar reserva · La Casa de Roos | transaccional propia |
 | `/contacto` | Contacto · La Casa de Roos | ok |
 | `/privacidad` | (noindex) | ok |
@@ -138,21 +142,21 @@ ninguna página atiende bien, ahí sí crear la landing específica.
 
 ## 8. Go-live de indexación (ejecutar en orden, con aprobación)
 
-1. Comprar/registrar `lacasaderoos.com` (hoy disponible, ~US$11/año) —
-   decisión del dueño. Configurar DNS según Vercel y esperar HTTPS válido.
-2. Decidir host canónico: recomendado `www.lacasaderoos.com` como primario
-   (CNAME requerido por Vercel) y apex redirigiendo 308 → www en Vercel.
-3. Setear `NEXT_PUBLIC_SITE_URL=https://www.lacasaderoos.com` en Vercel
-   (Production) — canonical, sitemap, robots, OG y JSON-LD se actualizan
-   solos (todo deriva de `SITE_URL`).
-4. Verificar que el subdominio `*.vercel.app` redirige al dominio custom
-   (Vercel lo hace automático al asignar el dominio a Production).
+1. ~~Comprar/registrar `lacasaderoos.com`~~ ✅ Hecho (2026-06-11, vía
+   Vercel; DNS y HTTPS activos en apex y www).
+2. ~~Host canónico~~ ✅ Decidido: **apex** `https://lacasaderoos.com`
+   (Vercel gestiona el DNS, así que el apex no tiene la limitación de
+   CNAME; `SITE_URL` ya apunta ahí).
+3. Dashboard de Vercel → Settings → Domains: poner `www.lacasaderoos.com`
+   como **Redirect (308) → lacasaderoos.com**. Hoy ambos sirven 200.
+4. Merge del PR de este pase → verificar en producción que el canonical de
+   todas las páginas, `/sitemap.xml`, `/robots.txt` y los OG URLs muestran
+   `https://lacasaderoos.com`.
 5. Flip `INDEXABLE = true` → deploy → verificar `meta robots` = `index,
-   follow` en producción y que `/sitemap.xml` y `/robots.txt` muestren el
-   dominio nuevo.
+   follow` en producción (los pasos 5–8 requieren aprobación explícita).
 6. Google Search Console: crear propiedad de **Dominio** (lacasaderoos.com)
-   con verificación DNS TXT, o propiedad de prefijo https://www. Enviar
-   `https://www.lacasaderoos.com/sitemap.xml`.
+   con verificación DNS TXT (Vercel DNS → añadir el TXT en el dashboard).
+   Enviar `https://lacasaderoos.com/sitemap.xml`.
 7. Inspección de URL + "Solicitar indexación" para `/`, `/habitaciones` y
    las 4 suites (en ese orden de prioridad).
 8. Crear GBP (cuando haya dirección) y enlazarlo al dominio.
@@ -171,7 +175,6 @@ ninguna página atiende bien, ahí sí crear la landing específica.
 ## 10. Qué NO hacer todavía
 
 - No enviar a GSC ni pedir indexación (sitio en `noindex` deliberado).
-- No comprar dominio sin aprobación explícita del dueño.
 - No crear landing pages de keywords (§6) ni blog.
 - No publicar dirección exacta hasta aprobación del dueño.
 - No añadir `aggregateRating` al JSON-LD con datos de Airbnb (las reseñas
