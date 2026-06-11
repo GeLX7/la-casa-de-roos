@@ -18,7 +18,10 @@ go-live (§8) y tener la aprobación del dueño del proyecto.
   subdominio `*.vercel.app` y `www` consolidan vía canonical.
 - Pendiente de 1 clic en el dashboard de Vercel (Settings → Domains):
   marcar `www.lacasaderoos.com` como "Redirect to lacasaderoos.com" (308)
-  — hoy ambos hosts sirven 200 y solo el canonical los consolida.
+  — verificado el 2026-06-11: HTTPS apex = 200, HTTPS www = 200, HTTP redirige
+  a HTTPS, pero `www` todavía no redirige al apex.
+- Estado de indexación: `INDEXABLE=false`; Google Search Console todavía no se
+  creó/configuró para el dominio y el sitemap todavía no se envió.
 - 4 suites privadas, sin dirección exacta publicada (pendiente del dueño),
   reservas por WhatsApp, prueba social de Airbnb (★ ~4.9, +347 reseñas).
 - Investigación competitiva detallada: `SEO_COMPETITIVE_RESEARCH.md`.
@@ -71,7 +74,8 @@ go-live (§8) y tener la aprobación del dueño del proyecto.
 ## 3. Auditoría técnica (estado actual)
 
 Ya correcto — no tocar:
-- `metadataBase` + canonical absolutos y veraces (subdominio Vercel).
+- `metadataBase` + canonical absolutos y veraces (apex
+  `https://lacasaderoos.com` tras mergear este pase).
 - `sitemap.xml` dinámico (8 URLs), `robots.txt` con referencia al sitemap.
 - Favicon/icons/manifest con el logo real; OG/Twitter image 1200×630 de
   marca con alt en español.
@@ -142,24 +146,21 @@ ninguna página atiende bien, ahí sí crear la landing específica.
 
 ## 8. Go-live de indexación (ejecutar en orden, con aprobación)
 
-1. ~~Comprar/registrar `lacasaderoos.com`~~ ✅ Hecho (2026-06-11, vía
-   Vercel; DNS y HTTPS activos en apex y www).
-2. ~~Host canónico~~ ✅ Decidido: **apex** `https://lacasaderoos.com`
-   (Vercel gestiona el DNS, así que el apex no tiene la limitación de
-   CNAME; `SITE_URL` ya apunta ahí).
-3. Dashboard de Vercel → Settings → Domains: poner `www.lacasaderoos.com`
-   como **Redirect (308) → lacasaderoos.com**. Hoy ambos sirven 200.
-4. Merge del PR de este pase → verificar en producción que el canonical de
-   todas las páginas, `/sitemap.xml`, `/robots.txt` y los OG URLs muestran
-   `https://lacasaderoos.com`.
-5. Flip `INDEXABLE = true` → deploy → verificar `meta robots` = `index,
-   follow` en producción (los pasos 5–8 requieren aprobación explícita).
-6. Google Search Console: crear propiedad de **Dominio** (lacasaderoos.com)
-   con verificación DNS TXT (Vercel DNS → añadir el TXT en el dashboard).
-   Enviar `https://lacasaderoos.com/sitemap.xml`.
+1. Verificar dominio canónico y redirect `www`: apex HTTPS 200, `www` con
+   **Redirect (308) → lacasaderoos.com** desde Vercel Project → Settings →
+   Domains; confirmar con `curl`/`dig`.
+2. Merge del PR de este pase.
+3. Mantener `INDEXABLE=false` después del merge hasta aprobación explícita.
+4. Cuando se apruebe indexar: cambiar `INDEXABLE=true`, deployar y verificar
+   `meta robots` = `index, follow`, canonicals, `/robots.txt` y
+   `/sitemap.xml` en producción.
+5. Google Search Console: crear propiedad de **Dominio** (`lacasaderoos.com`)
+   con verificación DNS TXT en Vercel.
+6. Enviar `https://lacasaderoos.com/sitemap.xml`.
 7. Inspección de URL + "Solicitar indexación" para `/`, `/habitaciones` y
-   las 4 suites (en ese orden de prioridad).
-8. Crear GBP (cuando haya dirección) y enlazarlo al dominio.
+   las 4 suites.
+8. Crear Google Business Profile solo cuando la dirección exacta esté
+   aprobada para publicación; enlazarlo al dominio.
 
 ## 9. Monitoreo post-launch
 

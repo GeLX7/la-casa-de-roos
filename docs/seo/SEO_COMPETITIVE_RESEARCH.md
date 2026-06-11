@@ -101,7 +101,59 @@ Arequipa`, `where to stay in Arequipa`.
 | airbnb.com/arequipa-peru/stays | Título de categoría con rating agregado: "Arequipa, Peru Vacation Rentals (4.9 out of 5)" | Airbnb usa rating en título; nosotros NO lo replicamos en metadata propia (no verificable en nuestro dominio) — el rating vive en el contenido visible con atribución |
 | Ficha individual (apartamento céntrico) | Título apilado de hechos: "Vivienda rentada · Arequipa · ★4.88 · 2 habitaciones · 2 camas" | La especificidad fáctica (capacidad, camas, baño) en titles/copy es la lingua franca del nicho |
 
-## 3. Temas de FAQ detectados en el nicho
+## 3. Brechas competitivas y acciones
+
+### Qué hacen mejor los competidores
+
+- **OTAs:** autoridad de dominio, filtros, disponibilidad/precios visibles,
+  mapas por landmark y confianza transaccional ("pagar después", "sin costo").
+- **Hoteles locales:** nombres y titles geográficos simples, precios por
+  noche visibles, páginas bilingües y más señales de entidad local.
+- **Blogs de viaje:** comparan zonas, resuelven "dónde hospedarse" y capturan
+  consultas informacionales antes de que el viajero elija alojamiento.
+- **Airbnb:** fichas muy específicas con rating/reseñas, capacidad, camas,
+  baño, fotos y reglas en un formato que Google entiende bien.
+
+### Qué mejorar ahora en La Casa de Roos
+
+- Canonical y sitemap al apex `https://lacasaderoos.com`.
+- `/habitaciones`: FAQ honesta + FAQPage JSON-LD sobre baño privado,
+  reserva, ubicación, self check-in, cocina y ruido.
+- `/arequipa`: sección corta de zonas (Centro Histórico, Yanahuara,
+  Vallecito) + enlaces internos hacia suites/reserva.
+- Suite pages: mantener títulos fácticos, enlazar naturalmente a `/arequipa`
+  y mostrar prueba social Airbnb solo visible, atribuida, sin schema.
+- No prometer reserva instantánea, pago online, cancelación gratis ni
+  beneficios que el flujo WhatsApp no garantiza.
+
+### Qué esperar hasta tener datos/señales
+
+- Landing pages específicas por keyword: esperar GSC 2–3 meses
+  post-indexación para evitar thin content/canibalización.
+- Versión EN: esperar señales de impresiones en inglés o demanda real.
+- Google Business Profile y NAP completo: bloqueado hasta tener dirección
+  exacta aprobada para publicación.
+- Precios visibles: decisión del dueño; no inventar rangos desde Airbnb.
+
+### Oportunidades de keyword
+
+- `suite privada Arequipa centro histórico`
+- `habitación con baño privado Arequipa centro`
+- `hospedaje cerca Plaza de Armas Arequipa`
+- `alojamiento cerca Calle Mercaderes Arequipa`
+- `dónde hospedarse en Arequipa`
+- `qué hacer en Arequipa`
+
+Recomendación de landing pages: **no crear páginas delgadas ahora**. Para MVP,
+concentrar señales en `/habitaciones`, las 4 páginas de suite y `/arequipa`.
+Crear URLs nuevas solo si GSC muestra consultas repetidas que ninguna página
+actual responde bien.
+
+Nota de indexación: **no indexar todavía**. Mantener `INDEXABLE=false` hasta
+que el dominio canónico, el redirect `www` → apex, Search Console, sitemap y
+GBP estén listos/aprobados en el orden del plan de lanzamiento.
+
+## 4. Temas de FAQ detectados en el nicho
 
 De blogs (misstourist FAQ) y patrones de listings: mejor zona / seguridad ·
 cuántos días · precios típicos · baño privado sí/no · check-in flexible ·
@@ -109,7 +161,7 @@ ruido nocturno · cocina disponible · cómo reservar sin OTA. → Las 6 FAQs
 añadidas a `/habitaciones` cubren los que aplican a nuestra casa, con
 respuestas 100 % veraces de los datos existentes.
 
-## 4. Brechas de contenido detectadas (futuras, NO ahora)
+## 5. Brechas de contenido detectadas (futuras, NO ahora)
 
 1. Versión EN de páginas clave (cluster "where to stay in Arequipa
    historic center" tiene SERP blog-débil en propiedades individuales).
@@ -120,7 +172,7 @@ respuestas 100 % veraces de los datos existentes.
 4. Reseñas de Google propias (GBP) para el pack local — bloqueado por
    dirección exacta.
 
-## 5. Qué NO copiar del nicho
+## 6. Qué NO copiar del nicho
 
 - Páginas-landmark fabricadas en masa ("hotels near X" × 20) — thin
   content sin inventario que lo respalde.
