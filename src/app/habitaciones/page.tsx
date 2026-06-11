@@ -1,14 +1,56 @@
 import type { Metadata } from "next";
 import { listings } from "@/data/listings";
-import { landmarks } from "@/data/site";
+import { landmarks, site } from "@/data/site";
 import { RoomCard } from "@/components/room-card";
 import { SectionMotifs } from "@/components/motifs";
+import { JsonLd } from "@/components/json-ld";
 
 export const metadata: Metadata = {
   title: "Habitaciones y suites en el Centro Histórico de Arequipa",
   description:
     "Cuatro suites privadas con baño propio, sala y kitchenette en el Centro Histórico de Arequipa. Capacidad para 2 a 3 huéspedes, llegada autónoma.",
   alternates: { canonical: "/habitaciones" },
+};
+
+/* The questions guests actually ask before booking (sourced from the
+   owner's Airbnb conversations and the honesty blocks elsewhere on the
+   site). Everything stated here must stay true to the listings data —
+   no instant booking, no overpromising. */
+const faqs = [
+  {
+    q: "¿Las habitaciones tienen baño privado?",
+    a: "Sí. Cada una de las cuatro suites tiene baño completo privado, además de dormitorio con cama queen, sala de estar propia y kitchenette.",
+  },
+  {
+    q: "¿Cómo se reserva?",
+    a: "Nos escribes por WhatsApp o desde el formulario de solicitud con tus fechas, y te confirmamos disponibilidad y tarifa, normalmente en minutos. No se paga nada en esta web.",
+  },
+  {
+    q: "¿Dónde está exactamente La Casa de Roos?",
+    a: "En el Centro Histórico de Arequipa (Cercado), a una cuadra de la Calle Mercaderes y a unos 3 minutos a pie de la Plaza de Armas. La dirección exacta se comparte al confirmar la reserva.",
+  },
+  {
+    q: "¿Cómo funciona el check-in?",
+    a: `Llegada autónoma con caja de seguridad dentro de un edificio empresarial seguro, desde las ${site.checkin}. El check-out es hasta las ${site.checkout}.`,
+  },
+  {
+    q: "¿Hay cocina?",
+    a: "Cada suite incluye kitchenette con lo esencial, y además hay una cocina completa compartida, exclusiva para huéspedes.",
+  },
+  {
+    q: "¿Es ruidoso el centro histórico de noche?",
+    a: "El centro tiene vida y algunas noches llega ruido de la calle; por eso cada suite incluye tapones para los oídos de cortesía. Preferimos contarlo antes de que reserves.",
+  },
+] as const;
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
 };
 
 export default function HabitacionesPage() {
@@ -42,6 +84,27 @@ export default function HabitacionesPage() {
             <RoomCard key={l.slug} listing={l} variant={i} />
           ))}
         </div>
+
+        {/* Pre-booking FAQ — the real questions guests ask by WhatsApp,
+            answered in page so the answer exists before the chat starts. */}
+        <section className="mx-auto mt-16 max-w-3xl border-t border-sillar-200 pt-12">
+          <JsonLd data={faqJsonLd} />
+          <h2 className="text-center font-display text-2xl font-bold text-tinta-900 sm:text-3xl">
+            Preguntas frecuentes
+          </h2>
+          <dl className="mt-8 space-y-7">
+            {faqs.map((f) => (
+              <div key={f.q}>
+                <dt className="font-display text-base font-bold text-tinta-900">
+                  {f.q}
+                </dt>
+                <dd className="mt-2 text-sm leading-relaxed text-tinta-700">
+                  {f.a}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
       </div>
     </div>
   );

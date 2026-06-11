@@ -283,6 +283,12 @@ export default async function RoomPage({
             >
               Ver anuncio en Airbnb <ExternalLink className="h-3.5 w-3.5" />
             </a>
+            <Link
+              href="/arequipa"
+              className="flex w-full items-center justify-center gap-2 px-5 py-1 text-xs font-medium text-tinta-500 transition-colors hover:text-arcilla-600"
+            >
+              Qué hacer cerca de la casa <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
           </div>
           <p className="mt-4 border-t border-sillar-200 pt-4 text-[11px] leading-relaxed text-tinta-500">
             Las solicitudes están sujetas a confirmación de disponibilidad.

@@ -4,12 +4,14 @@
  * checked 2026-06-10). Exact street address pending from owner.
  */
 
-/* Production lives on the Vercel subdomain until the owner buys a custom
-   domain; NEXT_PUBLIC_SITE_URL overrides it when that day comes. Keeping
-   the default truthful matters: metadataBase, canonical, sitemap, robots
-   and JSON-LD all derive absolute URLs from it. */
+/* Canonical host. lacasaderoos.com was purchased through Vercel on
+   2026-06-11 (Vercel-managed DNS, HTTPS live on apex and www); the apex is
+   the primary and every other host (www + *.vercel.app) consolidates into
+   it via the canonical tags — which all derive from this constant, as do
+   metadataBase, sitemap, robots and JSON-LD. NEXT_PUBLIC_SITE_URL can
+   still override per environment. */
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://la-casa-de-roos.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://lacasaderoos.com";
 
 /* Master indexing switch. While false, every page carries noindex: the
    site stays out of Google until the custom domain resolves and the SEO
