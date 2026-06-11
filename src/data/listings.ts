@@ -6,12 +6,18 @@
  * docs/research/content-inventory.md (checked 2026-06-10). Copy is written
  * fresh for this site — never paste Airbnb text verbatim.
  *
- * PHOTOS: each suite's hero slot shows a TEMPORARY cover exported from the
- * owner's own public Airbnb listing (downloaded 2026-06-10, stored locally
- * under public/images/listings/<slug>/ — never hotlinked). They must be
- * replaced with owner-provided originals once the owner sends files or
- * confirms permission (docs/research/content-rights-checklist.md → "Photos
- * needed from owner"). The remaining slots stay as placeholders until then.
+ * PHOTOS: full galleries are TEMPORARY owner-source-derived assets exported
+ * from the owner's own public Airbnb listings (public room-tour data,
+ * downloaded 2026-06-10, recompressed and stored locally under
+ * public/images/listings/<slug>/ — never hotlinked). Categories and alt
+ * text derive from Airbnb's own public room-tour labels. Photos repeated
+ * across all four listings (guest kitchen, YURAKUNA restaurant) are pooled
+ * once under public/images/listings/comunes/. All of it pending owner
+ * originals or explicit approval (docs/research/content-rights-checklist.md).
+ *
+ * CATEGORY RATINGS: official per-category scores published on each public
+ * Airbnb listing page (checked 2026-06-10) — display-only, attributed,
+ * never marked up as schema.org aggregateRating.
  *
  * PRICES: owner decision 2026-06-10 — no fixed rates yet and iCal cannot
  * sync Airbnb prices, so every suite shows `priceLabel` ("Consultar precio").
@@ -22,8 +28,33 @@ export type GallerySlot = {
   slot: string;
   /** Spanish label shown inside the placeholder and used as alt text. */
   label: string;
-  /** Local asset path (e.g. "/images/listings/<slug>/cover.jpg"). null = pending. */
+  /** Local asset path (e.g. "/images/brand/casa-hero.jpg"). null = pending. */
   src: string | null;
+};
+
+export type GalleryCategory =
+  | "Sala"
+  | "Habitación"
+  | "Cocina"
+  | "Baño"
+  | "Áreas comunes"
+  | "Entorno";
+
+export type GalleryPhoto = {
+  /** Local asset path — Airbnb-derived photos are stored locally, never hotlinked. */
+  src: string;
+  alt: string;
+  category: GalleryCategory;
+};
+
+/** Official per-category scores from the public Airbnb listing page. */
+export type CategoryRatings = {
+  cleanliness: number;
+  accuracy: number;
+  checkin: number;
+  communication: number;
+  location: number;
+  value: number;
 };
 
 export type Listing = {
@@ -48,7 +79,8 @@ export type Listing = {
   rules: string[];
   quietHours: string;
   priceLabel: string;
-  gallery: GallerySlot[];
+  gallery: GalleryPhoto[];
+  categoryRatings: CategoryRatings;
 };
 
 const sharedAmenities: { icon: string; label: string }[] = [
@@ -81,17 +113,46 @@ const baseRules = (quietHours: string) => [
   "Penalidad de S/ 350 por incumplir las normas de la casa",
 ];
 
+/** Sequentially numbered photos of one space (sala-01.jpg, sala-02.jpg…). */
+const photoRun = (
+  slug: string,
+  prefix: string,
+  category: GalleryCategory,
+  alt: string,
+  count: number,
+): GalleryPhoto[] =>
+  Array.from({ length: count }, (_, i) => ({
+    src: `/images/listings/${slug}/${prefix}-${String(i + 1).padStart(2, "0")}.jpg`,
+    alt: `${alt}, foto ${i + 1}`,
+    category,
+  }));
+
 /**
- * Standard five photo slots per suite. The hero slot renders the temporary
- * Airbnb-derived cover stored locally; the other four stay pending owner
- * originals.
+ * Photos the owner repeats on all four Airbnb listings (guest kitchen and
+ * the YURAKUNA restaurant downstairs) — stored once under comunes/ and
+ * appended to every suite gallery.
  */
-const suiteGallery = (slug: string, heroLabel: string): GallerySlot[] => [
-  { slot: "hero", label: heroLabel, src: `/images/listings/${slug}/cover.jpg` },
-  { slot: "dormitorio", label: "Dormitorio con cama queen", src: null },
-  { slot: "sala", label: "Sala de estar privada", src: null },
-  { slot: "bano", label: "Baño privado", src: null },
-  { slot: "detalle", label: "Detalle de la suite", src: null },
+const sharedGallery: GalleryPhoto[] = [
+  ...photoRun("comunes", "area-comun", "Áreas comunes", "Cocina compartida exclusiva para huéspedes", 5),
+  ...photoRun("comunes", "entorno", "Entorno", "Restaurante YURAKUNA en el primer piso del edificio", 6),
+];
+
+/**
+ * Per-suite gallery: the suite's own photos (category counts mirror the
+ * files under public/images/listings/<slug>/) followed by the shared set.
+ * Order follows the Airbnb room tour: sala → habitación → baño.
+ */
+const suiteGallery = (
+  slug: string,
+  counts: { sala: number; habitacion: number; bano: number; areaComun?: number },
+): GalleryPhoto[] => [
+  ...photoRun(slug, "sala", "Sala", "Sala de estar de la suite", counts.sala),
+  ...photoRun(slug, "habitacion", "Habitación", "Dormitorio de la suite", counts.habitacion),
+  ...photoRun(slug, "bano", "Baño", "Baño privado de la suite", counts.bano),
+  ...(counts.areaComun
+    ? photoRun(slug, "area-comun", "Áreas comunes", "Cocina compartida exclusiva para huéspedes", counts.areaComun)
+    : []),
+  ...sharedGallery,
 ];
 
 export const listings: Listing[] = [
@@ -122,10 +183,15 @@ export const listings: Listing[] = [
     rules: baseRules("23:00 a 06:00"),
     quietHours: "23:00 a 06:00",
     priceLabel: "Consultar precio",
-    gallery: suiteGallery(
-      "suite-queen-con-sala",
-      "Sala de estar de la suite, con TV y detalles en madera",
-    ),
+    gallery: suiteGallery("suite-queen-con-sala", { sala: 5, habitacion: 5, bano: 5 }),
+    categoryRatings: {
+      cleanliness: 4.94,
+      accuracy: 4.88,
+      checkin: 4.93,
+      communication: 4.92,
+      location: 4.87,
+      value: 4.9,
+    },
   },
   {
     slug: "suite-queen-centro-historico",
@@ -150,10 +216,15 @@ export const listings: Listing[] = [
     rules: baseRules("23:00 a 06:00"),
     quietHours: "23:00 a 06:00",
     priceLabel: "Consultar precio",
-    gallery: suiteGallery(
-      "suite-queen-centro-historico",
-      "Sala de estar privada de la suite con lámparas colgantes",
-    ),
+    gallery: suiteGallery("suite-queen-centro-historico", { sala: 4, habitacion: 3, bano: 3 }),
+    categoryRatings: {
+      cleanliness: 4.92,
+      accuracy: 4.84,
+      checkin: 4.92,
+      communication: 4.96,
+      location: 4.99,
+      value: 4.79,
+    },
   },
   {
     slug: "suite-queen-con-vista",
@@ -178,10 +249,15 @@ export const listings: Listing[] = [
     rules: baseRules("23:00 a 07:00"),
     quietHours: "23:00 a 07:00",
     priceLabel: "Consultar precio",
-    gallery: suiteGallery(
-      "suite-queen-con-vista",
-      "Rincón de TV de la suite con repisa de madera y plantas",
-    ),
+    gallery: suiteGallery("suite-queen-con-vista", { sala: 5, habitacion: 3, bano: 2 }),
+    categoryRatings: {
+      cleanliness: 4.91,
+      accuracy: 4.86,
+      checkin: 4.93,
+      communication: 4.99,
+      location: 4.91,
+      value: 4.85,
+    },
   },
   {
     slug: "mini-apartamento-familiar",
@@ -190,7 +266,7 @@ export const listings: Listing[] = [
     airbnbUrl: "https://www.airbnb.com.pe/rooms/1352501815600410248",
     airbnbListingId: "1352501815600410248",
     rating: 4.82,
-    reviewCount: 96,
+    reviewCount: 97,
     guestFavorite: true,
     capacity: 3,
     beds: "1 cama queen + 1 cama individual",
@@ -211,10 +287,20 @@ export const listings: Listing[] = [
     rules: baseRules("23:00 a 06:00"),
     quietHours: "23:00 a 06:00",
     priceLabel: "Consultar precio",
-    gallery: suiteGallery(
-      "mini-apartamento-familiar",
-      "Sala amplia del mini apartamento con pintura arequipeña",
-    ),
+    gallery: suiteGallery("mini-apartamento-familiar", {
+      sala: 7,
+      habitacion: 9,
+      bano: 4,
+      areaComun: 1,
+    }),
+    categoryRatings: {
+      cleanliness: 4.93,
+      accuracy: 4.93,
+      checkin: 4.92,
+      communication: 4.92,
+      location: 4.89,
+      value: 4.85,
+    },
   },
 ];
 

@@ -49,12 +49,36 @@ All owner-related public sources, downloaded once, resized/compressed locally, n
 |---|---|---|
 | `public/images/brand/casa-hero.jpg` | Owner's Carrd site (`assets/images/bg.jpg`) | Home hero |
 | `public/images/brand/sala-cuadro.jpg` | Owner's Carrd site (`assets/images/container03.jpg`) | /arequipa |
-| `public/images/listings/suite-queen-con-sala/cover.jpg` | Owner's Airbnb listing og:image (Hosting-1352543068552764001) | Room card + gallery hero |
-| `public/images/listings/suite-queen-centro-historico/cover.jpg` | Owner's Airbnb listing og:image (Hosting-1353094020937867539) | Room card + gallery hero |
-| `public/images/listings/suite-queen-con-vista/cover.jpg` | Owner's Airbnb listing og:image (Hosting-1352529733779964415) | Room card + gallery hero |
-| `public/images/listings/mini-apartamento-familiar/cover.jpg` | Owner's Airbnb listing og:image (Hosting-1352501815600410248) | Room card + gallery hero |
 
-Blocked/limited sources (no bypass attempted): Facebook share link (login-walled, no public og:image); Google Maps photos (JS-only, not politely extractable); full Airbnb galleries (client-rendered — only the public og:image cover per listing was taken).
+### Full Airbnb listing galleries (2026-06-10 — TEMPORARY, owner-source-derived)
+
+Extracted from the public HTML of the owner's own four Airbnb listing pages
+(the embedded room-tour data each page serves to any anonymous visitor — no
+login, no private API, one fetch per page). Downloaded once at `im_w=1440`,
+recompressed locally (JPEG q60, max 1440px), never hotlinked. Categories and
+alt text come from Airbnb's own public room-tour labels ("Sala imagen 2",
+"Baño completo imagen 1", …). **Temporary pending owner originals or
+explicit approval (row 3).** The old `cover.jpg` files were removed: each
+cover was pixel-identical to that suite's `sala-01.jpg`.
+
+| Suite (listing) | Files under `public/images/listings/` | Own photos |
+|---|---|---|
+| suite-queen-con-sala (Hosting-1352543068552764001) | `sala-01..05`, `habitacion-01..05`, `bano-01..05` | 15 |
+| suite-queen-centro-historico (Hosting-1353094020937867539) | `sala-01..04`, `habitacion-01..03`, `bano-01..03` | 10 |
+| suite-queen-con-vista (Hosting-1352529733779964415) | `sala-01..05`, `habitacion-01..03`, `bano-01..02` | 10 |
+| mini-apartamento-familiar (Hosting-1352501815600410248) | `sala-01..07`, `habitacion-01..09`, `bano-01..04`, `area-comun-01` | 21 |
+| comunes (photos repeated on all four listings, pooled once) | `area-comun-01..05` (cocina de huéspedes), `entorno-01..06` (restaurante YURAKUNA) | 11 |
+
+67 files, ≈9.7 MB total. Per-category ratings (limpieza, llegada,
+comunicación, ubicación, veracidad, calidad-precio) were also read from the
+same public pages and shown attributed on each suite page.
+
+Blocked/limited sources (no bypass attempted): Facebook share link
+(login-walled, no public og:image); Google Maps photos (JS-only, not
+politely extractable); **Airbnb review texts** (loaded by a client-side API
+after page load — not present in the public HTML, so no review quotes are
+shown; only Airbnb's published per-category scores, attributed, with a link
+to the listing for full reviews).
 
 ### Logo (2026-06-10, row 15)
 

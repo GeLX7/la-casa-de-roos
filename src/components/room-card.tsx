@@ -1,15 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Listing } from "@/data/listings";
-import { PlaceholderImage } from "@/components/placeholder-image";
 import { Star, Users, Bed, ArrowRight } from "@/components/icons";
 
-export function RoomCard({
-  listing,
-  variant = 0,
-}: {
-  listing: Listing;
-  variant?: number;
-}) {
+export function RoomCard({ listing }: { listing: Listing; variant?: number }) {
+  const cover = listing.gallery[0];
   return (
     <article className="group flex flex-col overflow-hidden rounded-lg border border-sillar-200 bg-white shadow-sm transition-shadow hover:shadow-md">
       <Link
@@ -17,13 +12,15 @@ export function RoomCard({
         aria-label={`Ver ${listing.subtitle}`}
         className="relative block"
       >
-        <PlaceholderImage
-          photo={listing.gallery[0]}
-          variant={variant}
-          compact
-          className="aspect-[4/3] w-full transition-transform duration-300 group-hover:scale-[1.01]"
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-        />
+        <div className="relative aspect-[4/3] w-full overflow-hidden">
+          <Image
+            src={cover.src}
+            alt={cover.alt}
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-[1.01]"
+          />
+        </div>
         {listing.guestFavorite && (
           <span className="absolute left-3 top-3 rounded-md bg-white/90 px-3 py-1 text-[11px] font-semibold text-tinta-900 shadow-sm backdrop-blur">
             ❤ Favorito entre huéspedes

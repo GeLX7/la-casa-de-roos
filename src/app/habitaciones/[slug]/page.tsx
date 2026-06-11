@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { listings, getListing } from "@/data/listings";
 import { site, SITE_URL } from "@/data/site";
-import { PlaceholderImage } from "@/components/placeholder-image";
+import { SuiteGallery } from "@/components/suite-gallery";
 import { AmenityList } from "@/components/amenity-list";
 import { JsonLd } from "@/components/json-ld";
 import { whatsappUrl, roomWhatsappMessage } from "@/lib/whatsapp";
@@ -119,25 +119,12 @@ export default async function RoomPage({
         </div>
       </header>
 
-      {/* Gallery — placeholder slots until owner originals arrive. */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <PlaceholderImage
-          photo={listing.gallery[0]}
-            className="col-span-2 row-span-2 aspect-[4/3] rounded-lg sm:aspect-auto"
-          sizes="(min-width: 640px) 50vw, 100vw"
-          priority
-        />
-        {listing.gallery.slice(1).map((photo, i) => (
-          <PlaceholderImage
-            key={photo.slot}
-            photo={photo}
-            variant={i + 1}
-            compact
-            className="aspect-[4/3] rounded-md"
-            sizes="(min-width: 640px) 25vw, 50vw"
-          />
-        ))}
-      </div>
+      {/* Gallery — temporary Airbnb-derived photos stored locally, pending
+          owner originals (docs/research/content-rights-checklist.md). */}
+      <SuiteGallery
+        photos={listing.gallery}
+        suiteName={listing.subtitle}
+      />
 
       <div className="mt-10 grid gap-10 lg:grid-cols-[1.6fr_1fr]">
         <div className="space-y-10">
@@ -188,6 +175,62 @@ export default async function RoomPage({
                 </li>
               ))}
             </ul>
+          </section>
+
+          {/* Official per-category scores from the public Airbnb listing.
+              Full review texts aren't publicly extractable, so we show the
+              breakdown Airbnb itself publishes — attributed, display-only. */}
+          <section>
+            <h2 className="mb-1 font-display text-2xl font-bold text-tinta-900">
+              Lo que valoran los huéspedes
+            </h2>
+            <p className="mb-5 flex items-center gap-1.5 text-sm text-tinta-700">
+              <Star className="h-4 w-4 text-arcilla-500" />
+              {listing.rating.toFixed(2)} de calificación general ·{" "}
+              {listing.reviewCount} reseñas
+            </p>
+            <dl className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
+              {(
+                [
+                  ["Limpieza", listing.categoryRatings.cleanliness],
+                  ["Llegada", listing.categoryRatings.checkin],
+                  ["Comunicación", listing.categoryRatings.communication],
+                  ["Ubicación", listing.categoryRatings.location],
+                  ["Veracidad", listing.categoryRatings.accuracy],
+                  ["Calidad-precio", listing.categoryRatings.value],
+                ] as const
+              ).map(([label, score]) => (
+                <div key={label}>
+                  <div className="flex items-baseline justify-between text-sm">
+                    <dt className="font-medium text-tinta-900">{label}</dt>
+                    <dd className="font-semibold text-tinta-900">
+                      {score.toFixed(2)}
+                    </dd>
+                  </div>
+                  <div
+                    aria-hidden="true"
+                    className="mt-1.5 h-1 overflow-hidden rounded-full bg-sillar-200"
+                  >
+                    <div
+                      className="h-full rounded-full bg-arcilla-500"
+                      style={{ width: `${(score / 5) * 100}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </dl>
+            <p className="mt-5 text-xs text-tinta-500">
+              Calificaciones por categoría publicadas en nuestro anuncio de
+              Airbnb ({site.ratingsCheckedAt}).{" "}
+              <a
+                href={listing.airbnbUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2 hover:text-arcilla-600"
+              >
+                Ver las reseñas completas en Airbnb ↗
+              </a>
+            </p>
           </section>
         </div>
 
