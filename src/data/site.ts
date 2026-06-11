@@ -4,8 +4,12 @@
  * checked 2026-06-10). Exact street address pending from owner.
  */
 
+/* Production lives on the Vercel subdomain until the owner buys a custom
+   domain; NEXT_PUBLIC_SITE_URL overrides it when that day comes. Keeping
+   the default truthful matters: metadataBase, canonical, sitemap, robots
+   and JSON-LD all derive absolute URLs from it. */
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://lacasaderoos.com";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://la-casa-de-roos.vercel.app";
 
 export const site = {
   name: "La Casa de Roos",
