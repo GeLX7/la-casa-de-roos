@@ -27,7 +27,7 @@ function ActiveBadge({ active }: { active: boolean }) {
 export default async function AdminCatalogPage() {
   const guard = await guardAdminPanel();
 
-  if (!guard.configured) {
+  if (!guard.configured || !guard.dbReady) {
     return (
       <div className="space-y-6">
         <h1 className="font-display text-xl font-extrabold text-tinta-900">Catálogo</h1>

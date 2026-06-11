@@ -9,8 +9,10 @@
  */
 
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { requireAdmin, signInWithPassword, signOut } from "@/lib/admin/auth";
+import { requireAdmin, signInWithCredentials, signOut } from "@/lib/admin/auth";
+import { checkRateLimit } from "@/lib/admin/rate-limit";
 import { adminRest } from "@/lib/admin/supabase-admin";
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -82,15 +84,32 @@ function backToRoom(slug: string, outcome: { saved: true } | { error: string }):
 // ---------------------------------------------------------------------------
 
 export async function loginAction(formData: FormData): Promise<void> {
-  const email = text(formData, "email");
+  const username = text(formData, "username");
   const password = formData.get("password");
 
-  if (!email || typeof password !== "string" || !password) {
+  if (!username || typeof password !== "string" || !password) {
     redirect("/admin/login?error=missing");
   }
 
-  const result = await signInWithPassword(email, password);
+  // 5 attempts per 10 minutes per IP; PBKDF2 cost covers the rest.
+  const requestHeaders = await headers();
+  const ip =
+    requestHeaders.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    requestHeaders.get("x-real-ip") ||
+    "unknown";
+  const limit = checkRateLimit({
+    key: `admin-login:${ip}`,
+    limit: 5,
+    windowMs: 10 * 60 * 1000,
+  });
+  if (!limit.allowed) {
+    console.warn(`admin login rate-limited (ip=${ip}, retry in ${limit.retryAfterSeconds}s)`);
+    redirect("/admin/login?error=rate_limited");
+  }
+
+  const result = await signInWithCredentials(username, password);
   if (!result.ok) {
+    console.warn(`admin login failed (ip=${ip}, reason=${result.error})`);
     redirect(`/admin/login?error=${result.error}`);
   }
   redirect("/admin");

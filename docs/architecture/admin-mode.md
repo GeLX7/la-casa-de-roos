@@ -1,8 +1,12 @@
 # Admin Mode — Architecture
 
-Status: built in `feat/admin-catalog-foundation`. Fully functional only after the
-Supabase project exists (see `docs/runbooks/admin-supabase-setup.md`); until then
-every admin route renders a safe setup-needed state instead of crashing.
+Status: foundation built in `feat/admin-catalog-foundation`; auth switched to
+username/password env credentials in `feat/admin-username-auth`. Every `/admin`
+route stays disabled (redirects home) until `ENABLE_ADMIN_ROUTES=true`; login
+works once the admin credential env vars exist, and catalog editing becomes
+available after the Supabase project exists
+(`docs/runbooks/admin-supabase-setup.md`). Missing pieces always render a safe
+setup-needed state instead of crashing.
 
 ## What it is
 
@@ -12,7 +16,7 @@ today lives statically in `src/data/listings.ts`:
 | Route | Purpose |
 | --- | --- |
 | `/admin` | Dashboard: stats cards, missing-setup warnings, iCal status, site/SEO status |
-| `/admin/login` | Email + password login (Supabase Auth) |
+| `/admin/login` | Username + password login (env credentials, no Supabase Auth) |
 | `/admin/catalogo` | Room list: add, edit, reorder, hide/show, soft delete |
 | `/admin/catalogo/nuevo` | Create a room (created hidden; slug locked after creation) |
 | `/admin/catalogo/[slug]` | Room editor, organized in 9 cards |
@@ -33,33 +37,56 @@ The room editor cards mirror the sections of the public suite page:
 
 ```
 src/lib/admin/config.ts        env detection + missing-setup warnings
+src/lib/admin/credentials.ts   pure crypto: PBKDF2 hash + HMAC session value (node:crypto only)
+src/lib/admin/auth.ts          username/password sign-in, session cookie, requireAdmin gate
+src/lib/admin/rate-limit.ts    in-memory login rate limiter
 src/lib/admin/supabase-admin.ts service-role PostgREST helper (server-only)
-src/lib/admin/auth.ts          GoTrue REST login/session + admin_users allowlist gate
 src/lib/admin/catalog.ts       admin reads (rooms + children) and dashboard stats
 src/lib/admin/actions.ts       all server actions (every one calls requireAdmin())
 src/lib/catalog/data.ts        PUBLIC data layer: getRooms()/getRoomBySlug() with static fallback
 src/components/admin/*         cards, fields, stat/warning cards, submit buttons
 src/app/admin/**               routes (login outside the (panel) group)
+src/proxy.ts                   kill switch + cookie-presence pre-check for /admin/*
+scripts/hash-admin-password.mjs local generator for ADMIN_PASSWORD_HASH
 ```
 
-No new npm dependencies: Supabase REST + GoTrue are called with `fetch`, the
-same dependency-free pattern as `src/lib/booking/repository.ts`.
+No npm dependencies: Supabase REST is called with `fetch` and all auth crypto
+is `node:crypto`, the same dependency-free pattern as
+`src/lib/booking/repository.ts`.
 
 ## Authentication
 
-- Supabase Auth (GoTrue) password grant via REST; the access token is stored in
-  an `httpOnly`/`secure`/`SameSite=Lax` cookie (`lcr_admin_access`).
-- Being a valid Supabase user is **not enough**: the user id must exist in the
-  `admin_users` allowlist table (inserted manually — no signup flow exists).
-- `requireAdmin()` re-verifies the token against `/auth/v1/user` and the
-  allowlist on every page render **and** inside every server action (pages and
-  layouts render concurrently in App Router, so the layout alone is not a gate).
-- Sessions last as long as the Supabase JWT (default 1 h; can be raised in
-  Supabase Auth settings). The refresh token is stored but silent refresh is a
-  later step (needs a route handler — server components cannot set cookies).
-- Without Supabase env vars there is nothing to authenticate against and
-  nothing writable; admin pages then show only the setup-needed state.
-- `/admin` carries `robots noindex` metadata and is disallowed in `robots.txt`.
+Username + password against **env-var credentials** — Supabase Auth is not
+used (pattern adapted conceptually from the LAZZAT admin). Supabase only
+stores catalog/booking data.
+
+- Env vars: `ENABLE_ADMIN_ROUTES` (kill switch), `ADMIN_USERNAME`,
+  `ADMIN_PASSWORD_HASH` (salted PBKDF2-SHA256, 210k iterations, format
+  `pbkdf2$iter$digest$salt$hash`), `ADMIN_SESSION_SECRET` (≥32 chars).
+- The plaintext password and its hash never live in the repo or the database.
+  The hash is generated locally with `scripts/hash-admin-password.mjs` and
+  stored only as a server env var.
+- Login is a server action: constant-time PBKDF2 verification (with a
+  timing-equalizer burn when the username is wrong) plus an in-memory rate
+  limit of 5 attempts / 10 minutes / IP. Failures log IP + reason only.
+- Session: stateless HMAC-SHA256-signed value
+  (`username.expiresAt.signature`) in an `httpOnly`/`secure`/`SameSite=Lax`
+  cookie (`lcr_admin_session`), 8 h TTL. No server-side session store; being
+  stateless, individual sessions cannot be revoked early — rotating
+  `ADMIN_SESSION_SECRET` (or `ADMIN_USERNAME`) invalidates all of them
+  instantly.
+- `requireAdmin()` verifies the cookie locally (no network) on every page
+  render **and** inside every server action (pages and layouts render
+  concurrently in App Router, so the layout alone is not a gate).
+- `src/proxy.ts` adds a cheap pre-check on `/admin/:path*`: while
+  `ENABLE_ADMIN_ROUTES` ≠ `"true"` every admin route (login included)
+  redirects home; otherwise requests without the session cookie redirect to
+  `/admin/login`. Presence-only — the authoritative verification stays
+  server-side.
+- With credentials missing (and the kill switch on, e.g. locally) admin pages
+  show only the setup-needed state; nothing is writable.
+- `/admin` carries `robots noindex/nofollow/nocache` metadata and is
+  disallowed in `robots.txt`.
 
 ## Database
 
@@ -68,13 +95,15 @@ Two migrations (prepared, **not applied** — owner approval required):
 - `20260611143000_booking_calendar_foundation.sql` (PR #5): `rooms`,
   `calendar_sources`, `external_blocks`, `reservation_requests`,
   `manual_blocks`, `payment_intents`. RLS enabled, no policies → service-role-only.
-- `20260611170000_admin_catalog_foundation.sql` (this branch): extends `rooms`
-  with the catalog fields, adds `room_features`, `room_not_included`,
-  `room_rules`, `room_images`, `room_ratings`, `admin_users`, an `is_admin()`
-  helper, and RLS policies:
+- `20260611170000_admin_catalog_foundation.sql`: extends `rooms` with the
+  catalog fields and adds `room_features`, `room_not_included`, `room_rules`,
+  `room_images`, `room_ratings`, with RLS:
   - **anon/public**: `SELECT` only, and only active+non-deleted rooms with
     their enabled/active child content.
-  - **authenticated admins** (`is_admin()`): full read/write on catalog tables.
+  - **no write policies at all**: every write reaches Postgres exclusively
+    through server-side code using the service role (which bypasses RLS)
+    *after* `requireAdmin()` has verified the admin session. There is no
+    admin role inside the database because admin auth is env-based.
   - guest-PII/booking tables stay service-role-only.
   - The service role key is used exclusively server-side (`SUPABASE_SERVICE_ROLE_KEY`
     has no `NEXT_PUBLIC_` prefix and is only read in `src/lib/admin/*` / `src/lib/booking/*`).
@@ -112,6 +141,6 @@ dashboard labels DB-only numbers as "available after Supabase setup".
 - Image upload via Supabase Storage (schema already accepts absolute URLs).
 - Reservation request management UI (approve/cancel) — tables exist from PR #5.
 - iCal import job + sync status writes; Culqi payments; notification email.
-- Silent session refresh; optional middleware/proxy pre-check for `/admin`.
+- Persistent audit log of admin logins/edits (LAZZAT-style `recordAuditLog`).
 - Switching home/sitemap/reservar to the catalog data layer, then flipping
   `CATALOG_DATA_SOURCE=supabase` after content verification.
