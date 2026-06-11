@@ -5,6 +5,7 @@ import { listings, getListing } from "@/data/listings";
 import { site, SITE_URL } from "@/data/site";
 import { SuiteGallery } from "@/components/suite-gallery";
 import { AmenityList } from "@/components/amenity-list";
+import { AvailabilityPrepPanel } from "@/components/availability-prep-panel";
 import { JsonLd } from "@/components/json-ld";
 import { whatsappUrl, roomWhatsappMessage } from "@/lib/whatsapp";
 import {
@@ -150,6 +151,8 @@ export default async function RoomPage({
               </p>
             ))}
           </section>
+
+          <AvailabilityPrepPanel roomName={listing.subtitle} />
 
           <section>
             <h2 className="mb-4 font-display text-2xl font-bold text-tinta-900">

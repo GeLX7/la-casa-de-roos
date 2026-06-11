@@ -3,16 +3,20 @@
 import { useMemo, useState } from "react";
 import { listings } from "@/data/listings";
 import { site } from "@/data/site";
+import { AvailabilityChecker } from "@/components/availability-checker";
 import { WhatsApp } from "@/components/icons";
 
 /**
- * Phase 1 request-to-book form: UI only, no backend/storage.
- * Submit composes a WhatsApp message to the owner (current real booking
- * channel). Phase 2 replaces this with a server action + bookings table
- * (docs/roadmap/MVP_PLAN.md).
+ * Request-to-book stays WhatsApp-first until Supabase/iCal/Culqi env vars
+ * are configured. The availability panel calls the disabled-safe API route,
+ * so the UI can move to stored requests later without promising instant
+ * booking today.
  */
 export function RequestForm({ initialSlug }: { initialSlug?: string }) {
   const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
+  const [submitState, setSubmitState] = useState<
+    "idle" | "checking" | "request_sent" | "needs_confirmation"
+  >("idle");
   const [form, setForm] = useState({
     suite: listings.some((l) => l.slug === initialSlug)
       ? (initialSlug as string)
@@ -36,6 +40,7 @@ export function RequestForm({ initialSlug }: { initialSlug?: string }) {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setSubmitState("checking");
     const lines = [
       "Hola Roos, quisiera solicitar una reserva desde la web:",
       `• Suite: ${selected.title} (${selected.subtitle})`,
@@ -51,6 +56,8 @@ export function RequestForm({ initialSlug }: { initialSlug?: string }) {
       "_blank",
       "noopener,noreferrer",
     );
+    setSubmitState("request_sent");
+    window.setTimeout(() => setSubmitState("needs_confirmation"), 900);
   }
 
   const inputCls =
@@ -86,6 +93,12 @@ export function RequestForm({ initialSlug }: { initialSlug?: string }) {
           />
         </div>
       </div>
+
+      <AvailabilityChecker
+        roomSlug={form.suite}
+        startDate={form.checkin}
+        endDate={form.checkout}
+      />
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
@@ -135,9 +148,23 @@ export function RequestForm({ initialSlug }: { initialSlug?: string }) {
         className="flex w-full items-center justify-center gap-2 bg-arcilla-500 px-6 py-3.5 text-base font-semibold text-white shadow-sm transition-colors hover:bg-arcilla-600"
       >
         <WhatsApp className="h-5 w-5" />
-        <span className="sm:hidden">Enviar por WhatsApp</span>
-        <span className="hidden sm:inline">Enviar solicitud por WhatsApp</span>
+        <span className="sm:hidden">
+          {submitState === "checking" ? "Preparando..." : "Enviar por WhatsApp"}
+        </span>
+        <span className="hidden sm:inline">
+          {submitState === "checking"
+            ? "Preparando solicitud..."
+            : "Enviar solicitud por WhatsApp"}
+        </span>
       </button>
+
+      {submitState !== "idle" && (
+        <p className="rounded-md bg-sillar-50 px-3 py-2 text-center text-xs leading-relaxed text-tinta-600">
+          {submitState === "needs_confirmation" || submitState === "request_sent"
+            ? "Solicitud enviada por WhatsApp. Necesita confirmación de disponibilidad."
+            : "Preparando tu solicitud."}
+        </p>
+      )}
 
       <p className="text-center text-xs leading-relaxed text-tinta-500">
         Esto es una <strong>solicitud, no una reserva instantánea</strong>: Roos

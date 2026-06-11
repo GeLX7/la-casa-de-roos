@@ -1,0 +1,86 @@
+# Booking Calendar Sync — Phase 2 Foundation
+
+Status: prepared, not live. This design waits for Supabase credentials, four
+Airbnb iCal export URLs, owner notification email, and final owner approval.
+
+## Why iCal
+
+Airbnb exposes per-listing calendar import/export through the iCalendar
+standard. It does not provide a public host API for direct real-time calendar
+sync unless the host uses an approved PMS/channel manager. For La Casa de Roos,
+iCal is the safest MVP because it is official, free, per-room, and reversible.
+
+## Import Model
+
+Airbnb listing -> private Airbnb iCal export URL -> website calendar import.
+
+Each of the four suites will have one server-only env var:
+
+- `AIRBNB_ICAL_SUITE_QUEEN_CON_SALA`
+- `AIRBNB_ICAL_SUITE_QUEEN_CENTRO_HISTORICO`
+- `AIRBNB_ICAL_SUITE_QUEEN_CON_VISTA`
+- `AIRBNB_ICAL_MINI_APARTAMENTO_FAMILIAR`
+
+The website parses all-day iCal events into unavailable date ranges and stores
+them in `external_blocks`. Public users never see the raw Airbnb URL.
+
+## Export Model
+
+Confirmed web reservations and manual owner blocks -> website `.ics` feed ->
+Airbnb imports that feed.
+
+The feed route is prepared as:
+
+`/api/ical/[roomSlug]?token=BOOKING_ICAL_SECRET`
+
+It is disabled until `BOOKING_ICAL_SECRET` and Supabase server credentials are
+configured. Feed events use generic text: `Blocked - La Casa de Roos`. Guest
+name, email, phone, and message never enter the exported `.ics`.
+
+## Refresh Delay And Double-Booking Risk
+
+Airbnb pulls imported calendars on its own schedule, often every few hours.
+That means a website-confirmed booking can take time to block on Airbnb. This
+site must not promise instant two-way sync.
+
+Safe launch rule: keep request-to-book. A guest submits dates, Roos checks
+availability, then confirms manually. At confirmation time the system should
+refresh Airbnb iCal again and then create/confirm the website reservation.
+
+## Failure Behavior
+
+- If Supabase env vars are missing, availability API returns a disabled state.
+- If Airbnb iCal URL is missing, that room remains manual-confirmation only.
+- If Airbnb fetch fails, owner confirmation remains required and UI must stay
+  conservative.
+- If website `.ics` secret is missing, export route returns disabled status.
+- If overlap checks fail, reservation remains unconfirmed and owner resolves it.
+
+## Manual Override Needs
+
+Owner/admin will need a way to:
+
+- block dates manually;
+- edit/cancel blocks;
+- confirm/cancel reservation requests;
+- see last iCal sync status per room;
+- force a fresh iCal sync before confirming;
+- rotate Airbnb iCal URLs and website export secret if leaked.
+
+## Upgrade Path
+
+Phase 2 uses iCal + request-to-book. Upgrade when volume or risk demands:
+
+1. PMS/channel manager such as Smoobu, Beds24, Hospitable, Lodgify, Hostaway.
+2. Direct payment confirmation with Culqi once keys, RUC, and deposit policy
+   are ready.
+3. Owner admin dashboard with sync health, manual blocks, and payments.
+
+## Prepared Code
+
+- `src/lib/booking/ical.ts`: parse Airbnb iCal, generate website `.ics`.
+- `src/lib/booking/availability.ts`: combine imported/stored blocks.
+- `src/app/api/availability/route.ts`: read-only availability endpoint.
+- `src/app/api/reservation-requests/route.ts`: disabled-safe request endpoint.
+- `src/app/api/ical/[roomSlug]/route.ts`: protected website export feed.
+- `supabase/migrations/20260611143000_booking_calendar_foundation.sql`: schema.
