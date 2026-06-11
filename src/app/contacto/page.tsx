@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
 import { site } from "@/data/site";
 import { whatsappUrl, defaultWhatsappMessage } from "@/lib/whatsapp";
-import { WhatsApp, MapPin, ArrowRight } from "@/components/icons";
+import { SectionMotifs } from "@/components/motifs";
+import {
+  WhatsApp,
+  MapPin,
+  ArrowRight,
+  Instagram,
+  TikTok,
+  Facebook,
+} from "@/components/icons";
 
 export const metadata: Metadata = {
   title: "Contacto",
@@ -12,86 +20,90 @@ export const metadata: Metadata = {
 
 export default function ContactoPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-14">
-      <div className="text-center">
-        <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
-          Estamos para ayudarte
-        </p>
-        <h1 className="font-display text-4xl font-extrabold text-tinta-900">Contacto</h1>
-        <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-tinta-700">
-          El canal más rápido es WhatsApp: Roos responde normalmente en minutos.
-        </p>
-      </div>
-
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        <a
-          href={whatsappUrl(defaultWhatsappMessage)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group rounded-lg border border-sillar-200 bg-white p-6 shadow-sm transition-colors hover:border-arcilla-400"
-        >
-          <WhatsApp className="h-8 w-8 text-[#25D366]" />
-          <h2 className="mt-3 font-display text-xl font-bold text-tinta-900">
-            WhatsApp
-          </h2>
-          <p className="mt-1 text-sm text-tinta-700">{site.whatsappDisplay}</p>
-          <p className="mt-3 flex items-center gap-1.5 text-sm font-semibold text-arcilla-600">
-            Iniciar conversación
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+    <div className="relative overflow-hidden">
+      <SectionMotifs variant="band" />
+      <div className="relative mx-auto max-w-3xl px-6 py-14">
+        <div className="text-center">
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
+            Estamos para ayudarte
           </p>
-        </a>
-
-        <a
-          href={site.mapsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group rounded-lg border border-sillar-200 bg-white p-6 shadow-sm transition-colors hover:border-arcilla-400"
-        >
-          <MapPin className="h-8 w-8 text-arcilla-500" />
-          <h2 className="mt-3 font-display text-xl font-bold text-tinta-900">
-            Ubicación
-          </h2>
-          <p className="mt-1 text-sm text-tinta-700">{site.neighborhood}</p>
-          {/* TODO(owner): publish exact street address when provided (Q4 — approved). */}
-          <p className="mt-3 flex items-center gap-1.5 text-sm font-semibold text-arcilla-600">
-            Abrir en Google Maps
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          <h1 className="font-display text-4xl font-extrabold text-tinta-900">Contacto</h1>
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-tinta-700">
+            El canal más rápido es WhatsApp: Roos responde normalmente en minutos.
           </p>
-        </a>
+        </div>
+
+        <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <a
+            href={whatsappUrl(defaultWhatsappMessage)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group rounded-lg border border-sillar-200 bg-white p-6 shadow-sm transition-colors hover:border-arcilla-400"
+          >
+            <WhatsApp className="h-8 w-8 text-[#25D366]" />
+            <h2 className="mt-3 font-display text-xl font-bold text-tinta-900">
+              WhatsApp
+            </h2>
+            <p className="mt-1 text-sm text-tinta-700">{site.whatsappDisplay}</p>
+            <p className="mt-3 flex items-center gap-1.5 text-sm font-semibold text-arcilla-600">
+              Iniciar conversación
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </p>
+          </a>
+
+          <a
+            href={site.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group rounded-lg border border-sillar-200 bg-white p-6 shadow-sm transition-colors hover:border-arcilla-400"
+          >
+            <MapPin className="h-8 w-8 text-arcilla-500" />
+            <h2 className="mt-3 font-display text-xl font-bold text-tinta-900">
+              Ubicación
+            </h2>
+            <p className="mt-1 text-sm text-tinta-700">{site.neighborhood}</p>
+            {/* TODO(owner): publish exact street address when provided (Q4 — approved). */}
+            <p className="mt-3 flex items-center gap-1.5 text-sm font-semibold text-arcilla-600">
+              Abrir en Google Maps
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </p>
+          </a>
+        </div>
+
+        <section className="mt-12">
+          <h2 className="text-center text-xs font-bold uppercase tracking-[0.16em] text-tinta-900">
+            Síguenos
+          </h2>
+          <ul className="mt-4 grid grid-cols-1 gap-3 text-sm sm:grid-cols-3">
+            {(
+              [
+                ["Instagram", site.social.instagram, Instagram],
+                ["TikTok", site.social.tiktok, TikTok],
+                ["Facebook", site.social.facebook, Facebook],
+              ] as const
+            ).map(([name, url, Icon]) => (
+              <li key={name}>
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2.5 border border-sillar-200 bg-sillar-50/60 px-5 py-3.5 font-semibold text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
+                >
+                  <Icon className="h-4.5 w-4.5 text-arcilla-500" />
+                  {name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="mt-10 border-l-2 border-arcilla-500 bg-sillar-50 p-5 text-xs leading-relaxed text-tinta-500">
+          Para llegadas: el check-in es autónomo con caja de seguridad desde las{" "}
+          {site.checkin}; las llaves se devuelven en el segundo piso (Estudio
+          Museo Lozada Tamayo Coworking). Te enviamos las instrucciones completas
+          al confirmar tu reserva.
+        </section>
       </div>
-
-      <section className="mt-12">
-        <h2 className="text-center text-xs font-bold uppercase tracking-[0.16em] text-tinta-900">
-          Síguenos
-        </h2>
-        <ul className="mt-4 grid grid-cols-1 gap-3 text-sm sm:grid-cols-3">
-          {(
-            [
-              ["Instagram", site.social.instagram],
-              ["TikTok", site.social.tiktok],
-              ["Facebook", site.social.facebook],
-            ] as const
-          ).map(([name, url]) => (
-            <li key={name}>
-              <a
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center border border-sillar-200 bg-sillar-50/60 px-5 py-3.5 font-semibold text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
-              >
-                {name}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="mt-10 border-l-2 border-arcilla-500 bg-sillar-50 p-5 text-xs leading-relaxed text-tinta-500">
-        Para llegadas: el check-in es autónomo con caja de seguridad desde las{" "}
-        {site.checkin}; las llaves se devuelven en el segundo piso (Estudio
-        Museo Lozada Tamayo Coworking). Te enviamos las instrucciones completas
-        al confirmar tu reserva.
-      </section>
     </div>
   );
 }

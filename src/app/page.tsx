@@ -6,6 +6,7 @@ import { site, landmarks } from "@/data/site";
 import { RoomCard } from "@/components/room-card";
 import { TrustStrip } from "@/components/trust-strip";
 import { PlaceholderImage } from "@/components/placeholder-image";
+import { SectionMotifs } from "@/components/motifs";
 import { whatsappUrl, defaultWhatsappMessage } from "@/lib/whatsapp";
 import {
   WhatsApp,
@@ -52,54 +53,42 @@ const teaserExperiences = arequipaExperiences.filter((e) =>
 export default function HomePage() {
   return (
     <>
-      {/* Hero — centered editorial stack over a wide photo
-          (composition cue: lazzat.online's logo-led, centered hero). */}
-      <section className="bg-white">
-        <div className="mx-auto max-w-6xl px-6 pt-12 sm:pt-16">
+      {/* Hero — brand-led stack: name, lockup, the two actions, then the
+          photo and review proof (composition cue: lazzat.online's logo-led,
+          centered hero). The location pitch moved to the band below. */}
+      <section className="relative overflow-hidden bg-white">
+        <SectionMotifs variant="hero" />
+        <div className="relative mx-auto max-w-6xl px-6 pt-12 sm:pt-16">
           <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-            {/* Owner-provided brand lockup as a small crest above the title. */}
+            <h1 className="font-display text-4xl font-extrabold leading-[1.05] text-tinta-900 sm:text-5xl lg:text-6xl">
+              La Casa de <span className="text-arcilla-500">Roos</span>
+            </h1>
+            {/* Owner-provided brand lockup as the crest under the name. */}
             <Image
               src="/images/brand/logo-mark.jpg"
               alt="Logo de La Casa de Roos"
-              width={88}
-              height={88}
+              width={128}
+              height={128}
               priority
-              className="h-20 w-20 rounded-xl border border-sillar-200 object-cover sm:h-22 sm:w-22"
+              className="mt-7 h-28 w-28 rounded-2xl border border-sillar-200 object-cover shadow-sm sm:h-32 sm:w-32"
             />
-            <p className="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-tinta-700">
-              <MapPin className="h-3.5 w-3.5 text-arcilla-500" />
-              Centro Histórico · Arequipa, Perú
-            </p>
-            <h1 className="mt-4 font-display text-3xl font-extrabold leading-[1.12] text-tinta-900 sm:text-4xl lg:text-5xl">
-              Tu suite privada en la{" "}
-              <span className="text-arcilla-500">Ciudad Blanca</span>
-            </h1>
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-tinta-700 sm:text-lg">
-              A una cuadra de la Calle Mercaderes y a pasos de la Plaza de
-              Armas: cuatro suites privadas con baño propio, sala de estar,
-              kitchenette y llegada autónoma. Y una anfitriona que responde en
-              minutos.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <div className="mt-9 flex flex-wrap justify-center gap-3">
               <Link
                 href="/habitaciones"
-                aria-label="Ver habitaciones"
-                className="inline-flex items-center gap-2 bg-arcilla-500 px-6 py-3 text-base font-semibold text-white shadow-sm transition-colors hover:bg-arcilla-600"
+                className="inline-flex items-center gap-2 bg-arcilla-500 px-7 py-3.5 text-sm font-bold uppercase tracking-[0.12em] text-white shadow-sm transition-colors hover:bg-arcilla-600"
               >
-                <span className="sm:hidden">Ver suites</span>
-                <span className="hidden sm:inline">Ver habitaciones</span>
+                Ver habitaciones
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <a
                 href={whatsappUrl(defaultWhatsappMessage)}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Escribir por WhatsApp"
-                className="inline-flex items-center gap-2 border-b border-arcilla-500 px-1 py-3 text-base font-semibold text-tinta-900 transition-colors hover:text-arcilla-600"
+                aria-label="Escríbenos por WhatsApp"
+                className="inline-flex items-center gap-2 border border-sillar-300 bg-white px-7 py-3.5 text-sm font-bold uppercase tracking-[0.12em] text-tinta-900 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"
               >
                 <WhatsApp className="h-5 w-5 text-[#25D366]" />
-                <span className="sm:hidden">WhatsApp</span>
-                <span className="hidden sm:inline">Escríbenos</span>
+                Escríbenos
               </a>
             </div>
           </div>
@@ -129,6 +118,28 @@ export default function HomePage() {
       </section>
 
       <TrustStrip />
+
+      {/* Location pitch — the former hero copy, now a supporting band
+          between the proof strip and the suites. */}
+      <section className="relative overflow-hidden bg-white">
+        <SectionMotifs variant="band" />
+        <div className="relative mx-auto max-w-4xl px-6 pb-4 pt-14 text-center lg:pt-16">
+          <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-tinta-700">
+            <MapPin className="h-3.5 w-3.5 text-arcilla-500" />
+            Centro Histórico · Arequipa, Perú
+          </p>
+          <h2 className="mt-4 font-display text-2xl font-extrabold leading-[1.12] text-tinta-900 sm:text-3xl lg:text-4xl">
+            Tu suite privada en la{" "}
+            <span className="text-arcilla-500">Ciudad Blanca</span>
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-tinta-700 sm:text-lg">
+            A una cuadra de la Calle Mercaderes y a pasos de la Plaza de
+            Armas: cuatro suites privadas con baño propio, sala de estar,
+            kitchenette y llegada autónoma. Y una anfitriona que responde en
+            minutos.
+          </p>
+        </div>
+      </section>
 
       {/* Suites — centered heading, grid, centered closing action. */}
       <section className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
@@ -160,11 +171,12 @@ export default function HomePage() {
       </section>
 
       {/* Why us — centered heading over a 4-column feature row. */}
-      <section className="border-y border-sillar-200 bg-sillar-50/60">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
+      <section className="relative overflow-hidden border-y border-sillar-200 bg-sillar-50/60">
+        <SectionMotifs variant="panel" />
+        <div className="relative mx-auto max-w-6xl px-6 py-16 lg:py-24">
           <div className="mx-auto mb-12 max-w-4xl text-center">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-arcilla-500">
-              Por qué nosotros
+              ¿Por qué nosotros?
             </p>
             <h2 className="font-display text-2xl font-bold leading-snug text-tinta-900 sm:text-3xl lg:text-4xl">
               Hecho para descansar, pensado para confiar
@@ -317,8 +329,9 @@ export default function HomePage() {
       </section>
 
       {/* CTA — centered card (composition cue: lazzat.online's app card). */}
-      <section className="border-t border-sillar-200 bg-sillar-50/60">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+      <section className="relative overflow-hidden border-t border-sillar-200 bg-sillar-50/60">
+        <SectionMotifs variant="cta" />
+        <div className="relative mx-auto max-w-6xl px-6 py-16 lg:py-20">
           <div className="mx-auto max-w-3xl rounded-xl border border-sillar-200 bg-white px-6 py-12 text-center shadow-sm sm:px-12">
             <Image
               src="/images/brand/logo-mark.jpg"

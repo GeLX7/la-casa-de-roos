@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { site } from "@/data/site";
 import { whatsappUrl, defaultWhatsappMessage } from "@/lib/whatsapp";
-import { Instagram, TikTok, Facebook, WhatsApp } from "@/components/icons";
+import { Instagram, TikTok, Facebook, WhatsApp, MapPin } from "@/components/icons";
 
 const socials = [
   { name: "Instagram", href: site.social.instagram, icon: Instagram },
@@ -52,12 +52,14 @@ export function Footer() {
           </p>
           <ul className="space-y-2 text-tinta-700">
             <li>
-              <a href={whatsappUrl(defaultWhatsappMessage)} target="_blank" rel="noopener noreferrer" className="hover:text-arcilla-600">
+              <a href={whatsappUrl(defaultWhatsappMessage)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-arcilla-600">
+                <WhatsApp className="h-4 w-4 shrink-0 text-arcilla-500" />
                 WhatsApp {site.whatsappDisplay}
               </a>
             </li>
             <li>
-              <a href={site.mapsUrl} target="_blank" rel="noopener noreferrer" className="hover:text-arcilla-600">
+              <a href={site.mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-arcilla-600">
+                <MapPin className="h-4 w-4 shrink-0 text-arcilla-500" />
                 Ver en Google Maps
               </a>
             </li>

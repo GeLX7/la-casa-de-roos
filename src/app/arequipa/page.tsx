@@ -9,6 +9,7 @@ import {
 } from "@/data/arequipa";
 import { site, landmarks } from "@/data/site";
 import { PlaceholderImage } from "@/components/placeholder-image";
+import { SectionMotifs } from "@/components/motifs";
 import { ArrowRight, CalendarIcon, MapPin, Moon, SharedKitchen } from "@/components/icons";
 
 export const metadata: Metadata = {
@@ -47,8 +48,9 @@ export default function ArequipaPage() {
       {/* Hero — centered editorial stack over a wide panorama.
           Tourism images: temporary reference assets from Arequipa.com
           (docs/research/content-rights-checklist.md). */}
-      <section className="border-b border-sillar-200">
-        <div className="mx-auto max-w-6xl px-6 pb-12 pt-14 lg:pt-20">
+      <section className="relative overflow-hidden border-b border-sillar-200">
+        <SectionMotifs variant="panel" />
+        <div className="relative mx-auto max-w-6xl px-6 pb-12 pt-14 lg:pt-20">
           <div className="mx-auto max-w-4xl text-center">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-arcilla-600">
               Guía local
@@ -117,7 +119,7 @@ export default function ArequipaPage() {
         <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr]">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-arcilla-600">
-              Por qué el centro
+              ¿Por qué el centro?
             </p>
             <h2 className="mt-3 font-display text-2xl font-bold leading-snug text-tinta-900 sm:text-3xl">
               Base práctica, días más ligeros.
@@ -162,7 +164,7 @@ export default function ArequipaPage() {
         <div className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
           <div className="mx-auto mb-12 max-w-3xl text-center">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-arcilla-600">
-              Qué hacer
+              ¿Qué hacer?
             </p>
             <h2 className="mt-3 font-display text-2xl font-bold text-tinta-900 sm:text-3xl lg:text-4xl">
               Lugares imperdibles

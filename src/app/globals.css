@@ -19,10 +19,16 @@
   --color-tinta-900: #292420;
 
   /* Deep roasted browns sampled around the logo lockup's wordmark —
-     used for the branded header/nav only (site stays white-first). */
+     header text, footer accents (site stays white-first). */
   --color-cacao-700: #5d4430;
   --color-cacao-800: #4a3424;
   --color-cacao-900: #3b2a1d;
+
+  /* Cream sampled from the logo lockup's own background (#fdf2e0 avg of
+     corner/edge regions of logo-mark.jpg) — the header bar uses it so the
+     JPG mark merges seamlessly with the bar. */
+  --color-crema-50: #fdf2e0;
+  --color-crema-100: #f8ecd6;
 
   --color-arcilla-50: #fbefe8;
   --color-arcilla-400: #d2693f;
@@ -64,6 +70,37 @@ p {
 :where(a, button, input, select, textarea):focus-visible {
   outline: 2px solid var(--color-arcilla-500);
   outline-offset: 3px;
+}
+
+/* Decorative background motifs (src/components/motifs.tsx): hand-drawn
+   line-art accents floating very slowly behind section content. Inspired by
+   lazzat.online's drifting background squares, recolored and redrawn for
+   the brand (sillar arches, the logo's flower, Misti, tile clusters).
+   Transform-only animation; the global reduced-motion override disables it. */
+.motif-drift-a,
+.motif-drift-b,
+.motif-drift-c {
+  animation: motif-drift 18s ease-in-out infinite;
+  will-change: transform;
+}
+.motif-drift-b {
+  animation-duration: 26s;
+  animation-delay: -8s;
+}
+.motif-drift-c {
+  animation-duration: 34s;
+  animation-delay: -17s;
+}
+
+@keyframes motif-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(var(--motif-rot, 0deg));
+  }
+  50% {
+    transform: translate3d(0, -16px, 0)
+      rotate(calc(var(--motif-rot, 0deg) + 2.5deg));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -163,7 +163,7 @@ export default async function RoomPage({
 
           <section>
             <h2 className="mb-4 font-display text-2xl font-bold text-tinta-900">
-              Qué incluye
+              ¿Qué incluye?
             </h2>
             <AmenityList items={listing.amenities} />
             <h3 className="mb-2 mt-6 text-sm font-semibold text-tinta-900">
@@ -192,7 +192,7 @@ export default async function RoomPage({
         </div>
 
         {/* Booking panel */}
-        <aside className="h-fit rounded-lg border border-sillar-200 bg-white p-6 shadow-sm lg:sticky lg:top-24">
+        <aside className="h-fit rounded-lg border border-sillar-200 bg-white p-6 shadow-sm lg:sticky lg:top-28">
           <div className="flex items-baseline justify-between gap-3">
             <p className="font-display text-2xl font-bold text-arcilla-600">
               {listing.priceLabel}

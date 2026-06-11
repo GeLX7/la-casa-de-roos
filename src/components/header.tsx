@@ -12,54 +12,62 @@ const nav = [
   { href: "/contacto", label: "Contacto" },
 ] as const;
 
-/* Branded bar: deep roasted brown from the logo lockup; the rest of the
-   site stays white-first. Focus rings switch to white here for contrast. */
+/* Branded bar in the logo's own background cream (crema-50, sampled from
+   logo-mark.jpg) so the mark merges seamlessly with the bar and can sit
+   large on the left as the brand anchor. Layout: brand left, nav centered,
+   reserve CTA right. Text drops to the lockup's cacao brown for contrast
+   on cream; the CTA keeps white-on-arcilla. */
 export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-40 border-b border-cacao-900/70 bg-cacao-800/95 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+    <header className="sticky top-0 z-40 border-b border-sillar-300/70 bg-crema-50/95 backdrop-blur">
+      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6 md:grid md:grid-cols-[1fr_auto_1fr]">
         <Link
           href="/"
-          className="flex items-center gap-3 focus-visible:outline-white"
+          className="flex shrink-0 items-center gap-3 md:justify-self-start"
         >
-          {/* Owner-provided brand lockup (docs/research/content-rights-checklist.md) */}
+          {/* Owner-provided brand lockup (docs/research/content-rights-checklist.md);
+              borderless so it blends into the matching cream bar. */}
           <Image
             src="/images/brand/logo-mark.jpg"
             alt=""
-            width={40}
-            height={40}
-            className="h-10 w-10 rounded-md border border-white/20 object-cover"
+            width={56}
+            height={56}
+            className="h-14 w-14 rounded-md object-cover"
             priority
           />
-          <span className="font-display text-sm font-bold uppercase tracking-[0.1em] text-white">
-            La Casa de <span className="text-sillar-300">Roos</span>
+          <span className="font-display text-sm font-extrabold uppercase leading-tight tracking-[0.08em] text-cacao-900 sm:text-[15px]">
+            La Casa de <span className="text-arcilla-600">Roos</span>
           </span>
         </Link>
 
-        <nav aria-label="Principal" className="hidden items-center gap-6 sm:flex">
+        <nav
+          aria-label="Principal"
+          className="hidden items-center justify-center gap-6 md:flex lg:gap-8"
+        >
           {nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`border-b-2 pb-1 text-xs font-semibold uppercase tracking-[0.14em] transition-colors focus-visible:outline-white ${
+              className={`border-b-2 pb-1 text-xs font-bold uppercase tracking-[0.14em] transition-colors ${
                 pathname === item.href
-                  ? "border-sillar-300 text-white"
-                  : "border-transparent text-white/75 hover:text-white"
+                  ? "border-arcilla-500 text-cacao-900"
+                  : "border-transparent text-cacao-800/70 hover:text-cacao-900"
               }`}
             >
               {item.label}
             </Link>
           ))}
-          <Link
-            href="/reservar"
-            className="bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] text-cacao-900 shadow-sm transition-colors hover:bg-sillar-100 focus-visible:outline-white"
-          >
-            Solicitar reserva
-          </Link>
         </nav>
+
+        <Link
+          href="/reservar"
+          className="hidden bg-arcilla-500 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.1em] text-white shadow-sm transition-colors hover:bg-arcilla-600 md:inline-flex md:justify-self-end"
+        >
+          Solicitar reserva
+        </Link>
 
         <button
           type="button"
@@ -67,7 +75,7 @@ export function Header() {
           aria-expanded={open}
           aria-controls="mobile-nav"
           aria-label={open ? "Cerrar menú" : "Abrir menú"}
-          className="flex h-10 w-10 items-center justify-center rounded-lg text-white focus-visible:outline-white sm:hidden"
+          className="flex h-11 w-11 items-center justify-center rounded-lg text-cacao-900 md:hidden"
         >
           <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             {open ? (
@@ -83,7 +91,7 @@ export function Header() {
         <nav
           id="mobile-nav"
           aria-label="Principal móvil"
-          className="border-t border-white/10 bg-cacao-800 px-6 py-4 sm:hidden"
+          className="border-t border-sillar-300/70 bg-crema-50 px-6 py-4 md:hidden"
         >
           <ul className="flex flex-col gap-3">
             {nav.map((item) => (
@@ -91,10 +99,10 @@ export function Header() {
                 <Link
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className={`block border-l-2 py-1.5 pl-3 text-sm font-semibold uppercase tracking-[0.14em] focus-visible:outline-white ${
+                  className={`block border-l-2 py-1.5 pl-3 text-sm font-bold uppercase tracking-[0.14em] ${
                     pathname === item.href
-                      ? "border-sillar-300 text-white"
-                      : "border-transparent text-white/75"
+                      ? "border-arcilla-500 text-cacao-900"
+                      : "border-transparent text-cacao-800/70"
                   }`}
                 >
                   {item.label}
@@ -105,7 +113,7 @@ export function Header() {
               <Link
                 href="/reservar"
                 onClick={() => setOpen(false)}
-                className="mt-1 block bg-white px-4 py-2.5 text-center text-sm font-bold uppercase tracking-[0.1em] text-cacao-900 focus-visible:outline-white"
+                className="mt-1 block bg-arcilla-500 px-4 py-2.5 text-center text-sm font-bold uppercase tracking-[0.1em] text-white"
               >
                 Solicitar reserva
               </Link>
