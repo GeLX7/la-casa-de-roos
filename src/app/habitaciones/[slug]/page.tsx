@@ -34,7 +34,10 @@ export async function generateMetadata({
   const listing = getListing(slug);
   if (!listing) return {};
   return {
-    title: `${listing.title} · ${listing.subtitle}`,
+    /* Listing titles already carry the location keywords; the layout
+       template appends "· La Casa de Roos". Adding the subtitle too blows
+       far past Google's title display width. */
+    title: listing.title,
     description: listing.shortDescription,
     alternates: { canonical: `/habitaciones/${listing.slug}` },
     openGraph: {

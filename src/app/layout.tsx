@@ -4,7 +4,7 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { WhatsAppFab } from "@/components/whatsapp-fab";
 import { JsonLd } from "@/components/json-ld";
-import { site, SITE_URL } from "@/data/site";
+import { site, SITE_URL, INDEXABLE } from "@/data/site";
 import { listings } from "@/data/listings";
 import "./globals.css";
 
@@ -16,36 +16,38 @@ const montserrat = Montserrat({
   weight: ["400", "500", "600", "700", "800"],
 });
 
-/* Brand name reads uppercase wherever it titles the site (tab, search
-   results, link previews), matching the wordmark. Icons and the OG/Twitter
-   images come from the app-dir file conventions (favicon.ico, icon.png,
+/* Metadata uses the brand in normal title case ("La Casa de Roos") — the
+   uppercase treatment is a purely visual design system for on-page
+   headings, and shouting in the tab/search snippet reads like spam to
+   users and to Google's title rewriter. Icons and the OG/Twitter images
+   come from the app-dir file conventions (favicon.ico, icon.png,
    apple-icon.png, opengraph-image.jpg, twitter-image.jpg) so Next emits
    the tags with correct absolute URLs — no Vercel/Next default icon. */
-const siteTitle = site.name.toUpperCase();
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${siteTitle} · ${site.tagline}`,
-    template: `%s · ${siteTitle}`,
+    default: `${site.name} · ${site.seoTagline}`,
+    template: `%s · ${site.name}`,
   },
   description: site.description,
-  applicationName: siteTitle,
+  applicationName: site.name,
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: site.locale,
-    siteName: siteTitle,
-    title: `${siteTitle} · ${site.tagline}`,
+    siteName: site.name,
+    title: `${site.name} · ${site.tagline}`,
     description: site.description,
     url: SITE_URL,
   },
   twitter: {
     card: "summary_large_image",
-    title: siteTitle,
+    title: site.name,
     description: site.description,
   },
-  robots: { index: true, follow: true },
+  robots: INDEXABLE
+    ? { index: true, follow: true }
+    : { index: false, follow: true },
 };
 
 export const viewport: Viewport = {
@@ -64,6 +66,8 @@ const lodgingJsonLd = {
   logo: `${SITE_URL}/images/brand/logo.jpg`,
   image: `${SITE_URL}/images/brand/landing-page.jpg`,
   telephone: `+${site.whatsappNumber}`,
+  numberOfRooms: 4,
+  hasMap: site.mapsUrl,
   checkinTime: site.checkin,
   checkoutTime: site.checkout,
   address: {

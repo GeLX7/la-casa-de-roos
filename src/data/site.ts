@@ -11,10 +11,19 @@
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://la-casa-de-roos.vercel.app";
 
+/* Master indexing switch. While false, every page carries noindex: the
+   site stays out of Google until the custom domain resolves and the SEO
+   launch plan (docs/seo/SEO_LAUNCH_PLAN.md) is approved. Flip to true,
+   redeploy, then follow the plan's go-live checklist. */
+export const INDEXABLE = false;
+
 export const site = {
   name: "La Casa de Roos",
   tagline:
     "Suites y minidepartamentos en el corazón del Centro Histórico de Arequipa",
+  /* Short variant for <title> (the full tagline pushes the browser/search
+     title past Google's ~60-char display cutoff). */
+  seoTagline: "Suites en el Centro Histórico de Arequipa",
   description:
     "Suites privadas con baño propio, sala de estar y kitchenette en el Centro Histórico de Arequipa, a una cuadra de la Calle Mercaderes y a pasos de la Plaza de Armas.",
   locale: "es_PE",
