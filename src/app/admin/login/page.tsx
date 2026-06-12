@@ -7,11 +7,10 @@ import { SubmitButton } from "@/components/admin/buttons";
 import { Field, SetupNeededCard, inputClass } from "@/components/admin/ui";
 
 const ERROR_MESSAGES: Record<string, string> = {
-  missing: "Escribe tu correo y contraseña.",
-  invalid_credentials: "Correo o contraseña incorrectos.",
-  not_admin: "Esta cuenta no tiene permisos de administración.",
-  configuration_needed: "Supabase aún no está configurado.",
-  upstream_error: "No se pudo conectar con el servidor de autenticación. Intenta de nuevo.",
+  missing: "Escribe tu usuario y contraseña.",
+  invalid_credentials: "Usuario o contraseña incorrectos.",
+  rate_limited: "Demasiados intentos. Espera unos minutos y vuelve a intentarlo.",
+  configuration_needed: "Las credenciales de admin aún no están configuradas.",
 };
 
 export default async function AdminLoginPage({
@@ -22,9 +21,9 @@ export default async function AdminLoginPage({
   const { error } = await searchParams;
   const config = getAdminRuntimeConfig();
 
-  if (config.fullyConfigured && (await getAdminSession())) {
-    redirect("/admin");
-  }
+  // The proxy already blocks this while the kill switch is off; re-check anyway.
+  if (!config.adminRoutesEnabled) redirect("/");
+  if (config.credentialsReady && (await getAdminSession())) redirect("/admin");
 
   return (
     <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-6 py-12">
@@ -36,20 +35,17 @@ export default async function AdminLoginPage({
       </h1>
 
       <div className="mt-8">
-        {!config.fullyConfigured ? (
-          <SetupNeededCard title="Configuración pendiente">
+        {!config.credentialsReady ? (
+          <SetupNeededCard title="Credenciales pendientes">
             <p>
-              El inicio de sesión se activa cuando exista el proyecto de Supabase y las
-              variables <code>NEXT_PUBLIC_SUPABASE_URL</code>,{" "}
-              <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code> y{" "}
-              <code>SUPABASE_SERVICE_ROLE_KEY</code> estén definidas.
+              El inicio de sesión se activa cuando existan las variables de entorno{" "}
+              <code>ADMIN_USERNAME</code>, <code>ADMIN_PASSWORD_HASH</code> y{" "}
+              <code>ADMIN_SESSION_SECRET</code>.
             </p>
             <p>
-              Mientras tanto puedes revisar el estado general en el{" "}
-              <Link href="/admin" className="underline underline-offset-2">
-                panel de configuración
-              </Link>
-              .
+              El hash de la contraseña se genera localmente con{" "}
+              <code>scripts/hash-admin-password.mjs</code> — la contraseña en claro nunca
+              se guarda en el repositorio ni en la base de datos.
             </p>
           </SetupNeededCard>
         ) : (
@@ -62,13 +58,15 @@ export default async function AdminLoginPage({
                 {ERROR_MESSAGES[error] ?? "No se pudo iniciar sesión."}
               </p>
             )}
-            <Field label="Correo" htmlFor="email">
+            <Field label="Usuario" htmlFor="username">
               <input
-                id="email"
-                name="email"
-                type="email"
+                id="username"
+                name="username"
+                type="text"
                 required
-                autoComplete="email"
+                autoComplete="username"
+                autoCapitalize="none"
+                spellCheck={false}
                 className={inputClass}
               />
             </Field>

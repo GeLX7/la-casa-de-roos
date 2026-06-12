@@ -42,7 +42,7 @@ export default async function AdminPanelLayout({ children }: { children: ReactNo
           </div>
           {guard.configured ? (
             <form action={logoutAction} className="flex items-center gap-3">
-              <span className="text-xs text-tinta-500">{guard.session.email}</span>
+              <span className="text-xs text-tinta-500">{guard.session.username}</span>
               <button
                 type="submit"
                 className="rounded-md border border-sillar-300 px-3 py-1.5 text-xs font-semibold text-tinta-700 transition-colors hover:border-arcilla-400 hover:text-arcilla-600"

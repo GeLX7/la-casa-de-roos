@@ -178,7 +178,7 @@ export default async function AdminRoomEditPage({
   const { slug } = await params;
   const { saved, error } = await searchParams;
 
-  if (!guard.configured) {
+  if (!guard.configured || !guard.dbReady) {
     return (
       <SetupNeededCard title="Editar habitaciones requiere Supabase">
         <p>

@@ -48,22 +48,33 @@ notes, rules, gallery metadata, Airbnb ratings, calendar source refs):
 ⚠ Run the seed **once**, at initial setup. Re-running later overwrites any
 edits the owner made to those four suites in the admin.
 
-## 4. Create the first admin user
+## 4. Configure the admin credentials (no Supabase Auth)
 
-1. Supabase Dashboard → Authentication → Users → **Add user** → email +
-   strong password (e.g. the owner's email). Mark email as confirmed.
-2. Copy the new user's UUID.
-3. SQL editor:
+Admin login is username + password verified against env vars — Supabase Auth
+is not involved, so no auth user is created. **The plaintext password must
+never be committed, logged, or pasted into chats/issues.**
 
-```sql
-insert into public.admin_users (user_id, email, note)
-values ('<user-uuid>', 'owner@example.com', 'Roos — owner');
+1. On your local machine, generate the salted PBKDF2 hash (the script prompts
+   twice with hidden input and prints only the hash):
+
+```bash
+node scripts/hash-admin-password.mjs
+# or pipe it straight into Vercel so the hash never shows on screen:
+node scripts/hash-admin-password.mjs | vercel env add ADMIN_PASSWORD_HASH production
 ```
 
-Only users in `admin_users` can use the admin, regardless of valid login.
-Optional: Authentication → Settings → disable public signups (the site never
-signs users up, but it removes the surface entirely). Consider raising the JWT
-expiry (e.g. 8 h) so admin sessions last longer — there is no silent refresh yet.
+2. Generate the session-signing secret:
+
+```bash
+openssl rand -base64 48
+```
+
+3. You now have the four admin env vars for step 5: `ENABLE_ADMIN_ROUTES=true`,
+   `ADMIN_USERNAME` (e.g. `luislazaro`), `ADMIN_PASSWORD_HASH`,
+   `ADMIN_SESSION_SECRET`.
+
+Rotating the password later = re-run the hash script and replace the env var.
+Rotating `ADMIN_SESSION_SECRET` instantly invalidates every active session.
 
 ## 5. Set the environment variables
 
@@ -74,11 +85,16 @@ Preview) — and locally in `.env.local`:
 NEXT_PUBLIC_SUPABASE_URL=https://<ref>.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon key>
 SUPABASE_SERVICE_ROLE_KEY=<service role key>   # server-only secret
+ENABLE_ADMIN_ROUTES=true                       # kill switch — admin is dark without it
+ADMIN_USERNAME=<username>
+ADMIN_PASSWORD_HASH=<output of scripts/hash-admin-password.mjs>
+ADMIN_SESSION_SECRET=<output of openssl rand -base64 48>
 ```
 
-Redeploy. `/admin/login` now shows the login form; log in with the user from
-step 4. The dashboard switches from placeholder stats to live counts, and the
-catalog becomes editable.
+Redeploy. `/admin/login` now shows the username/password form. The dashboard
+switches from placeholder stats to live counts, and the catalog becomes
+editable. (The admin login itself works even before steps 1–3 of the Supabase
+setup — only catalog editing needs the database.)
 
 ## 6. (Later, separate decision) point the public site at Supabase
 

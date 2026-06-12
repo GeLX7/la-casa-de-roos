@@ -27,7 +27,9 @@ Status: docs only. No admin UI is built in this branch.
 
 ## Suggested First Version
 
-1. Passwordless owner login through Supabase Auth.
+1. ~~Passwordless owner login through Supabase Auth.~~ Superseded (2026-06-11):
+   username/password against env-var credentials, no Supabase Auth — see
+   `docs/architecture/admin-mode.md`.
 2. Requests table with filters: requested, pending payment, confirmed,
    cancelled, expired.
 3. Manual block form.

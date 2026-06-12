@@ -20,9 +20,11 @@ export default async function AdminDashboardPage() {
       <div>
         <h1 className="font-display text-xl font-extrabold text-tinta-900">Panel</h1>
         <p className="mt-1 text-sm text-tinta-500">
-          {guard.configured
-            ? "Resumen de la casa y estado del sistema."
-            : "Vista previa con datos del catálogo estático. Configura Supabase para activar la edición y las estadísticas en vivo."}
+          {!guard.configured
+            ? "Vista previa con el catálogo estático. Configura las credenciales de admin para iniciar sesión."
+            : !guard.dbReady
+              ? "Sesión activa. Configura Supabase para activar la edición del catálogo y las estadísticas en vivo."
+              : "Resumen de la casa y estado del sistema."}
         </p>
       </div>
 

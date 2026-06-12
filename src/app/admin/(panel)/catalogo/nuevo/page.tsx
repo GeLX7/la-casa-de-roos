@@ -18,7 +18,7 @@ export default async function NewRoomPage({
   const guard = await guardAdminPanel();
   const { error } = await searchParams;
 
-  if (!guard.configured) {
+  if (!guard.configured || !guard.dbReady) {
     return (
       <SetupNeededCard title="Crear habitaciones requiere Supabase">
         <p>Configura el proyecto de Supabase para poder añadir habitaciones.</p>

@@ -1,191 +1,136 @@
 /**
- * Admin authentication on Supabase Auth (GoTrue) via plain REST — no client
- * library, matching the dependency-free Supabase pattern of this repo.
+ * Admin authentication: username + password against env-var credentials —
+ * no Supabase Auth involved (pattern adapted from the LAZZAT admin, see
+ * docs/architecture/admin-mode.md).
  *
  * Flow:
- *  - signInWithPassword() exchanges email+password for an access token
- *    (password grant) and stores it in an httpOnly cookie.
- *  - getAdminSession() verifies the token against /auth/v1/user and then
- *    checks the admin_users allowlist with the service role. A valid Supabase
- *    account that is NOT in admin_users is rejected.
- *  - requireAdmin() redirects to /admin/login when any check fails.
+ *  - signInWithCredentials() compares the username and the PBKDF2 hash from
+ *    ADMIN_USERNAME / ADMIN_PASSWORD_HASH (constant-time, with a timing
+ *    equalizer when the username is wrong) and, on success, sets a stateless
+ *    HMAC-signed session cookie (httpOnly, Secure in prod, SameSite=Lax).
+ *  - getAdminSession() verifies the cookie signature/expiry locally — no
+ *    network round trip — and re-checks the username against the env var, so
+ *    rotating ADMIN_USERNAME or ADMIN_SESSION_SECRET invalidates sessions
+ *    immediately.
+ *  - requireAdmin() gates every panel page and server action.
  *
- * Sessions last as long as the Supabase JWT (1 h by default; can be raised in
- * Supabase Auth settings). Refresh-token rotation is a documented later step:
- * the refresh token is already stored, but server components cannot write
- * cookies, so silent refresh needs a dedicated route handler.
+ * The plaintext password and its hash never live in the repo or database:
+ * the hash is generated locally with scripts/hash-admin-password.mjs and
+ * stored only as a Vercel/server env var.
  */
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getAdminRuntimeConfig } from "@/lib/admin/config";
-import { adminRest } from "@/lib/admin/supabase-admin";
+import {
+  burnPasswordVerification,
+  createSessionValue,
+  verifyPassword,
+  verifySessionValue,
+} from "@/lib/admin/credentials";
 
-export const ACCESS_COOKIE = "lcr_admin_access";
-export const REFRESH_COOKIE = "lcr_admin_refresh";
+/* Cookie name is duplicated as a literal in src/proxy.ts (the proxy only
+   checks presence and must stay free of server-only imports). */
+export const SESSION_COOKIE = "lcr_admin_session";
+
+const SESSION_TTL_SECONDS = 60 * 60 * 8; // 8 hours
 
 export type AdminSession = {
-  userId: string;
-  email: string;
+  username: string;
 };
 
 type SignInResult =
   | { ok: true }
-  | { ok: false; error: "configuration_needed" | "invalid_credentials" | "not_admin" | "upstream_error" };
+  | { ok: false; error: "configuration_needed" | "invalid_credentials" };
 
-function authUrl(path: string): string {
-  const { supabaseUrl } = getAdminRuntimeConfig();
-  return `${supabaseUrl.replace(/\/$/, "")}/auth/v1/${path}`;
-}
-
-async function isAllowlistedAdmin(userId: string): Promise<boolean> {
-  const rows = await adminRest<{ user_id: string }[]>(
-    `admin_users?user_id=eq.${encodeURIComponent(userId)}&select=user_id&limit=1`,
-  );
-  return rows.length > 0;
-}
-
-export async function signInWithPassword(
-  email: string,
+export async function signInWithCredentials(
+  username: string,
   password: string,
 ): Promise<SignInResult> {
   const config = getAdminRuntimeConfig();
-  if (!config.fullyConfigured) {
+  if (!config.authReady) {
     return { ok: false, error: "configuration_needed" };
   }
 
-  let payload: {
-    access_token?: string;
-    refresh_token?: string;
-    expires_in?: number;
-    user?: { id?: string };
-  };
-  try {
-    const response = await fetch(authUrl("token?grant_type=password"), {
-      method: "POST",
-      headers: { apikey: config.anonKey, "content-type": "application/json" },
-      body: JSON.stringify({ email, password }),
-      cache: "no-store",
-    });
-    if (response.status === 400 || response.status === 401 || response.status === 403) {
-      return { ok: false, error: "invalid_credentials" };
-    }
-    if (!response.ok) {
-      return { ok: false, error: "upstream_error" };
-    }
-    payload = await response.json();
-  } catch {
-    return { ok: false, error: "upstream_error" };
+  if (username !== config.adminUsername) {
+    // Same PBKDF2 cost as the real check: response timing stays uniform.
+    burnPasswordVerification(password);
+    return { ok: false, error: "invalid_credentials" };
   }
-
-  const accessToken = payload.access_token;
-  const userId = payload.user?.id;
-  if (!accessToken || !userId) {
-    return { ok: false, error: "upstream_error" };
-  }
-
-  // Only allowlisted admins get a session cookie.
-  try {
-    if (!(await isAllowlistedAdmin(userId))) {
-      return { ok: false, error: "not_admin" };
-    }
-  } catch {
-    return { ok: false, error: "upstream_error" };
+  if (!verifyPassword(password, config.adminPasswordHash)) {
+    return { ok: false, error: "invalid_credentials" };
   }
 
   const cookieStore = await cookies();
-  const secure = process.env.NODE_ENV === "production";
-  cookieStore.set(ACCESS_COOKIE, accessToken, {
-    httpOnly: true,
-    secure,
-    sameSite: "lax",
-    path: "/",
-    maxAge: payload.expires_in ?? 3600,
-  });
-  if (payload.refresh_token) {
-    cookieStore.set(REFRESH_COOKIE, payload.refresh_token, {
+  cookieStore.set(
+    SESSION_COOKIE,
+    createSessionValue(username, config.sessionSecret, SESSION_TTL_SECONDS),
+    {
       httpOnly: true,
-      secure,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: 60 * 60 * 24 * 30,
-    });
-  }
+      maxAge: SESSION_TTL_SECONDS,
+    },
+  );
 
   return { ok: true };
 }
 
 export async function signOut(): Promise<void> {
-  const config = getAdminRuntimeConfig();
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get(ACCESS_COOKIE)?.value;
-
-  if (config.authReady && accessToken) {
-    // Best effort: revoke the session server-side too.
-    try {
-      await fetch(authUrl("logout"), {
-        method: "POST",
-        headers: { apikey: config.anonKey, authorization: `Bearer ${accessToken}` },
-        cache: "no-store",
-      });
-    } catch {
-      // Cookie removal below is what actually ends the admin session.
-    }
-  }
-
-  cookieStore.delete(ACCESS_COOKIE);
-  cookieStore.delete(REFRESH_COOKIE);
+  cookieStore.delete(SESSION_COOKIE);
 }
 
 /** Returns the verified admin session, or null (never throws). */
 export async function getAdminSession(): Promise<AdminSession | null> {
   const config = getAdminRuntimeConfig();
-  if (!config.fullyConfigured) return null;
+  if (!config.authReady) return null;
 
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get(ACCESS_COOKIE)?.value;
-  if (!accessToken) return null;
-
-  try {
-    const response = await fetch(authUrl("user"), {
-      headers: { apikey: config.anonKey, authorization: `Bearer ${accessToken}` },
-      cache: "no-store",
-    });
-    if (!response.ok) return null;
-    const user = (await response.json()) as { id?: string; email?: string };
-    if (!user.id) return null;
-    if (!(await isAllowlistedAdmin(user.id))) return null;
-    return { userId: user.id, email: user.email ?? "" };
-  } catch {
-    return null;
-  }
+  const username = verifySessionValue(
+    cookieStore.get(SESSION_COOKIE)?.value,
+    config.sessionSecret,
+  );
+  if (!username || username !== config.adminUsername) return null;
+  return { username };
 }
 
 /**
- * Gate for every admin page and server action that touches data.
- * Redirects to the login screen when there is no valid admin session.
+ * Gate for every admin page and server action that touches data. Redirects
+ * home while the admin kill switch is off, and to the login screen when
+ * there is no valid admin session.
  */
 export async function requireAdmin(): Promise<AdminSession> {
+  const config = getAdminRuntimeConfig();
+  if (!config.adminRoutesEnabled) redirect("/");
+
   const session = await getAdminSession();
   if (!session) redirect("/admin/login");
   return session;
 }
 
 export type PanelGuard =
-  | { configured: false; session: null }
-  | { configured: true; session: AdminSession };
+  | { configured: false; dbReady: boolean; session: null }
+  | { configured: true; dbReady: boolean; session: AdminSession };
 
 /**
  * Guard used by every panel page (not only the layout — layouts and pages
  * render concurrently, so each page enforces it itself).
  *
- * Without Supabase env vars there is no auth server and nothing writable:
- * pages render the setup-needed state. The moment the env vars exist, every
- * panel page requires a logged-in allowlisted admin.
+ * Kill switch off → redirect home (the proxy already blocks this earlier).
+ * Credentials missing → setup-needed mode, nothing writable, no session.
+ * Credentials present → a valid session is required; `dbReady` then tells
+ * the page whether Supabase-backed editing is available or the catalog is
+ * still read-only.
  */
 export async function guardAdminPanel(): Promise<PanelGuard> {
-  if (!getAdminRuntimeConfig().fullyConfigured) {
-    return { configured: false, session: null };
+  const config = getAdminRuntimeConfig();
+  if (!config.adminRoutesEnabled) redirect("/");
+
+  if (!config.credentialsReady) {
+    return { configured: false, dbReady: config.dbReady, session: null };
   }
-  return { configured: true, session: await requireAdmin() };
+  const session = await requireAdmin();
+  return { configured: true, dbReady: config.dbReady, session };
 }
