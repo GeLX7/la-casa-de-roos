@@ -55,7 +55,8 @@ is not involved, so no auth user is created. **The plaintext password must
 never be committed, logged, or pasted into chats/issues.**
 
 1. On your local machine, generate the salted PBKDF2 hash (the script prompts
-   twice with hidden input and prints only the hash):
+   twice with hidden input and prints only the hash; passwords need at least
+   8 characters, 12+ recommended):
 
 ```bash
 node scripts/hash-admin-password.mjs

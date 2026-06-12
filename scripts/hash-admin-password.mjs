@@ -21,7 +21,9 @@
 
 import { createPasswordHash } from "../src/lib/admin/credentials.ts";
 
-const MIN_LENGTH = 12;
+/* Hard floor; 12+ characters still recommended (PBKDF2 slows attacks but
+   cannot rescue a short guessable password). */
+const MIN_LENGTH = 8;
 
 function fail(message) {
   console.error(`\n✖ ${message}`);
@@ -89,6 +91,7 @@ if (!password || password.length < MIN_LENGTH) {
 const hash = createPasswordHash(password);
 
 console.error("\nHash generado (formato pbkdf2$iteraciones$digest$salt$hash).");
+console.error("Mínimo 8 caracteres; se recomiendan 12 o más.");
 console.error("Guárdalo SOLO como variable de entorno ADMIN_PASSWORD_HASH en Vercel");
 console.error("(Settings → Environment Variables) o pípalo directo:");
 console.error("  node scripts/hash-admin-password.mjs | vercel env add ADMIN_PASSWORD_HASH production");
