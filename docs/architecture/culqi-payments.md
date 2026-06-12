@@ -1,66 +1,33 @@
-# Culqi Payments — Future Foundation
+# Culqi Payments — Removed From Active Scope
 
-Status: documented only. No live Culqi integration exists in this branch.
+**Status: not planned (owner decision, 2026-06-12).** The site processes no
+online payments. Airbnb remains the booking/payment platform for Airbnb
+bookings, and direct website inquiries are requested and confirmed through
+WhatsApp. There is no Culqi account, no Culqi keys, no payment UI, and no
+payment environment variables.
 
-## Goal
+This file is kept only as a historical record of the Phase 3 exploration
+(2026-06-10) so the context is not lost if online payments are ever
+reconsidered. The original research lives in
+`docs/architecture/booking-payment-architecture.md` (also marked historical).
 
-Use Culqi later for an advance/deposit after owner approval. The booking flow
-must still protect availability first; payment must not create an instant
-confirmed reservation without owner confirmation.
+## What remains in the codebase (dormant, intentionally)
 
-## Required Later
+- The `payment_intents` table exists in
+  `supabase/migrations/20260611143000_booking_calendar_foundation.sql` and in
+  the live database. It is empty, service-role-only (RLS, no policies), and
+  nothing reads or writes it. It stays because dropping live schema is a
+  destructive change with no benefit; if it is ever removed, that is a separate
+  approved migration.
+- `reservation_requests.payment_status` (always `"none"`) and the
+  `pending_payment` status value exist for the same reason. Website requests
+  only use `requested` / `confirmed` / `cancelled`.
+- No Culqi env vars exist in `.env.example`, Vercel, or the admin setup
+  warnings.
 
-- `CULQI_PUBLIC_KEY`
-- `CULQI_PRIVATE_KEY`
-- `CULQI_WEBHOOK_SECRET`
-- Culqi account in the business/legal name
-- RUC/business onboarding status
-- deposit policy
-- cancellation/refund policy
-- notification email
+## If payments are ever reconsidered
 
-## Options
-
-- Culqi Checkout: faster hosted or embedded checkout flow.
-- Culqi API: more custom control, more implementation and testing.
-- Webhooks: required either way so paid status is set from Culqi server events,
-  not from client-side redirects.
-
-## Recommended Flow
-
-1. Guest sends reservation request.
-2. Server re-checks availability, including latest Airbnb iCal blocks.
-3. Owner marks request as ready for payment.
-4. Server creates Culqi payment for the deposit/advance in PEN.
-5. Guest pays through Culqi.
-6. Culqi webhook confirms payment server-side.
-7. Reservation becomes `confirmed`.
-8. Website `.ics` feed blocks dates for Airbnb import.
-
-## Security Notes
-
-- Private key stays server-only.
-- Webhook secret stays server-only.
-- Never store card data.
-- Store only provider payment id, amount, currency, status, and timestamps.
-- Treat payment success page as informational; webhook is source of truth.
-- Confirm amount/currency before marking paid.
-
-## Database Placeholder
-
-`payment_intents` is prepared in the migration:
-
-- provider: `culqi`
-- provider payment id
-- amount
-- currency: `PEN`
-- status
-- reservation request link
-
-## Open Questions
-
-- Deposit amount: first night, fixed percent, or custom amount?
-- Refund window and no-show policy?
-- Cancellation cutoff?
-- Whether foreign cards, Yape, or bank transfers should be offered first?
-- Who receives payment failure/refund notifications?
+Treat it as a new project: provider evaluation (Culqi required RUC onboarding —
+see the historical research), deposit/refund policy, and explicit owner
+approval would all need to happen first. Nothing in the current site assumes
+or prepares for it beyond the dormant schema above.

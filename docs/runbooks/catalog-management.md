@@ -67,5 +67,16 @@ new permanent content changes belong in the admin, not in the file.
 
 ## Out of scope here
 
-Reservation/calendar management (later phase), payments (later phase, Culqi),
-the LAZZAT project (unrelated — never touched by this admin).
+Reservation/calendar management (future phase, pending the Airbnb iCal URLs),
+payments (none on the site — Airbnb bookings pay on Airbnb, direct requests
+are confirmed by WhatsApp), the LAZZAT project (unrelated — never touched by
+this admin).
+
+## If the catalog shows "Sin conexión con Supabase"
+
+The env vars exist but the database rejected them ("Invalid API key" in the
+Vercel logs). Almost always the keys belong to a previous/recreated Supabase
+project: copy `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` and
+`SUPABASE_SERVICE_ROLE_KEY` again from the **current** project (Dashboard →
+Settings → API), update them in Vercel, and redeploy
+(`docs/runbooks/admin-supabase-setup.md`, step 5).

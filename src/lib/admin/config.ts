@@ -100,6 +100,10 @@ export function getSetupWarnings(): SetupWarning[] {
     });
   }
 
+  /* iCal stays a future feature: until the owner provides the four private
+     Airbnb export URLs, availability is confirmed by WhatsApp. No payment or
+     email warnings here by design — payments happen on Airbnb and direct
+     inquiries go through WhatsApp (docs/architecture/booking-calendar-sync.md). */
   const icalKeys = [
     "AIRBNB_ICAL_SUITE_QUEEN_CON_SALA",
     "AIRBNB_ICAL_SUITE_QUEEN_CENTRO_HISTORICO",
@@ -110,32 +114,16 @@ export function getSetupWarnings(): SetupWarning[] {
   if (missingIcal.length > 0) {
     warnings.push({
       key: "ical",
-      label: "iCal de Airbnb pendiente",
-      detail: `Faltan ${missingIcal.length} de 4 URLs privadas de exportación iCal de Airbnb (las provee la dueña).`,
-    });
-  }
-
-  if (!process.env.CULQI_PUBLIC_KEY || !process.env.CULQI_PRIVATE_KEY) {
-    warnings.push({
-      key: "culqi",
-      label: "Culqi sin claves",
-      detail: "Los pagos siguen desactivados hasta tener llaves de Culqi (fase posterior).",
-    });
-  }
-
-  if (!process.env.BOOKING_ADMIN_EMAIL) {
-    warnings.push({
-      key: "email",
-      label: "Email de notificaciones pendiente",
-      detail: "BOOKING_ADMIN_EMAIL vacío: no hay correo para avisar nuevas solicitudes.",
+      label: "iCal de Airbnb pendiente (función futura)",
+      detail: `Faltan ${missingIcal.length} de 4 URLs privadas de exportación iCal de Airbnb (las provee la dueña). Mientras tanto, la disponibilidad se confirma por WhatsApp.`,
     });
   }
 
   if (!process.env.BOOKING_ICAL_SECRET) {
     warnings.push({
       key: "ical-secret",
-      label: "Secreto del feed iCal pendiente",
-      detail: "BOOKING_ICAL_SECRET vacío: las URLs de exportación .ics del sitio aún no funcionan.",
+      label: "Secreto del feed iCal pendiente (función futura)",
+      detail: "BOOKING_ICAL_SECRET vacío: las URLs de exportación .ics del sitio se configurarán junto con la sincronización de calendarios.",
     });
   }
 

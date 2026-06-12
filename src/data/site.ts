@@ -31,7 +31,8 @@ export const site = {
   locale: "es_PE",
   whatsappNumber: "51967757040",
   whatsappDisplay: "+51 967 757 040",
-  // TODO(owner): notification email pending (questions-for-owner.md Q12).
+  /* WhatsApp is the only direct contact/reservation channel; there is no
+     email workflow (owner decision, June 2026). */
   city: "Arequipa",
   region: "Arequipa",
   country: "PE",

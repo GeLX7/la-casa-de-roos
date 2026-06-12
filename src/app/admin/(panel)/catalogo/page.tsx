@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { guardAdminPanel } from "@/lib/admin/auth";
 import { getAdminRooms } from "@/lib/admin/catalog";
 import {
@@ -24,38 +25,62 @@ function ActiveBadge({ active }: { active: boolean }) {
   );
 }
 
+/** Static-listing fallback shown while Supabase editing is unavailable. */
+function ReadOnlyCatalog({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <div className="space-y-6">
+      <h1 className="font-display text-xl font-extrabold text-tinta-900">Catálogo</h1>
+      <SetupNeededCard title={title}>{children}</SetupNeededCard>
+      <ul className="divide-y divide-sillar-200 rounded-lg border border-sillar-200 bg-white">
+        {listings.map((room) => (
+          <li key={room.slug} className="flex items-center justify-between gap-4 px-5 py-4">
+            <div>
+              <p className="text-sm font-semibold text-tinta-900">{room.subtitle}</p>
+              <p className="text-xs text-tinta-500">
+                /habitaciones/{room.slug} · hasta {room.capacity} huéspedes
+              </p>
+            </div>
+            <ActiveBadge active />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export default async function AdminCatalogPage() {
   const guard = await guardAdminPanel();
 
   if (!guard.configured || !guard.dbReady) {
     return (
-      <div className="space-y-6">
-        <h1 className="font-display text-xl font-extrabold text-tinta-900">Catálogo</h1>
-        <SetupNeededCard title="Catálogo en modo solo lectura">
-          <p>
-            Estas son las habitaciones del catálogo estático actual del sitio. Para
-            editarlas desde aquí hace falta el proyecto de Supabase con sus variables de
-            entorno y la semilla inicial.
-          </p>
-        </SetupNeededCard>
-        <ul className="divide-y divide-sillar-200 rounded-lg border border-sillar-200 bg-white">
-          {listings.map((room) => (
-            <li key={room.slug} className="flex items-center justify-between gap-4 px-5 py-4">
-              <div>
-                <p className="text-sm font-semibold text-tinta-900">{room.subtitle}</p>
-                <p className="text-xs text-tinta-500">
-                  /habitaciones/{room.slug} · hasta {room.capacity} huéspedes
-                </p>
-              </div>
-              <ActiveBadge active />
-            </li>
-          ))}
-        </ul>
-      </div>
+      <ReadOnlyCatalog title="Catálogo en modo solo lectura">
+        <p>
+          Estas son las habitaciones del catálogo estático actual del sitio. Para
+          editarlas desde aquí hace falta el proyecto de Supabase con sus variables de
+          entorno y la semilla inicial.
+        </p>
+      </ReadOnlyCatalog>
     );
   }
 
-  const rooms = await getAdminRooms();
+  /* A bad key or unreachable project must degrade to the read-only view with
+     an actionable message — never a 500 (this page is the owner's main tool). */
+  let rooms;
+  try {
+    rooms = await getAdminRooms();
+  } catch (error) {
+    console.error("AdminCatalogPage: Supabase read failed", error);
+    return (
+      <ReadOnlyCatalog title="Sin conexión con Supabase">
+        <p>
+          Las variables de Supabase están definidas pero la base de datos rechazó la
+          conexión. Revisa que <code>SUPABASE_SERVICE_ROLE_KEY</code> y{" "}
+          <code>NEXT_PUBLIC_SUPABASE_URL</code> correspondan al proyecto actual y
+          vuelve a desplegar (docs/runbooks/admin-supabase-setup.md).
+        </p>
+      </ReadOnlyCatalog>
+    );
+  }
 
   return (
     <div className="space-y-6">

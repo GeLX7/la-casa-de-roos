@@ -189,14 +189,34 @@ export default async function AdminRoomEditPage({
     );
   }
 
-  const room = await getAdminRoom(slug);
+  /* Degrade instead of 500 when Supabase rejects the connection (bad key,
+     wrong project): the list page shows the same actionable message. */
+  let room: Awaited<ReturnType<typeof getAdminRoom>>;
+  try {
+    room = await getAdminRoom(slug);
+  } catch (err) {
+    console.error("AdminRoomEditPage: Supabase read failed", err);
+    return (
+      <SetupNeededCard title="Sin conexión con Supabase">
+        <p>
+          Las variables de Supabase están definidas pero la base de datos rechazó la
+          conexión. Revisa que <code>SUPABASE_SERVICE_ROLE_KEY</code> y{" "}
+          <code>NEXT_PUBLIC_SUPABASE_URL</code> correspondan al proyecto actual y
+          vuelve a desplegar (docs/runbooks/admin-supabase-setup.md).
+        </p>
+      </SetupNeededCard>
+    );
+  }
   if (!room) notFound();
 
   const ratings = room.room_ratings;
   const icalEnvKey = getAirbnbIcalEnvKey(room.slug) ?? `AIRBNB_ICAL_${room.slug.toUpperCase().replace(/-/g, "_")}`;
   const icalConfigured = Boolean(getAirbnbIcalUrl(room.slug));
   const icalSecretConfigured = Boolean(process.env.BOOKING_ICAL_SECRET);
-  const calendarSource = await getCalendarSource(room.id);
+  const calendarSource = await getCalendarSource(room.id).catch((err) => {
+    console.error("AdminRoomEditPage: calendar source read failed", err);
+    return null;
+  });
 
   return (
     <div className="space-y-6">

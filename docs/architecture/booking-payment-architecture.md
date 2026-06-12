@@ -1,5 +1,14 @@
 # Booking & Payment Architecture
 
+> **Superseded (2026-06-12).** Owner decision: **no online payments and no
+> email workflow** are part of the product. Airbnb is the booking/payment
+> platform for Airbnb bookings; direct website inquiries go through WhatsApp
+> (request → owner confirms personally). The phases below describing Culqi,
+> Mercado Pago, deposits, and Resend email notifications are kept only as a
+> historical record of the 2026-06-10 research — do not implement from this
+> document. Current scope: `README.md` and
+> `docs/architecture/culqi-payments.md`.
+
 Recommendation doc, 2026-06-10. No payment is implemented in MVP — this defines the path.
 
 ## Booking flow evolution
