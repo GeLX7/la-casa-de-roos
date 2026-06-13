@@ -1,12 +1,17 @@
 # Admin Mode — Architecture
 
-Status: foundation built in `feat/admin-catalog-foundation`; auth switched to
-username/password env credentials in `feat/admin-username-auth`. Every `/admin`
-route stays disabled (redirects home) until `ENABLE_ADMIN_ROUTES=true`; login
-works once the admin credential env vars exist, and catalog editing becomes
-available after the Supabase project exists
-(`docs/runbooks/admin-supabase-setup.md`). Missing pieces always render a safe
-setup-needed state instead of crashing.
+Status: **live in production** (2026-06-12) — Supabase project
+`eyzbjtcelekuczqobhau` is migrated and seeded, admin env vars are set in
+Vercel, and the owner signs in at `/admin/login`. Every `/admin` route stays
+disabled (redirects home) until `ENABLE_ADMIN_ROUTES=true`; missing or broken
+pieces always render a safe setup-needed state instead of crashing — including
+a "Sin conexión con Supabase" state when the database rejects the configured
+keys (see `docs/runbooks/catalog-management.md`).
+
+Product scope note: the admin manages **catalog content only**. There are no
+payment or email features anywhere in the product — Airbnb handles payments
+for Airbnb bookings and direct inquiries go through WhatsApp
+(`docs/architecture/culqi-payments.md`).
 
 ## What it is
 
@@ -90,11 +95,12 @@ stores catalog/booking data.
 
 ## Database
 
-Two migrations (prepared, **not applied** — owner approval required):
+Two migrations (applied to the live project on 2026-06-12):
 
 - `20260611143000_booking_calendar_foundation.sql` (PR #5): `rooms`,
   `calendar_sources`, `external_blocks`, `reservation_requests`,
-  `manual_blocks`, `payment_intents`. RLS enabled, no policies → service-role-only.
+  `manual_blocks`, `payment_intents` (dormant — no online payments; kept for
+  schema compatibility). RLS enabled, no policies → service-role-only.
 - `20260611170000_admin_catalog_foundation.sql`: extends `rooms` with the
   catalog fields and adds `room_features`, `room_not_included`, `room_rules`,
   `room_images`, `room_ratings`, with RLS:
@@ -139,8 +145,12 @@ dashboard labels DB-only numbers as "available after Supabase setup".
 ## Later phases (intentionally not built)
 
 - Image upload via Supabase Storage (schema already accepts absolute URLs).
-- Reservation request management UI (approve/cancel) — tables exist from PR #5.
-- iCal import job + sync status writes; Culqi payments; notification email.
+- Reservation request management UI (review WhatsApp-originated requests) —
+  tables exist from PR #5.
+- iCal import job + sync status writes (pending the four Airbnb iCal URLs).
 - Persistent audit log of admin logins/edits (LAZZAT-style `recordAuditLog`).
 - Switching home/sitemap/reservar to the catalog data layer, then flipping
   `CATALOG_DATA_SOURCE=supabase` after content verification.
+
+Not phases — removed from the product entirely: online payments (Culqi) and
+email notifications. See `docs/architecture/culqi-payments.md`.

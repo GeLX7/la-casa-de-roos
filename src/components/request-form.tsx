@@ -7,10 +7,11 @@ import { AvailabilityChecker } from "@/components/availability-checker";
 import { WhatsApp } from "@/components/icons";
 
 /**
- * Request-to-book stays WhatsApp-first until Supabase/iCal/Culqi env vars
- * are configured. The availability panel calls the disabled-safe API route,
- * so the UI can move to stored requests later without promising instant
- * booking today.
+ * Request-to-book is WhatsApp-first by design: the form opens a prefilled
+ * WhatsApp message and the owner confirms availability personally. The
+ * availability panel calls the disabled-safe API route so the UI can show
+ * live calendars once the Airbnb iCal URLs are configured — there is no
+ * online checkout or payment step on the site.
  */
 export function RequestForm({ initialSlug }: { initialSlug?: string }) {
   const today = useMemo(() => new Date().toISOString().slice(0, 10), []);

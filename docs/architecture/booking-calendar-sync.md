@@ -1,7 +1,11 @@
-# Booking Calendar Sync — Phase 2 Foundation
+# Booking Calendar Sync — Future Feature (iCal pending)
 
-Status: prepared, not live. This design waits for Supabase credentials, four
-Airbnb iCal export URLs, owner notification email, and final owner approval.
+Status: prepared in code, **not active**. The only missing inputs are the four
+private Airbnb iCal export URLs (owner provides) plus `BOOKING_ICAL_SECRET`.
+Until then, availability is confirmed personally by WhatsApp — the live
+request form already works that way. There is no payment or email step in
+this design: Airbnb handles payment for Airbnb bookings, and direct requests
+are confirmed through WhatsApp (owner decision, 2026-06-12).
 
 ## Why iCal
 
@@ -69,12 +73,14 @@ Owner/admin will need a way to:
 
 ## Upgrade Path
 
-Phase 2 uses iCal + request-to-book. Upgrade when volume or risk demands:
+This phase uses iCal + request-to-book. Upgrade when volume or risk demands:
 
 1. PMS/channel manager such as Smoobu, Beds24, Hospitable, Lodgify, Hostaway.
-2. Direct payment confirmation with Culqi once keys, RUC, and deposit policy
-   are ready.
-3. Owner admin dashboard with sync health, manual blocks, and payments.
+2. Admin dashboard additions: sync health, manual blocks, reservation request
+   management.
+
+(Online payments are not on the roadmap — see
+`docs/architecture/culqi-payments.md`.)
 
 ## Prepared Code
 

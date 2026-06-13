@@ -1,5 +1,10 @@
 export type BookingProvider = "airbnb" | "website" | "manual";
 
+/* "pending_payment" and PaymentStatus mirror dormant database columns kept
+   for schema compatibility. The site processes no online payments: payments
+   happen on Airbnb and direct reservations are confirmed by WhatsApp, so
+   website requests only ever use "requested"/"confirmed"/"cancelled" and
+   payment_status stays "none". */
 export type ReservationStatus =
   | "requested"
   | "pending_payment"

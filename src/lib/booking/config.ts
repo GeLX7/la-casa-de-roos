@@ -16,7 +16,6 @@ export function getBookingRuntimeConfig() {
     supabaseUrl,
     supabaseServiceRoleKey,
     icalSecret,
-    adminEmail: process.env.BOOKING_ADMIN_EMAIL ?? "",
     hasDatabase: Boolean(supabaseUrl && supabaseServiceRoleKey),
     hasIcalSecret: Boolean(icalSecret),
   };

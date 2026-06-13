@@ -97,6 +97,18 @@ switches from placeholder stats to live counts, and the catalog becomes
 editable. (The admin login itself works even before steps 1–3 of the Supabase
 setup — only catalog editing needs the database.)
 
+### Troubleshooting: "Sin conexión con Supabase" / `Invalid API key`
+
+If the catalog shows the "Sin conexión con Supabase" card (and the Vercel
+runtime logs show `Supabase REST 401: Invalid API key`), the env vars exist
+but at least one value does not belong to the current project — typical after
+the Supabase project was recreated or moved to another organization, leaving
+stale keys in Vercel. Fix: re-copy **all three** values
+(`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`,
+`SUPABASE_SERVICE_ROLE_KEY`) from the current project's **Settings → API**
+page, replace them in Vercel, and redeploy. Login keeps working during this —
+admin auth never touches Supabase.
+
 ## 6. (Later, separate decision) point the public site at Supabase
 
 Editing in the admin does **not** change the public site yet — it still serves
@@ -112,10 +124,13 @@ and redeploy. Static listings remain the automatic fallback on any error. See
 ## What stays disabled after this runbook
 
 - **Airbnb iCal sync** — needs the four private `AIRBNB_ICAL_*` URLs plus the
-  import job (later phase). Status is visible per room in the admin.
-- **Website `.ics` export** — needs `BOOKING_ICAL_SECRET`.
-- **Email notifications** — needs `BOOKING_ADMIN_EMAIL` + sending integration.
-- **Culqi payments** — needs keys + explicit approval (later phase;
-  `docs/architecture/culqi-payments.md`).
+  import job (future phase). Status is visible per room in the admin. Until
+  then, availability is confirmed by WhatsApp.
+- **Website `.ics` export** — needs `BOOKING_ICAL_SECRET` (configured together
+  with the iCal URLs).
 - **Image upload** — admin edits image metadata only; uploads arrive with
   Supabase Storage in a later phase (bucket + storage policies + upload UI).
+
+Not disabled but **removed from the product**: online payments and email
+notifications. WhatsApp is the only direct contact/reservation channel and
+Airbnb handles its own payments (`docs/architecture/culqi-payments.md`).
