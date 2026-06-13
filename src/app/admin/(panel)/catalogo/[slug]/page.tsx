@@ -22,6 +22,9 @@ import {
 import { getAirbnbIcalEnvKey, getAirbnbIcalUrl } from "@/lib/booking/config";
 import { SITE_URL } from "@/data/site";
 import { ConfirmSubmit, SubmitButton } from "@/components/admin/buttons";
+import { IconPickerField } from "@/components/admin/icon-picker-field";
+import { RoomEditorShell } from "@/components/admin/room-editor-shell";
+import type { PreviewData } from "@/components/admin/room-preview";
 import {
   ActionBanner,
   AdminCard,
@@ -96,15 +99,7 @@ function ItemListCard({
               <input type="hidden" name="kind" value={kind} />
               <input type="hidden" name="item_id" value={item.id} />
               {withIcon && (
-                <Field label="Icono">
-                  <select name="icon" defaultValue={item.icon ?? "check"} className={inputClass}>
-                    {ICON_OPTIONS.map((icon) => (
-                      <option key={icon} value={icon}>
-                        {icon}
-                      </option>
-                    ))}
-                  </select>
-                </Field>
+                <IconPickerField name="icon" defaultValue={item.icon ?? "check"} options={ICON_OPTIONS} />
               )}
               <Field label="Texto" className="min-w-60 flex-1">
                 <input name="label" defaultValue={item.label} required className={inputClass} />
@@ -148,15 +143,7 @@ function ItemListCard({
         <input type="hidden" name="kind" value={kind} />
         <input type="hidden" name="sort_order" value={items.length} />
         {withIcon && (
-          <Field label="Icono">
-            <select name="icon" defaultValue="check" className={inputClass}>
-              {ICON_OPTIONS.map((icon) => (
-                <option key={icon} value={icon}>
-                  {icon}
-                </option>
-              ))}
-            </select>
-          </Field>
+          <IconPickerField name="icon" defaultValue="check" options={ICON_OPTIONS} />
         )}
         <Field label="Nuevo elemento" className="min-w-60 flex-1">
           <input name="label" required className={inputClass} />
@@ -220,6 +207,34 @@ export default async function AdminRoomEditPage({
     return null;
   });
 
+  const activeImages = room.room_images.filter((img) => img.active);
+  const coverImage = activeImages.find((img) => img.is_cover) ?? activeImages[0] ?? null;
+  const initialPreview: PreviewData = {
+    name: room.name,
+    subtitle: room.subtitle,
+    priceLabel: room.price_label,
+    active: room.active,
+    guestFavorite: room.guest_favorite,
+    capacity: String(room.capacity),
+    beds: room.beds,
+    bath: room.bath,
+    checkin: room.checkin,
+    checkout: room.checkout,
+    quietHours: room.quiet_hours,
+    descriptionTitle: room.description_title,
+    shortDescription: room.short_description,
+    longDescription: room.long_description.join("\n\n"),
+    features: room.room_features
+      .filter((f) => f.enabled)
+      .map((f) => ({ icon: f.icon ?? "check", label: f.label })),
+    notes: room.room_not_included.filter((n) => n.enabled).map((n) => n.label),
+    rules: room.room_rules.filter((r) => r.enabled).map((r) => r.label),
+    cover: coverImage ? { src: coverImage.src, alt: coverImage.alt } : null,
+    gallery: activeImages.slice(0, 8).map((img) => ({ src: img.src, alt: img.alt })),
+    rating: ratings?.rating ?? 0,
+    reviewCount: ratings?.review_count ?? 0,
+  };
+
   return (
     <div className="space-y-6">
       <nav className="text-xs text-tinta-500">
@@ -244,12 +259,19 @@ export default async function AdminRoomEditPage({
 
       <ActionBanner saved={saved === "1"} error={error} />
 
+      <div className="rounded-md border border-salvia-500/30 bg-salvia-100/50 px-4 py-3 text-sm text-tinta-700">
+        <strong className="font-semibold text-tinta-900">Publicación:</strong> cada
+        bloque se guarda con su botón <em>Publicar en Supabase</em>. Como el sitio público
+        lee de Supabase, los cambios pueden reflejarse en la web pública tras guardarse.
+      </div>
+
+      <RoomEditorShell initial={initialPreview}>
       {/* 1 — Basic info */}
       <AdminCard
         title="1 · Información básica"
         description="Título, subtítulo, visibilidad y enlace de Airbnb. El slug queda fijo tras la creación para no romper URLs ya indexadas."
       >
-        <form action={updateRoomBasicAction} className="space-y-4">
+        <form action={updateRoomBasicAction} data-card="basic" className="space-y-4">
           <HiddenRoomFields room={room} />
           <Field label="Título (H1)" htmlFor="name">
             <input id="name" name="name" defaultValue={room.name} required className={inputClass} />
@@ -302,7 +324,12 @@ export default async function AdminRoomEditPage({
               Insignia “Favorito de huéspedes”
             </label>
           </div>
-          <SubmitButton />
+          <div className="flex flex-wrap items-center gap-3">
+            <SubmitButton>Publicar en Supabase</SubmitButton>
+            <p className="text-xs text-tinta-500">
+              Se publica en Supabase y puede reflejarse en la web pública.
+            </p>
+          </div>
         </form>
       </AdminCard>
 
@@ -311,7 +338,7 @@ export default async function AdminRoomEditPage({
         title="2 · Datos principales"
         description="La fila de datos al inicio de la página: huéspedes, camas, baño y horarios."
       >
-        <form action={updateRoomFactsAction} className="space-y-4">
+        <form action={updateRoomFactsAction} data-card="facts" className="space-y-4">
           <HiddenRoomFields room={room} />
           <div className="grid gap-4 sm:grid-cols-3">
             <Field label="Huéspedes máx." htmlFor="capacity">
@@ -346,7 +373,12 @@ export default async function AdminRoomEditPage({
               />
             </Field>
           </div>
-          <SubmitButton />
+          <div className="flex flex-wrap items-center gap-3">
+            <SubmitButton>Publicar en Supabase</SubmitButton>
+            <p className="text-xs text-tinta-500">
+              Se publica en Supabase y puede reflejarse en la web pública.
+            </p>
+          </div>
         </form>
       </AdminCard>
 
@@ -355,7 +387,7 @@ export default async function AdminRoomEditPage({
         title="3 · Descripción"
         description="El bloque “LA SUITE” y el resumen corto que también se usa en buscadores. Separa los párrafos con una línea en blanco."
       >
-        <form action={updateRoomDescriptionAction} className="space-y-4">
+        <form action={updateRoomDescriptionAction} data-card="description" className="space-y-4">
           <HiddenRoomFields room={room} />
           <Field label="Título de la sección" htmlFor="description_title">
             <input
@@ -401,7 +433,12 @@ export default async function AdminRoomEditPage({
               />
             </Field>
           </div>
-          <SubmitButton />
+          <div className="flex flex-wrap items-center gap-3">
+            <SubmitButton>Publicar en Supabase</SubmitButton>
+            <p className="text-xs text-tinta-500">
+              Se publica en Supabase y puede reflejarse en la web pública.
+            </p>
+          </div>
         </form>
       </AdminCard>
 
@@ -440,8 +477,34 @@ export default async function AdminRoomEditPage({
       >
         <ul className="space-y-3">
           {room.room_images.map((image) => (
-            <li key={image.id} className="rounded-md border border-sillar-200 p-3">
-              <p className="mb-2 truncate font-mono text-xs text-tinta-500">{image.src}</p>
+            <li
+              key={image.id}
+              className={`rounded-md border p-3 ${
+                image.is_cover ? "border-arcilla-400 ring-1 ring-arcilla-400/40" : "border-sillar-200"
+              } ${image.active ? "" : "opacity-60"}`}
+            >
+              <div className="flex gap-3">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  loading="lazy"
+                  className="h-20 w-28 shrink-0 rounded bg-sillar-100 object-cover"
+                />
+                <div className="min-w-0 flex-1">
+                  <div className="mb-2 flex flex-wrap items-center gap-2">
+                    {image.is_cover && (
+                      <span className="rounded bg-arcilla-500 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
+                        Portada
+                      </span>
+                    )}
+                    {!image.active && (
+                      <span className="rounded bg-sillar-200 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-tinta-500">
+                        Oculta
+                      </span>
+                    )}
+                    <p className="truncate font-mono text-xs text-tinta-500">{image.src}</p>
+                  </div>
               <form action={updateImageAction} className="flex flex-wrap items-end gap-3">
                 <HiddenRoomFields room={room} />
                 <input type="hidden" name="image_id" value={image.id} />
@@ -477,6 +540,8 @@ export default async function AdminRoomEditPage({
                 </div>
                 <SubmitButton variant="ghost">Guardar</SubmitButton>
               </form>
+                </div>
+              </div>
               <form action={deleteImageAction} className="mt-2">
                 <HiddenRoomFields room={room} />
                 <input type="hidden" name="image_id" value={image.id} />
@@ -521,7 +586,7 @@ export default async function AdminRoomEditPage({
         title="8 · Calificaciones (origen: Airbnb)"
         description="Puntajes publicados en el anuncio de Airbnb — actualizar con cuidado y solo con los valores reales del anuncio. Se muestran citados en el sitio; nunca se marcan como aggregateRating de schema.org y no se inventan reseñas."
       >
-        <form action={updateRoomRatingsAction} className="space-y-4">
+        <form action={updateRoomRatingsAction} data-card="ratings" className="space-y-4">
           <HiddenRoomFields room={room} />
           <div className="grid gap-4 sm:grid-cols-3">
             <Field label="Calificación general" htmlFor="rating">
@@ -581,7 +646,12 @@ export default async function AdminRoomEditPage({
               </Field>
             ))}
           </div>
-          <SubmitButton />
+          <div className="flex flex-wrap items-center gap-3">
+            <SubmitButton>Publicar en Supabase</SubmitButton>
+            <p className="text-xs text-tinta-500">
+              Se publica en Supabase y puede reflejarse en la web pública.
+            </p>
+          </div>
         </form>
       </AdminCard>
 
@@ -632,6 +702,7 @@ export default async function AdminRoomEditPage({
           </div>
         </dl>
       </AdminCard>
+      </RoomEditorShell>
     </div>
   );
 }
