@@ -199,10 +199,12 @@ export default async function AdminRoomEditPage({
     return (
       <SetupNeededCard title="Sin conexión con Supabase">
         <p>
-          Las variables de Supabase están definidas pero la base de datos rechazó la
-          conexión. Revisa que <code>SUPABASE_SERVICE_ROLE_KEY</code> y{" "}
-          <code>NEXT_PUBLIC_SUPABASE_URL</code> correspondan al proyecto actual y
-          vuelve a desplegar (docs/runbooks/admin-supabase-setup.md).
+          Las variables de Supabase existen, pero la base de datos rechazó la clave
+          (<code>Invalid API key</code>). Casi siempre es{" "}
+          <code>SUPABASE_SERVICE_ROLE_KEY</code>: vuelve a copiar la{" "}
+          <code>service_role</code> del proyecto actual (Supabase → Settings → API),
+          actualízala en Vercel y vuelve a desplegar
+          (docs/runbooks/admin-supabase-setup.md).
         </p>
       </SetupNeededCard>
     );

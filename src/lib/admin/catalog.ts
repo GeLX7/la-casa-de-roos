@@ -89,6 +89,37 @@ export async function getAdminRooms(): Promise<AdminRoomSummary[]> {
   );
 }
 
+export type AdminRoomCounts = { features: number; images: number; rules: number };
+
+/**
+ * Per-room child-row counts for the catalog list (features / images / rules),
+ * including disabled ones so the owner sees the full picture. Best-effort: a
+ * failure here must not take down the room list, so callers degrade to "no
+ * counts shown" rather than the whole catalog falling back (see the list page).
+ */
+export async function getAdminRoomCounts(): Promise<Record<string, AdminRoomCounts>> {
+  type CountRow = {
+    id: string;
+    room_features: { count: number }[];
+    room_images: { count: number }[];
+    room_rules: { count: number }[];
+  };
+  const rows = await adminRest<CountRow[]>(
+    "rooms?select=id,room_features(count),room_images(count),room_rules(count)&deleted_at=is.null",
+  );
+  const first = (rows: { count: number }[]) => rows[0]?.count ?? 0;
+  return Object.fromEntries(
+    rows.map((row) => [
+      row.id,
+      {
+        features: first(row.room_features),
+        images: first(row.room_images),
+        rules: first(row.room_rules),
+      },
+    ]),
+  );
+}
+
 export async function getAdminRoom(slug: string): Promise<AdminRoom | null> {
   const rows = await adminRest<
     (Omit<AdminRoom, "room_ratings"> & { room_ratings: AdminRatings[] | AdminRatings | null })[]
