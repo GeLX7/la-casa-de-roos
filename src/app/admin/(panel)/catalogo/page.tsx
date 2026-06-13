@@ -1,7 +1,11 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { guardAdminPanel } from "@/lib/admin/auth";
-import { getAdminRooms } from "@/lib/admin/catalog";
+import {
+  getAdminRoomCounts,
+  getAdminRooms,
+  type AdminRoomCounts,
+} from "@/lib/admin/catalog";
 import {
   moveRoomAction,
   softDeleteRoomAction,
@@ -73,14 +77,23 @@ export default async function AdminCatalogPage() {
     return (
       <ReadOnlyCatalog title="Sin conexión con Supabase">
         <p>
-          Las variables de Supabase están definidas pero la base de datos rechazó la
-          conexión. Revisa que <code>SUPABASE_SERVICE_ROLE_KEY</code> y{" "}
-          <code>NEXT_PUBLIC_SUPABASE_URL</code> correspondan al proyecto actual y
-          vuelve a desplegar (docs/runbooks/admin-supabase-setup.md).
+          Las variables de Supabase existen, pero la base de datos rechazó la clave
+          (<code>Invalid API key</code>). Casi siempre es{" "}
+          <code>SUPABASE_SERVICE_ROLE_KEY</code>: vuelve a copiar la{" "}
+          <code>service_role</code> del proyecto actual (Supabase → Settings → API),
+          actualízala en Vercel y vuelve a desplegar
+          (docs/runbooks/admin-supabase-setup.md).
         </p>
       </ReadOnlyCatalog>
     );
   }
+
+  /* Counts are a best-effort enrichment: if this fails, the room list still
+     renders (degrade only this section, never the whole catalog). */
+  const counts = await getAdminRoomCounts().catch((error) => {
+    console.error("AdminCatalogPage: room counts read failed", error);
+    return {} as Record<string, AdminRoomCounts>;
+  });
 
   return (
     <div className="space-y-6">
@@ -131,6 +144,13 @@ export default async function AdminCatalogPage() {
               <p className="truncate text-xs text-tinta-500">
                 /habitaciones/{room.slug} · hasta {room.capacity} huéspedes
               </p>
+              {counts[room.id] && (
+                <p className="mt-1 flex flex-wrap gap-x-3 gap-y-0.5 text-xs text-tinta-500">
+                  <span>{counts[room.id].features} servicios</span>
+                  <span>{counts[room.id].images} fotos</span>
+                  <span>{counts[room.id].rules} normas</span>
+                </p>
+              )}
             </div>
 
             <ActiveBadge active={room.active} />

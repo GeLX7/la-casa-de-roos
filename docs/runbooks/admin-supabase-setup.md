@@ -103,11 +103,23 @@ If the catalog shows the "Sin conexión con Supabase" card (and the Vercel
 runtime logs show `Supabase REST 401: Invalid API key`), the env vars exist
 but at least one value does not belong to the current project — typical after
 the Supabase project was recreated or moved to another organization, leaving
-stale keys in Vercel. Fix: re-copy **all three** values
-(`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`,
-`SUPABASE_SERVICE_ROLE_KEY`) from the current project's **Settings → API**
-page, replace them in Vercel, and redeploy. Login keeps working during this —
-admin auth never touches Supabase.
+stale keys in Vercel.
+
+The admin catalog reads with the **`service_role`** key (`adminRest`), so that
+key is the usual culprit. Fix: re-copy the **`service_role`** key (and, to be
+safe, `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY`) from the
+current project's **Settings → API** page, replace them in Vercel Production,
+and redeploy. The public anon key and URL can be verified with a plain REST
+call; the `service_role` key is secret and cannot be read back from Vercel, so
+replace it from the Supabase dashboard rather than trying to inspect it. Login
+keeps working throughout — admin auth never touches Supabase.
+
+⚠ Do **not** use `GET /api/availability` returning `live:true` as proof that
+the `service_role` key is valid. That endpoint only checks the env vars are
+non-empty and then degrades gracefully if the query fails (it still returns
+`live:true` with "no known blocks"). The real probes are: the admin catalog
+loading its rooms, or the Vercel logs showing no `Supabase REST 401` on
+`/admin/catalogo`.
 
 ## 6. (Later, separate decision) point the public site at Supabase
 
