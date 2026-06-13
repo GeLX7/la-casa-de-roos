@@ -92,12 +92,23 @@ export function Footer() {
       </div>
 
       <div className="border-t border-sillar-200 bg-sillar-50/60 px-6 py-4">
-        <p className="mx-auto max-w-6xl text-xs leading-relaxed text-tinta-500">
-          © {new Date().getFullYear()} La Casa de Roos, Arequipa. Sitio
-          independiente: Airbnb es una marca de Airbnb, Inc.; este sitio no está
-          afiliado a Airbnb. Las calificaciones citadas provienen de nuestros
-          anuncios públicos en Airbnb ({site.ratingsCheckedAt}).
-        </p>
+        <div className="mx-auto flex max-w-6xl flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <p className="text-xs leading-relaxed text-tinta-500">
+            © {new Date().getFullYear()} La Casa de Roos, Arequipa. Sitio
+            independiente: Airbnb es una marca de Airbnb, Inc.; este sitio no está
+            afiliado a Airbnb. Las calificaciones citadas provienen de nuestros
+            anuncios públicos en Airbnb ({site.ratingsCheckedAt}).
+          </p>
+          {/* Discreet owner entry point. /admin is protected (kill switch +
+              login) and noindex; rel=nofollow keeps it out of SEO weight. */}
+          <Link
+            href="/admin"
+            rel="nofollow"
+            className="shrink-0 self-end text-xs text-tinta-400 underline-offset-2 transition-colors hover:text-arcilla-600 hover:underline sm:self-auto"
+          >
+            Admin
+          </Link>
+        </div>
       </div>
     </footer>
   );
