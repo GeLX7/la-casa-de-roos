@@ -27,10 +27,29 @@ page without deleting it (preferred over Eliminar). New items append at the
 end; change "Orden" numbers to reorder (lower = first).
 
 ### Photos
-Only metadata is editable for now (alt text, category, order, cover, visible).
-To add a photo, the file must already exist under `public/images/...` in the
-repo (or be a full `https://` URL); paste its path in "Añadir foto". File
-upload arrives with Supabase Storage in a later phase.
+**Upload (Supabase Storage):** drag photos onto the upload zone in "7 · Fotos y
+categorías" (or "Elegir archivos"), pick a default category, then **Subir y
+publicar en Supabase**. Files go to the public `room-images` bucket
+(`rooms/<slug>/<uuid>-<name>`); accepted types are JPG/PNG/WEBP/AVIF up to
+10 MB each. Upload a small batch at a time (a whole batch must stay under
+~30 MB). New photos appear at the end of the list — set the cover/order after.
+
+**Metadata:** alt text, category, order, cover (portada) and visible are
+editable per photo, for both uploaded and existing photos.
+
+**Source label:** each row shows "Subida a Supabase" (uploaded) or "Archivo
+local" (the original seeded `/images/...` files).
+
+**Delete ("Quitar de la galería"):** removes the DB row immediately and, for
+uploaded photos, also deletes the Storage object. Original local files in the
+repo are **never** deleted. There's a confirmation prompt.
+
+**Cover (portada):** one per room. The cover leads the room card on
+`/habitaciones` and the suite-page gallery. (The home page shows fixed sample
+rooms from the static module and does not reflect Supabase photo edits.)
+
+You can still add a photo by path with "Añadir foto" (an existing
+`/images/...` path or a full `https://` URL) — useful for repo assets.
 
 ### Ratings
 Airbnb-sourced. Update only by copying the current values from the public

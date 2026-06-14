@@ -33,7 +33,7 @@ type RoomRow = {
   room_features: { icon: string; label: string; sort_order: number }[];
   room_not_included: { label: string; sort_order: number }[];
   room_rules: { label: string; sort_order: number }[];
-  room_images: { src: string; alt: string; category: string; sort_order: number }[];
+  room_images: { src: string; alt: string; category: string; sort_order: number; is_cover: boolean }[];
   room_ratings:
     | {
         rating: number;
@@ -52,7 +52,7 @@ const ROOM_SELECT =
   "slug,name,subtitle,airbnb_url,airbnb_listing_id,capacity,beds,bath,quiet_hours," +
   "short_description,long_description,price_label,guest_favorite," +
   "room_features(icon,label,sort_order),room_not_included(label,sort_order)," +
-  "room_rules(label,sort_order),room_images(src,alt,category,sort_order)," +
+  "room_rules(label,sort_order),room_images(src,alt,category,sort_order,is_cover)," +
   "room_ratings(rating,review_count,cleanliness,accuracy,checkin,communication,location,value)";
 
 function supabaseCatalogEnabled(): boolean {
@@ -102,11 +102,14 @@ function toListing(row: RoomRow): Listing {
     rules: byOrder(row.room_rules).map(({ label }) => label),
     quietHours: row.quiet_hours,
     priceLabel: row.price_label,
-    gallery: byOrder(row.room_images).map(({ src, alt, category }) => ({
-      src,
-      alt,
-      category: category as GalleryCategory,
-    })),
+    // Cover first (so it leads room cards + the suite gallery), then by order.
+    gallery: [...row.room_images]
+      .sort((a, b) => Number(b.is_cover) - Number(a.is_cover) || a.sort_order - b.sort_order)
+      .map(({ src, alt, category }) => ({
+        src,
+        alt,
+        category: category as GalleryCategory,
+      })),
     categoryRatings: {
       cleanliness: ratings?.cleanliness ?? 0,
       accuracy: ratings?.accuracy ?? 0,

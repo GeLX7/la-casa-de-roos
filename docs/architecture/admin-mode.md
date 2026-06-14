@@ -34,7 +34,7 @@ The room editor cards mirror the sections of the public suite page:
 4. **¿Qué incluye?** — repeatable features with icon key, visible toggle, order
 5. **Para que lo sepas antes de reservar** — repeatable not-included notes
 6. **Normas de la casa** — repeatable rules
-7. **Fotos** — gallery metadata: src path, alt, category (Sala/Habitación/Cocina/Baño/Áreas comunes/Entorno/Detalles), order, cover, visible. No file upload yet (see "Later phases")
+7. **Fotos** — Supabase Storage upload (drag/drop or picker → public `room-images` bucket) plus per-photo metadata: alt, category (Sala/Habitación/Cocina/Baño/Áreas comunes/Entorno/Detalles), order, cover, visible. Delete removes the row and (for uploaded photos) the Storage object; seeded local files are never touched. See `docs/runbooks/catalog-management.md`
 8. **Calificaciones** — Airbnb-sourced overall + per-category scores, marked "update carefully"; never schema.org aggregateRating, no fake reviews
 9. **Calendario** — per-room Airbnb iCal env status, last sync (from `calendar_sources`), website `.ics` export URL preview
 
@@ -142,9 +142,27 @@ imported/manual blocks, weighted Airbnb rating) when Supabase is configured,
 and static-listing-derived values otherwise — with `live: false` so the
 dashboard labels DB-only numbers as "available after Supabase setup".
 
+## Image storage (Supabase Storage)
+
+Owner-uploaded room photos live in the **public** `room-images` bucket (path
+`rooms/<slug>/<uuid>-<name>`). Public read is intentional — these images render
+on the public site, so public CDN URLs avoid signed-URL expiry management.
+Uploads/deletes happen server-side with the service role (bypasses RLS); the
+bucket's `public` flag handles reads, so no custom `storage.objects` policy is
+needed. `room_images` gained `storage_path` (object key, for deletes) and
+`source_type` (`local` for seeded `/images/...` rows, `supabase_storage` for
+uploads); `src` still holds the rendered URL, so the public data layer is
+unchanged except for selecting `is_cover` and sorting the cover first. Limits
+(10 MB, image MIME types) are enforced in the upload action and on the bucket.
+Migration: `supabase/migrations/20260613194000_room_image_storage.sql`. The
+`next.config.ts` `images.remotePatterns` allow only this project's
+`/storage/v1/object/public/room-images/**` (no third-party hotlinking), and
+`serverActions.bodySizeLimit` is raised to 30 MB for uploads.
+
 ## Later phases (intentionally not built)
 
-- Image upload via Supabase Storage (schema already accepts absolute URLs).
+- Server-side image resizing/optimization on upload (next/image already
+  optimizes at render; originals are stored as-is).
 - Reservation request management UI (review WhatsApp-originated requests) —
   tables exist from PR #5.
 - iCal import job + sync status writes (pending the four Airbnb iCal URLs).

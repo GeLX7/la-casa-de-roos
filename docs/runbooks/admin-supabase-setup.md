@@ -140,8 +140,12 @@ and redeploy. Static listings remain the automatic fallback on any error. See
   then, availability is confirmed by WhatsApp.
 - **Website `.ics` export** — needs `BOOKING_ICAL_SECRET` (configured together
   with the iCal URLs).
-- **Image upload** — admin edits image metadata only; uploads arrive with
-  Supabase Storage in a later phase (bucket + storage policies + upload UI).
+
+Image upload is **live** (public `room-images` bucket, created by
+`supabase/migrations/20260613194000_room_image_storage.sql`). Owners upload
+photos in the catalog editor; see `docs/runbooks/catalog-management.md`. No
+extra env vars are needed — uploads reuse `SUPABASE_SERVICE_ROLE_KEY` +
+`NEXT_PUBLIC_SUPABASE_URL`.
 
 Not disabled but **removed from the product**: online payments and email
 notifications. WhatsApp is the only direct contact/reservation channel and

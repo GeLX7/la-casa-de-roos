@@ -8,12 +8,18 @@
  * ?error=<short message> on failure — the admin pages render those banners.
  */
 
+import { randomUUID } from "node:crypto";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { requireAdmin, signInWithCredentials, signOut } from "@/lib/admin/auth";
 import { checkRateLimit } from "@/lib/admin/rate-limit";
-import { adminRest } from "@/lib/admin/supabase-admin";
+import {
+  adminRest,
+  deleteFromStorage,
+  storagePublicUrl,
+  uploadToStorage,
+} from "@/lib/admin/supabase-admin";
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -34,6 +40,31 @@ const IMAGE_CATEGORIES = [
   "Entorno",
   "Detalles",
 ];
+
+/* Upload limits, mirrored on the storage bucket as defense in depth. */
+const EXT_BY_TYPE: Record<string, string> = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+  "image/avif": "avif",
+};
+const MAX_IMAGE_BYTES = 10 * 1024 * 1024; // 10 MB
+const MAX_UPLOAD_FILES = 20;
+
+/** Slugifies the original filename's base for a safe, predictable object path. */
+function safeFileBase(name: string): string {
+  const dot = name.lastIndexOf(".");
+  const base = dot > 0 ? name.slice(0, dot) : name;
+  return (
+    base
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[̀-ͯ]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 40) || "foto"
+  );
+}
 
 function text(formData: FormData, key: string): string {
   const value = formData.get(key);
@@ -433,8 +464,88 @@ export async function deleteListItemAction(formData: FormData): Promise<void> {
 }
 
 // ---------------------------------------------------------------------------
-// Gallery images (metadata only — upload is a documented later phase)
+// Gallery images (Supabase Storage uploads + metadata)
 // ---------------------------------------------------------------------------
+
+export async function uploadImagesAction(formData: FormData): Promise<void> {
+  await requireAdmin();
+  const slug = text(formData, "slug");
+  const roomId = text(formData, "room_id");
+  const defaultCategory = text(formData, "default_category");
+  const category = IMAGE_CATEGORIES.includes(defaultCategory) ? defaultCategory : "Habitación";
+  const alt = text(formData, "default_alt");
+
+  const files = formData
+    .getAll("files")
+    .filter((f): f is File => f instanceof File && f.size > 0);
+
+  if (files.length === 0) {
+    backToRoom(slug, { error: "No se seleccionaron imágenes." });
+  }
+  if (files.length > MAX_UPLOAD_FILES) {
+    backToRoom(slug, { error: `Máximo ${MAX_UPLOAD_FILES} imágenes por carga.` });
+  }
+
+  // Append after the current highest order so uploads never disturb the cover.
+  let nextOrder = 0;
+  try {
+    const rows = await adminRest<{ sort_order: number }[]>(
+      `room_images?room_id=eq.${encodeURIComponent(roomId)}&select=sort_order&order=sort_order.desc&limit=1`,
+    );
+    nextOrder = (rows[0]?.sort_order ?? -1) + 1;
+  } catch (error) {
+    console.error("uploadImagesAction: order lookup", error);
+  }
+
+  let uploaded = 0;
+  const failures: string[] = [];
+
+  for (const file of files) {
+    const ext = EXT_BY_TYPE[file.type];
+    if (!ext) {
+      failures.push(`${file.name}: tipo no permitido`);
+      continue;
+    }
+    if (file.size > MAX_IMAGE_BYTES) {
+      failures.push(`${file.name}: supera 10 MB`);
+      continue;
+    }
+    const path = `rooms/${slug}/${randomUUID()}-${safeFileBase(file.name)}.${ext}`;
+    try {
+      await uploadToStorage(path, await file.arrayBuffer(), file.type);
+      await adminRest("room_images", {
+        method: "POST",
+        body: JSON.stringify({
+          room_id: roomId,
+          src: storagePublicUrl(path),
+          storage_path: path,
+          source_type: "supabase_storage",
+          alt,
+          category,
+          active: true,
+          is_cover: false,
+          sort_order: nextOrder,
+        }),
+      });
+      nextOrder += 1;
+      uploaded += 1;
+    } catch (error) {
+      console.error("uploadImagesAction: upload", error);
+      failures.push(`${file.name}: error al subir`);
+    }
+  }
+
+  refreshCatalogPaths(slug);
+  if (failures.length === 0) {
+    backToRoom(slug, { saved: true });
+  }
+  backToRoom(slug, {
+    error:
+      uploaded > 0
+        ? `${uploaded} imagen(es) subida(s). Con error: ${failures.join("; ")}`
+        : `No se pudo subir. ${failures.join("; ")}`,
+  });
+}
 
 export async function addImageAction(formData: FormData): Promise<void> {
   await requireAdmin();
@@ -512,11 +623,29 @@ export async function updateImageAction(formData: FormData): Promise<void> {
 export async function deleteImageAction(formData: FormData): Promise<void> {
   await requireAdmin();
   const slug = text(formData, "slug");
+  const imageId = text(formData, "image_id");
 
   try {
-    await adminRest(`room_images?id=eq.${encodeURIComponent(text(formData, "image_id"))}`, {
+    // Resolve the storage object server-side (don't trust a client field).
+    const rows = await adminRest<{ storage_path: string | null; source_type: string }[]>(
+      `room_images?id=eq.${encodeURIComponent(imageId)}&select=storage_path,source_type`,
+    );
+    const image = rows[0];
+
+    // Remove the DB row first so the photo leaves the site immediately.
+    await adminRest(`room_images?id=eq.${encodeURIComponent(imageId)}`, {
       method: "DELETE",
     });
+
+    // Only delete uploaded objects from Storage; seeded local files in the repo
+    // are never touched. Best-effort — an orphaned object is harmless.
+    if (image?.source_type === "supabase_storage" && image.storage_path) {
+      try {
+        await deleteFromStorage(image.storage_path);
+      } catch (storageError) {
+        console.error("deleteImageAction: storage object orphaned", storageError);
+      }
+    }
   } catch (error) {
     console.error("deleteImageAction", error);
     backToRoom(slug, { error: "No se pudo eliminar la foto." });

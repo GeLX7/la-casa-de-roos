@@ -23,6 +23,7 @@ import { getAirbnbIcalEnvKey, getAirbnbIcalUrl } from "@/lib/booking/config";
 import { SITE_URL } from "@/data/site";
 import { ConfirmSubmit, SubmitButton } from "@/components/admin/buttons";
 import { IconPickerField } from "@/components/admin/icon-picker-field";
+import { ImageUploader } from "@/components/admin/image-uploader";
 import { RoomEditorShell } from "@/components/admin/room-editor-shell";
 import type { PreviewData } from "@/components/admin/room-preview";
 import {
@@ -473,8 +474,10 @@ export default async function AdminRoomEditPage({
       {/* 7 — Gallery */}
       <AdminCard
         title="7 · Fotos y categorías"
-        description="Edición de metadatos (texto alternativo, categoría, orden, portada). La subida de archivos llega con Supabase Storage en una fase posterior; por ahora las rutas apuntan a public/images/."
+        description="Sube fotos a Supabase Storage o edita los metadatos (texto alternativo, categoría, orden, portada, visible). Las fotos originales del sitio siguen funcionando junto a las nuevas."
       >
+        <ImageUploader roomId={room.id} slug={room.slug} categories={IMAGE_CATEGORIES} />
+
         <ul className="space-y-3">
           {room.room_images.map((image) => (
             <li
@@ -503,6 +506,9 @@ export default async function AdminRoomEditPage({
                         Oculta
                       </span>
                     )}
+                    <span className="rounded bg-cielo-100 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-tinta-600">
+                      {image.source_type === "supabase_storage" ? "Subida a Supabase" : "Archivo local"}
+                    </span>
                     <p className="truncate font-mono text-xs text-tinta-500">{image.src}</p>
                   </div>
               <form action={updateImageAction} className="flex flex-wrap items-end gap-3">

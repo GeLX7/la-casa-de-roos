@@ -129,10 +129,9 @@ export default async function RoomPage({
 
       {/* Gallery — temporary Airbnb-derived photos stored locally, pending
           owner originals (docs/research/content-rights-checklist.md). */}
-      <SuiteGallery
-        photos={listing.gallery}
-        suiteName={listing.subtitle}
-      />
+      {listing.gallery.length > 0 && (
+        <SuiteGallery photos={listing.gallery} suiteName={listing.subtitle} />
+      )}
 
       <div className="mt-10 grid gap-10 lg:grid-cols-[1.6fr_1fr]">
         <div className="space-y-10">
