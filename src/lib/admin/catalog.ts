@@ -23,6 +23,9 @@ export type AdminImage = {
   is_cover: boolean;
   active: boolean;
   sort_order: number;
+  storage_path: string | null;
+  /** 'local' (seeded /images path), 'supabase_storage' (uploaded), 'airbnb_seed'. */
+  source_type: string;
 };
 
 export type AdminRatings = {

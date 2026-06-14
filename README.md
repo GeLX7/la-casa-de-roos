@@ -2,11 +2,11 @@
 
 Direct-booking website for **La Casa de Roos**: four suite/mini-apartment lofts in the historic center of Arequipa, Peru, currently sold via Airbnb (≈★4.85, 346 reviews across 4 listings).
 
-**Status (2026-06-12):** Marketing site is live and indexable at `https://lacasaderoos.com`. Admin Mode is live: the Supabase project is migrated + seeded and the owner signs in at `/admin` to edit the room catalog. The public site still serves the static catalog (`src/data/listings.ts`) until `CATALOG_DATA_SOURCE=supabase` is intentionally enabled.
+**Status (2026-06-13):** Marketing site is live and indexable at `https://lacasaderoos.com`. Admin Mode is live and the public catalog is **Supabase-backed** (`CATALOG_DATA_SOURCE=supabase`): the owner edits rooms — including uploading photos to Supabase Storage — at `/admin`, and changes reach the live site after revalidation. `src/data/listings.ts` remains the automatic fallback on any Supabase error.
 
 **Product scope (owner decision, 2026-06-12):** everything operational is **WhatsApp + Airbnb**. Airbnb is the booking/payment platform for Airbnb bookings; direct website inquiries open a prefilled WhatsApp message and the owner confirms personally. **No online payments (no Culqi), no email workflow.** Airbnb iCal calendar sync is the one pending feature — prepared in code, waiting only for the four private Airbnb iCal export URLs; until then availability is confirmed by WhatsApp.
 
-**Admin Mode:** a Supabase-backed owner panel at `/admin` (dashboard with stats + setup warnings, catalog management, per-room editor in 9 cards: basics, facts, description, features, not-included notes, house rules, gallery metadata, Airbnb ratings, calendar status). Admin login is username + password against env-var credentials (PBKDF2 hash + HMAC session cookie, `ENABLE_ADMIN_ROUTES` kill switch — no Supabase Auth). See `docs/architecture/admin-mode.md` and `docs/runbooks/admin-supabase-setup.md`.
+**Admin Mode:** a Supabase-backed owner panel at `/admin` (dashboard with stats + setup warnings, catalog management, per-room editor in 9 cards: basics, facts, description, features, not-included notes, house rules, photo upload + gallery management (Supabase Storage), Airbnb ratings, calendar status). Admin login is username + password against env-var credentials (PBKDF2 hash + HMAC session cookie, `ENABLE_ADMIN_ROUTES` kill switch — no Supabase Auth). See `docs/architecture/admin-mode.md` and `docs/runbooks/admin-supabase-setup.md`.
 
 Current MVP routes include home, habitaciones, four suite pages, reservar, contacto, privacidad, sitemap/robots, 404, and a new `/arequipa` guest guide based on public research rewritten for the site.
 

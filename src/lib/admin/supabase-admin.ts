@@ -65,3 +65,66 @@ export async function adminCount(path: string): Promise<number> {
   const total = Number(range.split("/")[1]);
   return Number.isFinite(total) ? total : 0;
 }
+
+/* --- Supabase Storage (room photos) ------------------------------------- */
+/* Public bucket: reads come from the public URL (no signed URLs), writes use
+   the service role server-side. SERVER-ONLY, same as the REST helpers above. */
+
+export const STORAGE_BUCKET = "room-images";
+
+/** Public URL for an object path inside the room-images bucket. */
+export function storagePublicUrl(path: string): string {
+  const { supabaseUrl } = getAdminRuntimeConfig();
+  return `${supabaseUrl.replace(/\/$/, "")}/storage/v1/object/public/${STORAGE_BUCKET}/${path}`;
+}
+
+/** Uploads bytes to the bucket. Throws on failure (no upsert — paths are unique). */
+export async function uploadToStorage(
+  path: string,
+  body: ArrayBuffer,
+  contentType: string,
+): Promise<void> {
+  const config = getAdminRuntimeConfig();
+  if (!config.dbReady) {
+    throw new Error("Supabase admin environment is not configured.");
+  }
+  const response = await fetch(
+    `${config.supabaseUrl.replace(/\/$/, "")}/storage/v1/object/${STORAGE_BUCKET}/${encodeURI(path)}`,
+    {
+      method: "POST",
+      headers: {
+        apikey: config.serviceRoleKey,
+        authorization: `Bearer ${config.serviceRoleKey}`,
+        "content-type": contentType,
+        "x-upsert": "false",
+      },
+      body,
+      cache: "no-store",
+    },
+  );
+  if (!response.ok) {
+    throw new Error(`Supabase Storage upload ${response.status}: ${await response.text()}`);
+  }
+}
+
+/** Removes an object. A missing object (404) is treated as already gone. */
+export async function deleteFromStorage(path: string): Promise<void> {
+  const config = getAdminRuntimeConfig();
+  if (!config.dbReady) {
+    throw new Error("Supabase admin environment is not configured.");
+  }
+  const response = await fetch(
+    `${config.supabaseUrl.replace(/\/$/, "")}/storage/v1/object/${STORAGE_BUCKET}/${encodeURI(path)}`,
+    {
+      method: "DELETE",
+      headers: {
+        apikey: config.serviceRoleKey,
+        authorization: `Bearer ${config.serviceRoleKey}`,
+      },
+      cache: "no-store",
+    },
+  );
+  if (!response.ok && response.status !== 404) {
+    throw new Error(`Supabase Storage delete ${response.status}: ${await response.text()}`);
+  }
+}
