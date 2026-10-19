@@ -16,6 +16,17 @@
 
 import { listings, type GalleryCategory, type Listing } from "@/data/listings";
 
+type RatingsRow = {
+  rating: number;
+  review_count: number;
+  cleanliness: number;
+  accuracy: number;
+  checkin: number;
+  communication: number;
+  location: number;
+  value: number;
+};
+
 type RoomRow = {
   slug: string;
   name: string;
@@ -34,18 +45,9 @@ type RoomRow = {
   room_not_included: { label: string; sort_order: number }[];
   room_rules: { label: string; sort_order: number }[];
   room_images: { src: string; alt: string; category: string; sort_order: number; is_cover: boolean }[];
-  room_ratings:
-    | {
-        rating: number;
-        review_count: number;
-        cleanliness: number;
-        accuracy: number;
-        checkin: number;
-        communication: number;
-        location: number;
-        value: number;
-      }[]
-    | null;
+  // room_ratings is one-to-one (room_id is its primary key), so PostgREST embeds
+  // it as a single object; older shapes returned a one-item array. Accept both.
+  room_ratings: RatingsRow[] | RatingsRow | null;
 };
 
 const ROOM_SELECT =
@@ -82,7 +84,9 @@ const byOrder = <T extends { sort_order: number }>(rows: T[]) =>
   [...rows].sort((a, b) => a.sort_order - b.sort_order);
 
 function toListing(row: RoomRow): Listing {
-  const ratings = Array.isArray(row.room_ratings) ? row.room_ratings[0] : undefined;
+  const ratings = Array.isArray(row.room_ratings)
+    ? row.room_ratings[0]
+    : (row.room_ratings ?? undefined);
   return {
     slug: row.slug,
     title: row.name,
