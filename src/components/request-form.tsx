@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { listings } from "@/data/listings";
 import { site } from "@/data/site";
+import { addDays } from "@/lib/booking/dates";
 import { AvailabilityChecker } from "@/components/availability-checker";
 import { WhatsApp } from "@/components/icons";
 
@@ -32,12 +33,28 @@ export function RequestForm({ initialSlug }: { initialSlug?: string }) {
 
   const selected = listings.find((l) => l.slug === form.suite) ?? listings[0];
 
+  // The guest count never exceeds the selected suite's capacity, even when the
+  // visitor picked more guests on a larger suite and then switched suites.
+  const guests = String(Math.min(Number(form.guests) || 1, selected.capacity));
+  // A stay needs at least one night: the departure is after the arrival.
+  const minCheckout = form.checkin ? addDays(form.checkin, 1) : addDays(today, 1);
+
   const set =
     (key: keyof typeof form) =>
     (
       e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
     ) =>
       setForm((f) => ({ ...f, [key]: e.target.value }));
+
+  // Moving the arrival to the departure date or later clears the departure.
+  const setCheckin = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const checkin = e.target.value;
+    setForm((f) => ({
+      ...f,
+      checkin,
+      checkout: f.checkout && checkin && f.checkout <= checkin ? "" : f.checkout,
+    }));
+  };
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -47,7 +64,7 @@ export function RequestForm({ initialSlug }: { initialSlug?: string }) {
       `• Suite: ${selected.title} (${selected.subtitle})`,
       `• Llegada: ${form.checkin || "por definir"}`,
       `• Salida: ${form.checkout || "por definir"}`,
-      `• Huéspedes: ${form.guests}`,
+      `• Huéspedes: ${guests}`,
       `• Nombre: ${form.name}`,
       form.contact ? `• Contacto: ${form.contact}` : "",
       form.message ? `• Mensaje: ${form.message}` : "",
@@ -83,13 +100,13 @@ export function RequestForm({ initialSlug }: { initialSlug?: string }) {
           <label htmlFor="checkin" className={labelCls}>Llegada</label>
           <input
             id="checkin" type="date" required min={today}
-            value={form.checkin} onChange={set("checkin")} className={inputCls}
+            value={form.checkin} onChange={setCheckin} className={inputCls}
           />
         </div>
         <div>
           <label htmlFor="checkout" className={labelCls}>Salida</label>
           <input
-            id="checkout" type="date" required min={form.checkin || today}
+            id="checkout" type="date" required min={minCheckout}
             value={form.checkout} onChange={set("checkout")} className={inputCls}
           />
         </div>
@@ -104,7 +121,7 @@ export function RequestForm({ initialSlug }: { initialSlug?: string }) {
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="guests" className={labelCls}>Huéspedes</label>
-          <select id="guests" value={form.guests} onChange={set("guests")} className={inputCls}>
+          <select id="guests" value={guests} onChange={set("guests")} className={inputCls}>
             {Array.from({ length: selected.capacity }, (_, i) => i + 1).map((n) => (
               <option key={n} value={n}>{n}</option>
             ))}
