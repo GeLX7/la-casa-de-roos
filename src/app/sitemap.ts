@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
-import { listings } from "@/data/listings";
+import { getRooms } from "@/lib/catalog/data";
 import { SITE_URL } from "@/data/site";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const listings = await getRooms();
   const now = new Date();
   const staticRoutes = ["", "/habitaciones", "/arequipa", "/reservar", "/contacto"].map(
     (path) => ({

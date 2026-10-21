@@ -3,13 +3,14 @@ import { guardAdminPanel } from "@/lib/admin/auth";
 import { getAdminStats } from "@/lib/admin/catalog";
 import { getSetupWarnings } from "@/lib/admin/config";
 import { AIRBNB_ICAL_ENV_BY_ROOM, getAirbnbIcalUrl } from "@/lib/booking/config";
-import { listings } from "@/data/listings";
+import { getRooms } from "@/lib/catalog/data";
 import { INDEXABLE, SITE_URL } from "@/data/site";
 import { AdminCard, StatCard, WarningCard } from "@/components/admin/ui";
 
 export default async function AdminDashboardPage() {
   const guard = await guardAdminPanel();
   const stats = await getAdminStats();
+  const listings = await getRooms();
   const warnings = getSetupWarnings();
 
   const dbValue = (value: number | null) => (value === null ? "—" : String(value));
@@ -47,7 +48,7 @@ export default async function AdminDashboardPage() {
         <StatCard
           label="Reseñas en Airbnb"
           value={String(stats.totalReviews)}
-          hint="Total entre las cuatro suites"
+          hint="Total entre todas las habitaciones"
         />
         <StatCard label="Solicitudes de reserva" value={dbValue(stats.totalRequests)} hint={dbHint} />
         <StatCard label="Solicitudes pendientes" value={dbValue(stats.pendingRequests)} hint={dbHint} />

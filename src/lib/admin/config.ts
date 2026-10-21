@@ -14,6 +14,7 @@
  */
 
 import { MIN_SESSION_SECRET_LENGTH } from "@/lib/admin/credentials";
+import { AIRBNB_ICAL_ENV_BY_ROOM } from "@/lib/booking/config";
 
 export type AdminRuntimeConfig = {
   supabaseUrl: string;
@@ -100,22 +101,17 @@ export function getSetupWarnings(): SetupWarning[] {
     });
   }
 
-  /* iCal stays a future feature: until the owner provides the four private
+  /* iCal stays a future feature: until the owner provides the private
      Airbnb export URLs, availability is confirmed by WhatsApp. No payment or
      email warnings here by design — payments happen on Airbnb and direct
      inquiries go through WhatsApp (docs/architecture/booking-calendar-sync.md). */
-  const icalKeys = [
-    "AIRBNB_ICAL_SUITE_QUEEN_CON_SALA",
-    "AIRBNB_ICAL_SUITE_QUEEN_CENTRO_HISTORICO",
-    "AIRBNB_ICAL_SUITE_QUEEN_CON_VISTA",
-    "AIRBNB_ICAL_MINI_APARTAMENTO_FAMILIAR",
-  ];
+  const icalKeys = Object.values(AIRBNB_ICAL_ENV_BY_ROOM);
   const missingIcal = icalKeys.filter((key) => !process.env[key]);
   if (missingIcal.length > 0) {
     warnings.push({
       key: "ical",
       label: "iCal de Airbnb pendiente (función futura)",
-      detail: `Faltan ${missingIcal.length} de 4 URLs privadas de exportación iCal de Airbnb (las provee la dueña). Mientras tanto, la disponibilidad se confirma por WhatsApp.`,
+      detail: `Faltan ${missingIcal.length} de ${icalKeys.length} URLs privadas de exportación iCal de Airbnb (las provee la dueña). Mientras tanto, la disponibilidad se confirma por WhatsApp.`,
     });
   }
 

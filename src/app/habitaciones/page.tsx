@@ -8,7 +8,7 @@ import { JsonLd } from "@/components/json-ld";
 export const metadata: Metadata = {
   title: "Habitaciones y suites en el Centro Histórico de Arequipa",
   description:
-    "Cuatro suites privadas con baño propio, sala y cocina compartida exclusiva para huéspedes en el Centro Histórico de Arequipa. Capacidad para 2 a 3 huéspedes, llegada autónoma.",
+    "Suites privadas con baño propio, sala y cocina compartida exclusiva para huéspedes, y un mini apartamento con cocina propia, en el Centro Histórico de Arequipa. Capacidad para 2 a 3 huéspedes, llegada autónoma.",
   alternates: { canonical: "/habitaciones" },
 };
 
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 const faqs = [
   {
     q: "¿Las habitaciones tienen baño privado?",
-    a: "Sí. Cada una de las cuatro suites tiene baño completo privado, además de dormitorio con cama queen y sala de estar propia.",
+    a: "Sí. Todas las habitaciones, suites y mini apartamento, tienen baño completo privado y dormitorio con cama queen. Las suites además tienen sala de estar propia.",
   },
   {
     q: "¿Cómo se reserva?",
@@ -66,11 +66,12 @@ export default async function HabitacionesPage() {
             Habitaciones
           </p>
           <h1 className="font-display text-3xl font-extrabold leading-[1.15] text-tinta-900 sm:text-4xl">
-            Cuatro suites en una misma casa del centro.
+            Suites y mini apartamento en una misma casa del centro.
           </h1>
           <p className="mt-4 text-sm leading-relaxed text-tinta-700 sm:text-base">
             Cada suite tiene dormitorio queen, sala de estar privada, baño
-            propio y acceso a la cocina compartida. Elige por vista, espacio o capacidad; todas
+            propio y acceso a la cocina compartida; el mini apartamento tiene
+            cocina propia. Elige por vista, espacio o capacidad; todos
             comparten la misma ubicación caminable.
           </p>
         </div>

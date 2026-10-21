@@ -125,6 +125,14 @@ function toListing(row: RoomRow): Listing {
   };
 }
 
+/** Weighted aggregate of the public Airbnb ratings (display-only — never schema.org). */
+export function computeAggregate(rooms: Listing[]): { rating: number; reviewCount: number } {
+  const reviewCount = rooms.reduce((n, l) => n + l.reviewCount, 0);
+  if (reviewCount === 0) return { rating: 0, reviewCount: 0 };
+  const weighted = rooms.reduce((n, l) => n + l.rating * l.reviewCount, 0) / reviewCount;
+  return { rating: Math.round(weighted * 100) / 100, reviewCount };
+}
+
 /** Active rooms for the public site (static fallback always available). */
 export async function getRooms(): Promise<Listing[]> {
   if (!supabaseCatalogEnabled()) return listings;

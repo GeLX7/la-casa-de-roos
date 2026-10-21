@@ -1,4 +1,4 @@
-import { aggregate } from "@/data/listings";
+import { computeAggregate, getRooms } from "@/lib/catalog/data";
 import { site } from "@/data/site";
 import { Star, Key, MapPin } from "@/components/icons";
 
@@ -6,7 +6,8 @@ import { Star, Key, MapPin } from "@/components/icons";
  * Aggregate Airbnb figures shown as attributed facts (display only —
  * intentionally no schema.org aggregateRating, see docs/research/seo-strategy.md).
  */
-export function TrustStrip() {
+export async function TrustStrip() {
+  const aggregate = computeAggregate(await getRooms());
   return (
     <section aria-label="Reputación" className="border-y border-sillar-200 bg-white">
       <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-6 py-8 text-center sm:grid-cols-4 sm:divide-x sm:divide-sillar-200">

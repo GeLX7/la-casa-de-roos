@@ -14,7 +14,7 @@ export async function GET(
   const token = searchParams.get("token") ?? "";
   const config = getBookingRuntimeConfig();
 
-  if (!isKnownRoomSlug(roomSlug)) {
+  if (!(await isKnownRoomSlug(roomSlug))) {
     return NextResponse.json({ status: "not_found" }, { status: 404 });
   }
 

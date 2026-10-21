@@ -47,7 +47,7 @@ export const site = {
     facebook: "https://www.facebook.com/profile.php?id=61579891154411",
   },
   /** Date the public Airbnb figures below were last checked. */
-  ratingsCheckedAt: "junio 2026",
+  ratingsCheckedAt: "octubre 2026",
 } as const;
 
 export const landmarks = [
