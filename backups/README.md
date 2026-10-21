@@ -13,17 +13,35 @@ project (`eyzbjtcelekuczqobhau`):
 
 File: `backups/local/lacasaderoos-catalog-backup-<UTCtimestamp>.json`
 
-## How the snapshot was taken (no data modified)
+## How the snapshot is taken (no data modified)
 
-Read-only `SELECT … json_agg` per table via the Supabase SQL editor / MCP,
-written to one JSON object. It never writes to the database.
+`scripts/backup-catalog.mjs` reads each table (GET only) and writes one JSON
+object. Earlier snapshots were taken with read-only `SELECT … json_agg`. It
+never writes to the database.
 
-## Full database backup (documented, run manually if needed)
+## Rutina de respaldo (manual)
 
-Supabase keeps automatic daily backups (Dashboard → Database → Backups). For an
-on-demand logical dump, use the connection string from
-**Dashboard → Settings → Database → Connection string** (keep it secret, never
-commit it):
+El proyecto de Supabase está en el plan **free**, que **no incluye copias de
+seguridad automáticas diarias** (llegan con el plan Pro). La protección actual
+es la exportación manual:
+
+- **Cuándo:** una vez por semana y siempre **antes** de un cambio grande
+  (importar fotos, cambiar slugs, editar varias habitaciones, correr SQL).
+- **Cómo:** `node scripts/backup-catalog.mjs` con `SUPABASE_URL` (o
+  `NEXT_PUBLIC_SUPABASE_URL`) y `SUPABASE_SERVICE_ROLE_KEY` en el entorno
+  local. Solo lee (GET); no modifica nada. Genera el JSON en `backups/local/`.
+- **Dónde guardarlo:** copiar el archivo a una carpeta privada fuera del
+  repositorio (por ejemplo Google Drive privado). Puede contener enlaces iCal:
+  no compartirlo ni subirlo a GitHub.
+- **Revisión:** abrir el JSON y comprobar que cada tabla tiene filas.
+- Si el sitio llegara a guardar reservas, solicitudes o pagos, pasar a
+  Supabase Pro (backups diarios) antes de activarlo.
+
+## Volcado completo (opcional, manual)
+
+Para un volcado lógico completo usa la cadena de conexión de
+**Dashboard → Settings → Database → Connection string** (secreta, nunca se
+sube al repo):
 
 ```bash
 # Schema + data, custom format (restore with pg_restore):
