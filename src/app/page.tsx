@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { listings, aggregate } from "@/data/listings";
+import { computeAggregate, getRooms } from "@/lib/catalog/data";
 import { arequipaExperiences } from "@/data/arequipa";
 import { site, landmarks } from "@/data/site";
 import { RoomCard } from "@/components/room-card";
@@ -82,7 +82,9 @@ function HeroActions() {
   );
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const listings = await getRooms();
+  const aggregate = computeAggregate(listings);
   return (
     <>
       {/* Hero — the owner's landing artwork is the brand piece: cathedral,
@@ -176,8 +178,9 @@ export default function HomePage() {
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-tinta-700 sm:text-lg">
             A una cuadra de la Calle Mercaderes y a pasos de la Plaza de
-            Armas: cuatro suites privadas con baño propio, sala de estar,
-            acceso a la cocina compartida y llegada autónoma. Y una anfitriona que responde en
+            Armas: suites privadas con baño propio, sala de estar y acceso
+            a la cocina compartida, más un mini apartamento con cocina propia.
+            Todo con llegada autónoma y una anfitriona que responde en
             minutos.
           </p>
         </div>
@@ -192,15 +195,15 @@ export default function HomePage() {
               La casa
             </p>
             <h2 className="font-display text-2xl font-bold text-tinta-900 sm:text-3xl lg:text-4xl">
-              Nuestras suites
+              Suites y mini apartamento
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-tinta-700 sm:text-base">
-              Cuatro espacios privados, cada uno con su propia personalidad y la
+              Espacios privados, cada uno con su propia personalidad y la
               misma calidez.
             </p>
           </div>
           <div className="grid gap-6 sm:grid-cols-2">
-            {listings.slice(0, 4).map((l, i) => (
+            {listings.map((l, i) => (
               <RoomCard key={l.slug} listing={l} variant={i} />
             ))}
           </div>

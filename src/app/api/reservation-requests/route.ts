@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getListing } from "@/data/listings";
+import { getRoomBySlug } from "@/lib/catalog/data";
 import { getRoomAvailability } from "@/lib/booking/availability";
 import { isValidStayRange } from "@/lib/booking/dates";
 import {
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     guests: Number(body.guests),
     message: asString(body.message),
   };
-  const room = getListing(input.roomSlug);
+  const room = await getRoomBySlug(input.roomSlug);
 
   if (
     !room ||

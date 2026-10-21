@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { listings } from "@/data/listings";
 import { site } from "@/data/site";
 import { addDays } from "@/lib/booking/dates";
 import { AvailabilityChecker } from "@/components/availability-checker";
@@ -14,15 +13,23 @@ import { WhatsApp } from "@/components/icons";
  * live calendars once the Airbnb iCal URLs are configured — there is no
  * online checkout or payment step on the site.
  */
-export function RequestForm({ initialSlug }: { initialSlug?: string }) {
+export type RequestFormRoom = { slug: string; title: string; subtitle: string; capacity: number };
+
+export function RequestForm({
+  initialSlug,
+  rooms,
+}: {
+  initialSlug?: string;
+  rooms: RequestFormRoom[];
+}) {
   const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
   const [submitState, setSubmitState] = useState<
     "idle" | "checking" | "request_sent" | "needs_confirmation"
   >("idle");
   const [form, setForm] = useState({
-    suite: listings.some((l) => l.slug === initialSlug)
+    suite: rooms.some((l) => l.slug === initialSlug)
       ? (initialSlug as string)
-      : listings[0].slug,
+      : (rooms[0]?.slug ?? ""),
     checkin: "",
     checkout: "",
     guests: "2",
@@ -31,7 +38,7 @@ export function RequestForm({ initialSlug }: { initialSlug?: string }) {
     message: "",
   });
 
-  const selected = listings.find((l) => l.slug === form.suite) ?? listings[0];
+  const selected = rooms.find((l) => l.slug === form.suite) ?? rooms[0];
 
   // The guest count never exceeds the selected suite's capacity, even when the
   // visitor picked more guests on a larger suite and then switched suites.
@@ -87,7 +94,7 @@ export function RequestForm({ initialSlug }: { initialSlug?: string }) {
       <div>
         <label htmlFor="suite" className={labelCls}>Suite</label>
         <select id="suite" value={form.suite} onChange={set("suite")} className={inputCls}>
-          {listings.map((l) => (
+          {rooms.map((l) => (
             <option key={l.slug} value={l.slug}>
               {l.subtitle}
             </option>

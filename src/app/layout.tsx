@@ -5,7 +5,8 @@ import { Footer } from "@/components/footer";
 import { WhatsAppFab } from "@/components/whatsapp-fab";
 import { JsonLd } from "@/components/json-ld";
 import { site, SITE_URL, INDEXABLE } from "@/data/site";
-import { listings } from "@/data/listings";
+import { getRooms } from "@/lib/catalog/data";
+import type { Listing } from "@/data/listings";
 import "./globals.css";
 
 /* Single-family system following arequipa.com: Montserrat for everything,
@@ -57,7 +58,7 @@ export const viewport: Viewport = {
 /* LodgingBusiness JSON-LD. Street address intentionally omitted until the
    owner provides it (questions-for-owner.md Q4). No aggregateRating on
    purpose: Airbnb scores are shown visually with attribution only. */
-const lodgingJsonLd = {
+const buildLodgingJsonLd = (listings: Listing[]) => ({
   "@context": "https://schema.org",
   "@type": "LodgingBusiness",
   name: site.name,
@@ -66,7 +67,7 @@ const lodgingJsonLd = {
   logo: `${SITE_URL}/images/brand/logo.jpg`,
   image: `${SITE_URL}/images/brand/landing-page.jpg`,
   telephone: `+${site.whatsappNumber}`,
-  numberOfRooms: 4,
+  numberOfRooms: listings.length,
   hasMap: site.mapsUrl,
   checkinTime: site.checkin,
   checkoutTime: site.checkout,
@@ -82,11 +83,13 @@ const lodgingJsonLd = {
     site.social.facebook,
     ...listings.map((l) => l.airbnbUrl),
   ],
-};
+});
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const rooms = await getRooms();
+  const lodgingJsonLd = buildLodgingJsonLd(rooms);
   return (
     <html lang="es" className={montserrat.variable}>
       <body className="flex min-h-dvh flex-col">

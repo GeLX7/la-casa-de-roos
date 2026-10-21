@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { RequestForm } from "@/components/request-form";
+import { getRooms } from "@/lib/catalog/data";
 
 export const metadata: Metadata = {
   title: "Solicitar reserva",
@@ -14,6 +15,7 @@ export default async function ReservarPage({
   searchParams: Promise<{ suite?: string }>;
 }) {
   const { suite } = await searchParams;
+  const rooms = await getRooms();
 
   return (
     <div className="mx-auto max-w-2xl px-6 py-14">
@@ -33,7 +35,10 @@ export default async function ReservarPage({
       </p>
 
       <div className="mt-8 rounded-lg border border-sillar-200 bg-white p-5 shadow-sm sm:p-8">
-        <RequestForm initialSlug={suite} />
+        <RequestForm
+          initialSlug={suite}
+          rooms={rooms.map(({ slug, title, subtitle, capacity }) => ({ slug, title, subtitle, capacity }))}
+        />
       </div>
 
       <div className="mt-6 border-l-2 border-arcilla-500 bg-sillar-50 p-5 text-xs leading-relaxed text-tinta-500">

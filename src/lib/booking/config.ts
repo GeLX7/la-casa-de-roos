@@ -1,10 +1,11 @@
-import { listings } from "@/data/listings";
+import { getRoomBySlug } from "@/lib/catalog/data";
 
 export const AIRBNB_ICAL_ENV_BY_ROOM: Record<string, string> = {
   "roos-corazon": "AIRBNB_ICAL_ROOS_CORAZON",
   "roos-centro": "AIRBNB_ICAL_ROOS_CENTRO",
   "roos-vista": "AIRBNB_ICAL_ROOS_VISTA",
   "roos-familiar": "AIRBNB_ICAL_ROOS_FAMILIAR",
+  "roos-mini-centro": "AIRBNB_ICAL_ROOS_MINI_CENTRO",
 };
 
 export function getBookingRuntimeConfig() {
@@ -21,8 +22,8 @@ export function getBookingRuntimeConfig() {
   };
 }
 
-export function isKnownRoomSlug(roomSlug: string): boolean {
-  return listings.some((room) => room.slug === roomSlug);
+export async function isKnownRoomSlug(roomSlug: string): Promise<boolean> {
+  return Boolean(await getRoomBySlug(roomSlug));
 }
 
 export function getAirbnbIcalEnvKey(roomSlug: string): string | undefined {

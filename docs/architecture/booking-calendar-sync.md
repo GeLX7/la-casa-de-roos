@@ -18,12 +18,13 @@ iCal is the safest MVP because it is official, free, per-room, and reversible.
 
 Airbnb listing -> private Airbnb iCal export URL -> website calendar import.
 
-Each of the four suites will have one server-only env var:
+Each room will have one server-only env var:
 
-- `AIRBNB_ICAL_SUITE_QUEEN_CON_SALA`
-- `AIRBNB_ICAL_SUITE_QUEEN_CENTRO_HISTORICO`
-- `AIRBNB_ICAL_SUITE_QUEEN_CON_VISTA`
-- `AIRBNB_ICAL_MINI_APARTAMENTO_FAMILIAR`
+- `AIRBNB_ICAL_ROOS_CORAZON`
+- `AIRBNB_ICAL_ROOS_CENTRO`
+- `AIRBNB_ICAL_ROOS_VISTA`
+- `AIRBNB_ICAL_ROOS_FAMILIAR`
+- `AIRBNB_ICAL_ROOS_MINI_CENTRO`
 
 The website parses all-day iCal events into unavailable date ranges and stores
 them in `external_blocks`. Public users never see the raw Airbnb URL.

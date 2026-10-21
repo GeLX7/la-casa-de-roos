@@ -19,7 +19,7 @@ export async function getRoomAvailability(
 ): Promise<AvailabilityResult> {
   const checkedAt = new Date().toISOString();
 
-  if (!isKnownRoomSlug(roomSlug) || !isValidStayRange(startDate, endDate)) {
+  if (!(await isKnownRoomSlug(roomSlug)) || !isValidStayRange(startDate, endDate)) {
     return {
       room: roomSlug,
       startDate,
