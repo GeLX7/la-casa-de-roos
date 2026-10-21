@@ -44,6 +44,7 @@ export type AdminRoomSummary = {
   id: string;
   slug: string;
   name: string;
+  internal_name: string | null;
   subtitle: string;
   active: boolean;
   capacity: number;
@@ -88,7 +89,7 @@ const byOrder = <T extends { sort_order: number }>(rows: T[]) =>
 
 export async function getAdminRooms(): Promise<AdminRoomSummary[]> {
   return adminRest<AdminRoomSummary[]>(
-    "rooms?select=id,slug,name,subtitle,active,capacity,sort_order,deleted_at,updated_at&deleted_at=is.null&order=sort_order.asc,created_at.asc",
+    "rooms?select=id,slug,name,internal_name,subtitle,active,capacity,sort_order,deleted_at,updated_at&deleted_at=is.null&order=sort_order.asc,created_at.asc",
   );
 }
 

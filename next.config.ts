@@ -26,6 +26,21 @@ const nextConfig: NextConfig = {
         ]
       : [],
   },
+  async redirects() {
+    // Old room slugs -> new "roos-..." slugs (permanent, keeps old links and SEO).
+    const moved: Record<string, string> = {
+      "suite-queen-con-sala": "roos-corazon",
+      "suite-queen-centro-historico": "roos-centro",
+      "suite-queen-con-vista": "roos-vista",
+      "mini-apartamento-familiar": "roos-familiar",
+      "mini-apartamento-centro": "roos-mini-centro",
+    };
+    return Object.entries(moved).map(([from, to]) => ({
+      source: `/habitaciones/${from}`,
+      destination: `/habitaciones/${to}`,
+      permanent: true,
+    }));
+  },
   experimental: {
     // Admin photo uploads run through the (auth-gated) upload server action.
     // The 1 MB default would reject real photos; 30 MB covers a small batch.

@@ -211,6 +211,7 @@ export async function updateRoomBasicAction(formData: FormData): Promise<void> {
       method: "PATCH",
       body: JSON.stringify({
         name,
+        internal_name: text(formData, "internal_name") || null,
         subtitle: text(formData, "subtitle"),
         airbnb_url: text(formData, "airbnb_url"),
         airbnb_listing_id: text(formData, "airbnb_listing_id") || null,

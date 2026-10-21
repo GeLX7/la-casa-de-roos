@@ -1,10 +1,10 @@
 import { listings } from "@/data/listings";
 
 export const AIRBNB_ICAL_ENV_BY_ROOM: Record<string, string> = {
-  "suite-queen-con-sala": "AIRBNB_ICAL_SUITE_QUEEN_CON_SALA",
-  "suite-queen-centro-historico": "AIRBNB_ICAL_SUITE_QUEEN_CENTRO_HISTORICO",
-  "suite-queen-con-vista": "AIRBNB_ICAL_SUITE_QUEEN_CON_VISTA",
-  "mini-apartamento-familiar": "AIRBNB_ICAL_MINI_APARTAMENTO_FAMILIAR",
+  "roos-corazon": "AIRBNB_ICAL_ROOS_CORAZON",
+  "roos-centro": "AIRBNB_ICAL_ROOS_CENTRO",
+  "roos-vista": "AIRBNB_ICAL_ROOS_VISTA",
+  "roos-familiar": "AIRBNB_ICAL_ROOS_FAMILIAR",
 };
 
 export function getBookingRuntimeConfig() {

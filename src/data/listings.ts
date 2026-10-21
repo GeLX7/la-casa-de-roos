@@ -158,8 +158,8 @@ const suiteGallery = (
 
 export const listings: Listing[] = [
   {
-    slug: "suite-queen-con-sala",
-    title: "Habitación Corazón Centro Histórico Arequipa",
+    slug: "roos-corazon",
+    title: "Roos Corazón · Suite Queen con sala en Arequipa",
     subtitle: "Suite Queen con sala y vista al Centro Histórico",
     airbnbUrl: "https://www.airbnb.com.pe/rooms/1352543068552764001",
     airbnbListingId: "1352543068552764001",
@@ -195,8 +195,8 @@ export const listings: Listing[] = [
     },
   },
   {
-    slug: "suite-queen-centro-historico",
-    title: "Habitación Centro Histórico Arequipa",
+    slug: "roos-centro",
+    title: "Roos Centro · Suite Queen en el Centro Histórico de Arequipa",
     subtitle: "Suite Queen en el Centro Histórico",
     airbnbUrl: "https://www.airbnb.com.pe/rooms/1353094020937867539",
     airbnbListingId: "1353094020937867539",
@@ -228,8 +228,8 @@ export const listings: Listing[] = [
     },
   },
   {
-    slug: "suite-queen-con-vista",
-    title: "Habitación Centro Histórico Arequipa",
+    slug: "roos-vista",
+    title: "Roos Vista · Suite Queen con vista al Centro Histórico",
     subtitle: "Suite Queen con vista al Centro Histórico",
     airbnbUrl: "https://www.airbnb.com.pe/rooms/1352529733779964415",
     airbnbListingId: "1352529733779964415",
@@ -261,8 +261,8 @@ export const listings: Listing[] = [
     },
   },
   {
-    slug: "mini-apartamento-familiar",
-    title: "Mini Apartamento Cerca a Plaza de Armas",
+    slug: "roos-familiar",
+    title: "Roos Familiar · Mini apartamento cerca de la Plaza de Armas",
     subtitle: "Suite Queen familiar con vista + cama extra",
     airbnbUrl: "https://www.airbnb.com.pe/rooms/1352501815600410248",
     airbnbListingId: "1352501815600410248",

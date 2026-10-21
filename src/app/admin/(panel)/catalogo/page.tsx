@@ -139,6 +139,11 @@ export default async function AdminCatalogPage() {
 
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-semibold text-tinta-900">
+                {room.internal_name && (
+                  <span className="mr-2 rounded bg-sillar-50 px-1.5 py-0.5 text-xs font-bold text-arcilla-600">
+                    {room.internal_name}
+                  </span>
+                )}
                 {room.subtitle || room.name}
               </p>
               <p className="truncate text-xs text-tinta-500">
