@@ -8,7 +8,7 @@ import { JsonLd } from "@/components/json-ld";
 export const metadata: Metadata = {
   title: "Habitaciones y suites en el Centro Histórico de Arequipa",
   description:
-    "Cuatro suites privadas con baño propio, sala y kitchenette en el Centro Histórico de Arequipa. Capacidad para 2 a 3 huéspedes, llegada autónoma.",
+    "Cuatro suites privadas con baño propio, sala y cocina compartida exclusiva para huéspedes en el Centro Histórico de Arequipa. Capacidad para 2 a 3 huéspedes, llegada autónoma.",
   alternates: { canonical: "/habitaciones" },
 };
 
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 const faqs = [
   {
     q: "¿Las habitaciones tienen baño privado?",
-    a: "Sí. Cada una de las cuatro suites tiene baño completo privado, además de dormitorio con cama queen, sala de estar propia y kitchenette.",
+    a: "Sí. Cada una de las cuatro suites tiene baño completo privado, además de dormitorio con cama queen y sala de estar propia.",
   },
   {
     q: "¿Cómo se reserva?",
@@ -31,11 +31,11 @@ const faqs = [
   },
   {
     q: "¿Cómo funciona el check-in?",
-    a: `Llegada autónoma con caja de seguridad dentro de un edificio empresarial seguro, desde las ${site.checkin}. El check-out es hasta las ${site.checkout}.`,
+    a: `Llegada autónoma con cerradura inteligente dentro de un edificio empresarial seguro, desde las ${site.checkin}. El check-out es hasta las ${site.checkout}.`,
   },
   {
     q: "¿Hay cocina?",
-    a: "Cada suite incluye kitchenette con lo esencial, y además hay una cocina completa compartida, exclusiva para huéspedes.",
+    a: "Hay una cocina compartida en el área común por la que se pasa antes de llegar a las suites. Tiene minirefrigerador, microondas y cafetera, y es de uso exclusivo para los huéspedes: nadie más del edificio entra. Tu suite es completamente privada.",
   },
   {
     q: "¿Es ruidoso el centro histórico de noche?",
@@ -70,7 +70,7 @@ export default async function HabitacionesPage() {
           </h1>
           <p className="mt-4 text-sm leading-relaxed text-tinta-700 sm:text-base">
             Cada suite tiene dormitorio queen, sala de estar privada, baño
-            propio y kitchenette. Elige por vista, espacio o capacidad; todas
+            propio y acceso a la cocina compartida. Elige por vista, espacio o capacidad; todas
             comparten la misma ubicación caminable.
           </p>
         </div>

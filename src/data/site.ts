@@ -27,7 +27,7 @@ export const site = {
      title past Google's ~60-char display cutoff). */
   seoTagline: "Suites en el Centro Histórico de Arequipa",
   description:
-    "Suites privadas con baño propio, sala de estar y kitchenette en el Centro Histórico de Arequipa, a una cuadra de la Calle Mercaderes y a pasos de la Plaza de Armas.",
+    "Suites privadas con baño propio, sala de estar y cocina compartida exclusiva para huéspedes en el Centro Histórico de Arequipa, a una cuadra de la Calle Mercaderes y a pasos de la Plaza de Armas.",
   locale: "es_PE",
   whatsappNumber: "51967757040",
   whatsappDisplay: "+51 967 757 040",
