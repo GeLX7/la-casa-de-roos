@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { site } from "@/data/site";
 import { addDays } from "@/lib/booking/dates";
@@ -37,6 +38,9 @@ export function RequestForm({
     contact: "",
     message: "",
   });
+  // Explicit, unticked-by-default consent (Ley N.º 29733): the request cannot
+  // be sent until the visitor accepts the privacy policy.
+  const [consent, setConsent] = useState(false);
 
   const selected = rooms.find((l) => l.slug === form.suite) ?? rooms[0];
 
@@ -65,6 +69,7 @@ export function RequestForm({
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (!consent) return;
     setSubmitState("checking");
     const lines = [
       "Hola Roos, quisiera solicitar una reserva desde la web:",
@@ -166,6 +171,29 @@ export function RequestForm({
           id="message" rows={3} value={form.message} onChange={set("message")}
           className={inputCls} placeholder="Hora estimada de llegada, consultas…"
         />
+      </div>
+
+      <div className="flex items-start gap-3 rounded-md bg-sillar-50 px-3.5 py-3">
+        <input
+          id="consent"
+          type="checkbox"
+          required
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+          className="mt-0.5 h-4 w-4 shrink-0 accent-arcilla-500"
+        />
+        <label htmlFor="consent" className="text-xs leading-relaxed text-tinta-700">
+          He leído y acepto la{" "}
+          <Link
+            href="/privacidad"
+            target="_blank"
+            className="font-semibold text-arcilla-600 underline underline-offset-2"
+          >
+            política de privacidad
+          </Link>{" "}
+          y autorizo que mis datos se envíen por WhatsApp a La Casa de Roos para
+          gestionar mi solicitud.
+        </label>
       </div>
 
       <button

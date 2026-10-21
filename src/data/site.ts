@@ -46,6 +46,16 @@ export const site = {
     tiktok: "https://www.tiktok.com/@lacasaderoos",
     facebook: "https://www.facebook.com/profile.php?id=61579891154411",
   },
+  /* Data controller shown in the privacy policy (Ley N.º 29733). The e-mail
+     is published ONLY for data-rights requests (acceso, rectificación,
+     cancelación, oposición); reservations stay WhatsApp-first. */
+  legal: {
+    holder: "Herly Roosmery Lara Alvarez",
+    ruc: "10465946101",
+    tradeName: "La Casa de Roos",
+    address: "Calle Jerusalén 201D, Cercado de Arequipa, Perú",
+    privacyEmail: "edificioslt@gmail.com",
+  },
   /** Date the public Airbnb figures below were last checked. */
   ratingsCheckedAt: "octubre 2026",
 } as const;

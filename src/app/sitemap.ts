@@ -5,7 +5,7 @@ import { SITE_URL } from "@/data/site";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const listings = await getRooms();
   const now = new Date();
-  const staticRoutes = ["", "/habitaciones", "/arequipa", "/reservar", "/contacto"].map(
+  const staticRoutes = ["", "/habitaciones", "/arequipa", "/reservar", "/contacto", "/privacidad"].map(
     (path) => ({
       url: `${SITE_URL}${path}`,
       lastModified: now,
