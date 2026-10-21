@@ -14,7 +14,41 @@ const supabaseHost = (() => {
   }
 })();
 
+/* Security headers (point 9). CSP keeps 'unsafe-inline' for scripts/styles
+   because Next.js injects inline hydration scripts and the page has JSON-LD;
+   nonces would force every page to render dynamically (losing the cache).
+   Everything else is locked to this origin (+ Supabase Storage for photos). */
+const supabaseOrigin = supabaseHost ? `https://${supabaseHost}` : "";
+const isDev = process.env.NODE_ENV !== "production";
+const csp = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
+  "style-src 'self' 'unsafe-inline'",
+  `img-src 'self' data: blob: ${supabaseOrigin}`.trim(),
+  "font-src 'self' data:",
+  `connect-src 'self' ${supabaseOrigin}`.trim(),
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+].join("; ");
+
+const securityHeaders = [
+  { key: "Content-Security-Policy", value: csp },
+  { key: "X-Frame-Options", value: "DENY" },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  {
+    key: "Permissions-Policy",
+    value: "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+  },
+];
+
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
+  async headers() {
+    return [{ source: "/:path*", headers: securityHeaders }];
+  },
   images: {
     remotePatterns: supabaseHost
       ? [
