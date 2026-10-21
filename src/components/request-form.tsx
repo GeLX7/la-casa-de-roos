@@ -1,5 +1,6 @@
 "use client";
 
+import { withSourceTag } from "@/lib/source";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { site } from "@/data/site";
@@ -82,7 +83,7 @@ export function RequestForm({
       form.message ? `• Mensaje: ${form.message}` : "",
     ].filter(Boolean);
     window.open(
-      `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(lines.join("\n"))}`,
+      `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(withSourceTag(lines.join("\n")))}`,
       "_blank",
       "noopener,noreferrer",
     );

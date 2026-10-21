@@ -3,6 +3,7 @@ import { Montserrat } from "next/font/google";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { WhatsAppFab } from "@/components/whatsapp-fab";
+import { SourceCapture } from "@/components/source-capture";
 import { JsonLd } from "@/components/json-ld";
 import { site, SITE_URL, INDEXABLE } from "@/data/site";
 import { getRooms } from "@/lib/catalog/data";
@@ -98,6 +99,7 @@ export default async function RootLayout({
         <main className="flex-1">{children}</main>
         <Footer />
         <WhatsAppFab />
+        <SourceCapture />
       </body>
     </html>
   );

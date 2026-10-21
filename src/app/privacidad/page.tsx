@@ -72,6 +72,13 @@ export default function PrivacidadPage() {
           guardar solicitudes, actualizaremos esta política antes de hacerlo.
         </p>
         <p>
+          Si llegas desde un enlace nuestro (por ejemplo, Instagram o Google),
+          recordamos solo el nombre de ese origen mientras tu pestaña está
+          abierta y lo añadimos al final del mensaje de WhatsApp que decides
+          enviar, para saber por qué canal nos encontraste. No usamos cookies
+          ni herramientas de analítica para esto.
+        </p>
+        <p>
           Al consultar la disponibilidad, nuestro servidor recibe únicamente la
           suite y las fechas. Como cualquier sitio web, nuestro proveedor de
           alojamiento puede registrar datos técnicos básicos (como la dirección
