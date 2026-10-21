@@ -38,8 +38,7 @@ export default function PrivacidadPage() {
 
         <h2 className={h2}>1. Responsable del tratamiento</h2>
         <p>
-          {legal.holder} (RUC {legal.ruc}), que opera bajo el nombre comercial{" "}
-          {legal.tradeName}, con domicilio en {legal.address}.
+          {legal.tradeName} (RUC {legal.ruc}), con domicilio en {legal.address}.
         </p>
 
         <h2 className={h2}>2. Datos que recopilamos</h2>
