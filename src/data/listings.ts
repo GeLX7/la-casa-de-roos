@@ -88,9 +88,8 @@ const sharedAmenities: { icon: string; label: string }[] = [
   { icon: "wifi", label: "Wifi" },
   { icon: "bath", label: "Baño privado con agua caliente" },
   { icon: "tv", label: "TV" },
-  { icon: "kitchen", label: "Kitchenette: minirefrigerador, microondas y cafetera" },
-  { icon: "shared-kitchen", label: "Cocina compartida solo para huéspedes" },
-  { icon: "key", label: "Llegada autónoma con caja de seguridad" },
+  { icon: "shared-kitchen", label: "Cocina compartida solo para huéspedes, en el área común previa a las suites: minirefrigerador, microondas y cafetera" },
+  { icon: "key", label: "Llegada autónoma con cerradura inteligente" },
   { icon: "luggage", label: "Guardado de equipaje" },
   { icon: "moon", label: "Tapones para los oídos de cortesía" },
   { icon: "calendar", label: "Disponible para estadías largas" },
@@ -101,11 +100,11 @@ const sharedAmenities: { icon: string; label: string }[] = [
 const sharedNotIncluded = [
   "Aire acondicionado y calefacción (el clima templado de Arequipa los hace poco necesarios)",
   "Lavadora y secadora (hay lavandería a pasos)",
-  "Cocina completa dentro de la suite (kitchenette privado + cocina compartida de huéspedes)",
+  "Cocina propia dentro de la suite (la cocina compartida está en el área común previa a las suites y es solo para huéspedes)",
 ];
 
 const baseRules = (quietHours: string) => [
-  "Check-in desde las 14:00 (llegada autónoma con caja de seguridad)",
+  "Check-in desde las 14:00 (llegada autónoma con cerradura inteligente)",
   "Check-out antes de las 11:00",
   `Horas de silencio: ${quietHours}`,
   "No se permiten fiestas ni eventos",
@@ -170,7 +169,7 @@ export const listings: Listing[] = [
     beds: "1 cama queen",
     bath: "Baño privado",
     shortDescription:
-      "Suite amplia con sala de estar independiente, zona de trabajo y vista hacia el centro histórico. Cama queen, baño propio y kitchenette para empezar el día con calma.",
+      "Suite amplia con sala de estar independiente, zona de trabajo y vista hacia el centro histórico. Cama queen, baño propio y cocina compartida exclusiva para huéspedes, para empezar el día con calma.",
     longDescription: [
       "La suite más valorada de la casa: un dormitorio acogedor con cama queen, una sala privada con vista hacia el centro histórico y una zona de trabajo cómoda si viajas con el laptop a cuestas.",
       "Está dentro de un edificio empresarial seguro y tranquilo, a una cuadra de la Calle Mercaderes. Bajas las escaleras y estás en el corazón de Arequipa: la Plaza de Armas, el Monasterio de Santa Catalina y los mejores cafés quedan a minutos a pie.",
@@ -181,8 +180,8 @@ export const listings: Listing[] = [
       { icon: "iron", label: "Plancha" },
     ],
     notIncluded: sharedNotIncluded,
-    rules: baseRules("23:00 a 06:00"),
-    quietHours: "23:00 a 06:00",
+    rules: baseRules("23:00 a 07:00"),
+    quietHours: "23:00 a 07:00",
     priceLabel: "Consultar precio",
     gallery: suiteGallery("suite-queen-con-sala", { sala: 5, habitacion: 5, bano: 5 }),
     categoryRatings: {
@@ -207,15 +206,15 @@ export const listings: Listing[] = [
     beds: "1 cama queen",
     bath: "Baño privado",
     shortDescription:
-      "Suite acogedora con sala privada y todo lo esencial para una estadía cómoda en pleno centro: cama queen, baño propio y kitchenette.",
+      "Suite acogedora con sala privada y todo lo esencial para una estadía cómoda en pleno centro: cama queen, baño propio y acceso a una cocina compartida exclusiva para huéspedes.",
     longDescription: [
       "Una suite pensada para descansar bien después de recorrer la ciudad: cama queen, sala de estar privada y un baño completo solo para ti. Los huéspedes destacan la comunicación y la ubicación con puntaje perfecto.",
       "El edificio es empresarial y seguro, con cocina compartida exclusiva para huéspedes y un restaurante vegano en el primer piso. Todo el centro histórico queda a pasos de la puerta.",
     ],
     amenities: sharedAmenities,
     notIncluded: sharedNotIncluded,
-    rules: baseRules("23:00 a 06:00"),
-    quietHours: "23:00 a 06:00",
+    rules: baseRules("23:00 a 07:00"),
+    quietHours: "23:00 a 07:00",
     priceLabel: "Consultar precio",
     gallery: suiteGallery("suite-queen-centro-historico", { sala: 4, habitacion: 3, bano: 3 }),
     categoryRatings: {
@@ -285,8 +284,8 @@ export const listings: Listing[] = [
     ],
     notIncluded: sharedNotIncluded,
     // TODO(owner): confirm quiet hours for this suite (Airbnb page didn't expose it).
-    rules: baseRules("23:00 a 06:00"),
-    quietHours: "23:00 a 06:00",
+    rules: baseRules("23:00 a 07:00"),
+    quietHours: "23:00 a 07:00",
     priceLabel: "Consultar precio",
     gallery: suiteGallery("mini-apartamento-familiar", {
       sala: 7,

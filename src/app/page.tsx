@@ -38,7 +38,7 @@ const reasons = [
   {
     icon: Key,
     title: "Llegada autónoma",
-    text: "Check-in con caja de seguridad a tu propio ritmo, dentro de un edificio empresarial seguro.",
+    text: "Check-in autónomo con cerradura inteligente, a tu propio ritmo, dentro de un edificio empresarial seguro.",
   },
   {
     icon: SharedKitchen,
@@ -177,7 +177,7 @@ export default function HomePage() {
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-tinta-700 sm:text-lg">
             A una cuadra de la Calle Mercaderes y a pasos de la Plaza de
             Armas: cuatro suites privadas con baño propio, sala de estar,
-            kitchenette y llegada autónoma. Y una anfitriona que responde en
+            acceso a la cocina compartida y llegada autónoma. Y una anfitriona que responde en
             minutos.
           </p>
         </div>
@@ -294,8 +294,9 @@ export default function HomePage() {
                 de Arequipa casi nunca se extrañan.
               </li>
               <li>
-                La cocina completa es compartida (solo huéspedes); tu suite tiene
-                kitchenette con lo esencial.
+                La cocina es compartida (solo huéspedes) y está en el área común
+                antes de llegar a tu suite: tiene minirefrigerador, microondas y
+                cafetera. Tu suite es completamente privada y no tiene cocina propia.
               </li>
             </ul>
             <p className="mt-4 text-xs text-tinta-500">

@@ -98,9 +98,8 @@ export default function ContactoPage() {
         </section>
 
         <section className="mt-10 border-l-2 border-arcilla-500 bg-sillar-50 p-5 text-xs leading-relaxed text-tinta-500">
-          Para llegadas: el check-in es autónomo con caja de seguridad desde las{" "}
-          {site.checkin}; las llaves se devuelven en el segundo piso (Estudio
-          Museo Lozada Tamayo Coworking). Te enviamos las instrucciones completas
+          Para llegadas: el check-in es autónomo con cerradura inteligente desde las{" "}
+          {site.checkin}; al salir, las llaves se dejan en la misma habitación. Te enviamos las instrucciones completas
           al confirmar tu reserva.
         </section>
       </div>
