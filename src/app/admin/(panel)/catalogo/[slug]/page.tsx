@@ -247,6 +247,7 @@ export default async function AdminRoomEditPage({
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="font-display text-xl font-extrabold text-tinta-900">
+          {room.internal_name ? `${room.internal_name} · ` : ""}
           {room.subtitle || room.name}
         </h1>
         <Link
@@ -276,6 +277,15 @@ export default async function AdminRoomEditPage({
           <HiddenRoomFields room={room} />
           <Field label="Título (H1)" htmlFor="name">
             <input id="name" name="name" defaultValue={room.name} required className={inputClass} />
+          </Field>
+          <Field label="Nombre interno (solo panel, no se muestra al público)" htmlFor="internal_name">
+            <input
+              id="internal_name"
+              name="internal_name"
+              defaultValue={room.internal_name ?? ""}
+              placeholder="Ej.: Yanahuara"
+              className={inputClass}
+            />
           </Field>
           <Field label="Subtítulo" htmlFor="subtitle">
             <input id="subtitle" name="subtitle" defaultValue={room.subtitle} className={inputClass} />
