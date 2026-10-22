@@ -51,6 +51,20 @@ export async function getRoomAvailability(
   if (sync.state === "ok") blocks.push(...sync.blocks);
   else verified = false;
 
+  return buildAvailability({ roomSlug, startDate, endDate, checkedAt, blocks, verified });
+}
+
+/** Pure decision logic (unit-tested): turns the blocks read so far into a result. */
+export function buildAvailability(input: {
+  roomSlug: string;
+  startDate: string;
+  endDate: string;
+  checkedAt: string;
+  blocks: DateBlock[];
+  /** true ONLY if every source (Airbnb feed AND database) was read successfully. */
+  verified: boolean;
+}): AvailabilityResult {
+  const { roomSlug, startDate, endDate, checkedAt, blocks, verified } = input;
   const unavailableRanges = filterBlocksInRange(
     normalizeDateBlocks(blocks),
     startDate,
