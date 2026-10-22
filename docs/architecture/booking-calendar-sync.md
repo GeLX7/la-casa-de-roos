@@ -91,3 +91,11 @@ This phase uses iCal + request-to-book. Upgrade when volume or risk demands:
 - `src/app/api/reservation-requests/route.ts`: disabled-safe request endpoint.
 - `src/app/api/ical/[roomSlug]/route.ts`: protected website export feed.
 - `supabase/migrations/20260611143000_booking_calendar_foundation.sql`: schema.
+
+## Caché de disponibilidad (5 minutos)
+
+- El calendario de Airbnb de cada alojamiento se guarda en memoria hasta 5 minutos (`AVAILABILITY_CACHE_TTL_SECONDS`, opcional, 0–600; 0 la desactiva).
+- Solo una lectura reciente puede dar "available". Si al vencer no se puede refrescar, los bloqueos viejos solo sirven para decir "no disponible" (hasta 1 hora); nunca para confirmar disponibilidad.
+- Los errores se recuerdan solo 30 segundos. Cambiar la variable del enlace en Vercel invalida la caché (se compara un hash; el enlace no se guarda).
+- `checkedAt` indica cuándo se leyó el calendario realmente.
+- La caché es por instancia de servidor: cada instancia puede tener su propia copia.

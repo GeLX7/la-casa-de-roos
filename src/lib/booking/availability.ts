@@ -5,7 +5,7 @@ import {
   isValidStayRange,
   normalizeDateBlocks,
 } from "@/lib/booking/dates";
-import { syncAirbnbCalendar } from "@/lib/booking/ical";
+import { getCachedCalendar } from "@/lib/booking/calendar-cache";
 import { getStoredUnavailableBlocks } from "@/lib/booking/repository";
 import type { AvailabilityResult, DateBlock } from "@/lib/booking/types";
 
@@ -47,11 +47,30 @@ export async function getRoomAvailability(
   if (storedBlocks.ok) blocks.push(...storedBlocks.data);
   else verified = false;
 
-  const sync = await syncAirbnbCalendar(roomSlug);
-  if (sync.state === "ok") blocks.push(...sync.blocks);
-  else verified = false;
+  // The Airbnb feed is cached for ~5 minutes. Only a fresh read can support "available";
+  // an expired entry that could not be refreshed ("stale") can only add blocks.
+  const calendar = await getCachedCalendar(roomSlug);
+  let dataTime = Date.now();
+  if (calendar.state === "ok") {
+    blocks.push(...calendar.blocks);
+    dataTime = calendar.fetchedAt;
+  } else if (calendar.state === "stale") {
+    blocks.push(...calendar.blocks);
+    dataTime = calendar.fetchedAt;
+    verified = false;
+  } else {
+    verified = false;
+  }
 
-  return buildAvailability({ roomSlug, startDate, endDate, checkedAt, blocks, verified });
+  // checkedAt = when the calendar data was actually read (never newer than the data).
+  return buildAvailability({
+    roomSlug,
+    startDate,
+    endDate,
+    checkedAt: new Date(dataTime).toISOString(),
+    blocks,
+    verified,
+  });
 }
 
 /** Pure decision logic (unit-tested): turns the blocks read so far into a result. */
