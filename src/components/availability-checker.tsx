@@ -6,6 +6,7 @@ type AvailabilityStatus =
   | "idle"
   | "checking"
   | "configuration_needed"
+  | "unverified"
   | "available"
   | "unavailable"
   | "error";
@@ -17,7 +18,7 @@ type Props = {
 };
 
 type AvailabilityResponse = {
-  status: "configuration_needed" | "available" | "unavailable";
+  status: "configuration_needed" | "unverified" | "available" | "unavailable";
   message: string;
   unavailableDates?: string[];
 };
@@ -32,6 +33,7 @@ const statusStyles: Record<AvailabilityStatus, string> = {
   idle: "border-sillar-200 bg-sillar-50 text-tinta-700",
   checking: "border-sillar-300 bg-white text-tinta-700",
   configuration_needed: "border-arcilla-200 bg-arcilla-50/40 text-tinta-700",
+  unverified: "border-arcilla-200 bg-arcilla-50/40 text-tinta-700",
   available: "border-salvia-500/30 bg-salvia-500/10 text-tinta-700",
   unavailable: "border-arcilla-500/40 bg-arcilla-50 text-tinta-700",
   error: "border-arcilla-500/40 bg-arcilla-50 text-tinta-700",
@@ -67,7 +69,7 @@ export function AvailabilityChecker({ roomSlug, startDate, endDate }: Props) {
           key: requestKey,
           status: "error",
           message:
-            "No pudimos revisar el calendario. Escríbenos para confirmar disponibilidad.",
+            "Disponibilidad sujeta a confirmación. Escríbenos para confirmarla.",
         });
       });
 
@@ -82,7 +84,7 @@ export function AvailabilityChecker({ roomSlug, startDate, endDate }: Props) {
       ? result.status
       : "checking";
   const message = !hasValidDates
-    ? "Calendario en preparación. Escríbenos para confirmar disponibilidad."
+    ? "Elige fechas para consultar. La disponibilidad está sujeta a confirmación."
     : result?.key === requestKey
       ? result.message
       : "Revisando disponibilidad...";

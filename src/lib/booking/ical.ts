@@ -83,6 +83,38 @@ export async function importAirbnbCalendar(roomSlug: string): Promise<DateBlock[
   return parseIcalEvents(await response.text(), roomSlug);
 }
 
+export type CalendarSyncResult =
+  | { state: "not_configured" }
+  | { state: "error"; reason: string }
+  | { state: "ok"; blocks: DateBlock[] };
+
+/**
+ * Safe read of the Airbnb export feed. Never throws: any problem (no link,
+ * network error, timeout, non-200, body that is not a calendar) is reported
+ * as a non-"ok" state so callers can NEVER treat it as "no blocks".
+ */
+export async function syncAirbnbCalendar(roomSlug: string): Promise<CalendarSyncResult> {
+  const icalUrl = getAirbnbIcalUrl(roomSlug);
+  if (!icalUrl) return { state: "not_configured" };
+
+  try {
+    const response = await fetch(icalUrl, {
+      headers: { accept: "text/calendar,text/plain,*/*" },
+      cache: "no-store",
+      signal: AbortSignal.timeout(6000),
+    });
+    if (!response.ok) return { state: "error", reason: `http_${response.status}` };
+
+    const text = await response.text();
+    if (!/BEGIN:VCALENDAR/.test(text) || !/END:VCALENDAR/.test(text)) {
+      return { state: "error", reason: "not_a_calendar" };
+    }
+    return { state: "ok", blocks: parseIcalEvents(text, roomSlug) };
+  } catch {
+    return { state: "error", reason: "fetch_failed" };
+  }
+}
+
 function escapeIcalText(value: string): string {
   return value
     .replace(/\\/g, "\\\\")
