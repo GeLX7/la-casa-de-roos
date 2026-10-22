@@ -109,7 +109,7 @@ const baseRules = (quietHours: string) => [
   "No se permiten fiestas ni eventos",
   "Prohibido fumar dentro del alojamiento",
   "No se admiten mascotas",
-  "Penalidad de S/ 350 por incumplir las normas de la casa",
+  "Solo pueden alojarse las personas registradas en la reserva. Las visitas requieren autorización previa.",
 ];
 
 /** Sequentially numbered photos of one space (sala-01.jpg, sala-02.jpg…). */
