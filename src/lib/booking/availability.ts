@@ -1,17 +1,24 @@
-import { getAirbnbIcalUrl, hasAnyAirbnbIcalUrl, isKnownRoomSlug } from "@/lib/booking/config";
+import { isKnownRoomSlug } from "@/lib/booking/config";
 import {
   enumerateBlockedDates,
   filterBlocksInRange,
   isValidStayRange,
   normalizeDateBlocks,
 } from "@/lib/booking/dates";
-import { importAirbnbCalendar } from "@/lib/booking/ical";
-import { getStoredUnavailableBlocks, isBookingDatabaseConfigured } from "@/lib/booking/repository";
+import { syncAirbnbCalendar } from "@/lib/booking/ical";
+import { getStoredUnavailableBlocks } from "@/lib/booking/repository";
 import type { AvailabilityResult, DateBlock } from "@/lib/booking/types";
 
-const DISABLED_MESSAGE =
-  "Calendario en preparación. Escríbenos para confirmar disponibilidad.";
+const UNVERIFIED_MESSAGE = "Disponibilidad sujeta a confirmación.";
+const DISABLED_MESSAGE = UNVERIFIED_MESSAGE;
 
+/* Three outcomes:
+   - "unavailable": at least one known block overlaps the dates.
+   - "available":   the Airbnb calendar AND the stored blocks were read
+                    successfully right now and nothing overlaps.
+   - "unverified":  anything else (no calendar link, failed or invalid feed,
+                    database error). A missing or failing source never means
+                    free dates. The final confirmation is always manual. */
 export async function getRoomAvailability(
   roomSlug: string,
   startDate: string,
@@ -33,53 +40,77 @@ export async function getRoomAvailability(
     };
   }
 
-  const hasRuntimeSource =
-    isBookingDatabaseConfigured() || hasAnyAirbnbIcalUrl() || Boolean(getAirbnbIcalUrl(roomSlug));
-
-  if (!hasRuntimeSource) {
-    return {
-      room: roomSlug,
-      startDate,
-      endDate,
-      live: false,
-      status: "configuration_needed",
-      unavailableRanges: [],
-      unavailableDates: [],
-      checkedAt,
-      message: DISABLED_MESSAGE,
-    };
-  }
-
   const blocks: DateBlock[] = [];
+  let verified = true;
+
   const storedBlocks = await getStoredUnavailableBlocks(roomSlug, startDate, endDate);
   if (storedBlocks.ok) blocks.push(...storedBlocks.data);
+  else verified = false;
 
-  try {
-    blocks.push(...(await importAirbnbCalendar(roomSlug)));
-  } catch {
-    // API response stays conservative: if sync fails, owner confirmation remains required.
-  }
+  const sync = await syncAirbnbCalendar(roomSlug);
+  if (sync.state === "ok") blocks.push(...sync.blocks);
+  else verified = false;
 
+  return buildAvailability({ roomSlug, startDate, endDate, checkedAt, blocks, verified });
+}
+
+/** Pure decision logic (unit-tested): turns the blocks read so far into a result. */
+export function buildAvailability(input: {
+  roomSlug: string;
+  startDate: string;
+  endDate: string;
+  checkedAt: string;
+  blocks: DateBlock[];
+  /** true ONLY if every source (Airbnb feed AND database) was read successfully. */
+  verified: boolean;
+}): AvailabilityResult {
+  const { roomSlug, startDate, endDate, checkedAt, blocks, verified } = input;
   const unavailableRanges = filterBlocksInRange(
     normalizeDateBlocks(blocks),
     startDate,
     endDate,
   );
 
+  if (unavailableRanges.length > 0) {
+    return {
+      room: roomSlug,
+      startDate,
+      endDate,
+      live: verified,
+      status: "unavailable",
+      unavailableRanges,
+      unavailableDates: enumerateBlockedDates(unavailableRanges),
+      checkedAt,
+      message: "Estas fechas tienen bloqueos conocidos. Escríbenos para buscar alternativas.",
+    };
+  }
+
+  if (!verified) {
+    return {
+      room: roomSlug,
+      startDate,
+      endDate,
+      live: false,
+      status: "unverified",
+      unavailableRanges: [],
+      unavailableDates: [],
+      checkedAt,
+      message: UNVERIFIED_MESSAGE,
+    };
+  }
+
   return {
     room: roomSlug,
     startDate,
     endDate,
     live: true,
-    status: unavailableRanges.length > 0 ? "unavailable" : "available",
-    unavailableRanges,
-    unavailableDates: enumerateBlockedDates(unavailableRanges),
+    status: "available",
+    unavailableRanges: [],
+    unavailableDates: [],
     checkedAt,
     message:
-      unavailableRanges.length > 0
-        ? "Estas fechas tienen bloqueos conocidos. Escríbenos para buscar alternativas."
-        : "No hay bloqueos conocidos para estas fechas. La disponibilidad se confirma antes de la reserva.",
+      "Sin bloqueos conocidos en el calendario sincronizado. La disponibilidad se confirma antes de la reserva.",
   };
 }
 
-export { DISABLED_MESSAGE };
+export { DISABLED_MESSAGE, UNVERIFIED_MESSAGE };

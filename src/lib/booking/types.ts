@@ -23,10 +23,15 @@ export type DateBlock = {
   summary: string;
 };
 
+/* "available" is returned ONLY when a calendar source was read successfully
+   for this room and showed no overlapping block. Anything else that is not a
+   known block (no calendar configured, fetch/parse failure, database error)
+   is "unverified": never "available". */
 export type AvailabilityStatus =
   | "configuration_needed"
   | "available"
-  | "unavailable";
+  | "unavailable"
+  | "unverified";
 
 export type AvailabilityResult = {
   room: string;
