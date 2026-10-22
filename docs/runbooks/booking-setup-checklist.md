@@ -81,8 +81,8 @@ Confirm event says only `Blocked - La Casa de Roos`.
 ## 9. Enable Booking Request Flow
 
 - Direct inquiries already generate a prefilled WhatsApp message (live today).
-- Optionally turn on DB-backed `POST /api/reservation-requests` so requests
-  are also stored for the admin to review later.
+- `POST /api/reservation-requests` is TEMPORARILY DISABLED (returns 503, stores
+  nothing). Do not re-enable it until terms, privacy policy and security are approved.
 - Keep manual WhatsApp confirmation copy — requests are never instant
   bookings, and there is no payment or email step.
 - Do not launch instant booking until a channel-manager process is proven.
