@@ -11,7 +11,7 @@
  * downloaded 2026-06-10, recompressed and stored locally under
  * public/images/listings/<slug>/ — never hotlinked). Categories and alt
  * text derive from Airbnb's own public room-tour labels. Photos repeated
- * across all four listings (guest kitchen, YURAKUNA restaurant) are pooled
+ * across all four listings (guest kitchen) are pooled
  * once under public/images/listings/comunes/. All of it pending owner
  * originals or explicit approval (docs/research/content-rights-checklist.md).
  *
@@ -93,13 +93,12 @@ const sharedAmenities: { icon: string; label: string }[] = [
   { icon: "luggage", label: "Guardado de equipaje" },
   { icon: "moon", label: "Tapones para los oídos de cortesía" },
   { icon: "calendar", label: "Disponible para estadías largas" },
-  { icon: "laundry", label: "Lavandería cercana" },
+  { icon: "laundry", label: "Lavandería de pago cercana" },
   { icon: "parking", label: "Estacionamiento de pago cerca" },
 ];
 
 const sharedNotIncluded = [
-  "Aire acondicionado y calefacción (el clima templado de Arequipa los hace poco necesarios)",
-  "Lavadora y secadora (hay lavandería a pasos)",
+  "Lavadora y secadora dentro de la suite (hay una lavandería de pago cercana)",
   "Cocina propia dentro de la suite (la cocina compartida está en el área común previa a las suites y es solo para huéspedes)",
 ];
 
@@ -128,13 +127,11 @@ const photoRun = (
   }));
 
 /**
- * Photos the owner repeats on all four Airbnb listings (guest kitchen and
- * the YURAKUNA restaurant downstairs) — stored once under comunes/ and
- * appended to every suite gallery.
+ * Photos the owner repeats on all four Airbnb listings (guest kitchen) —
+ * stored once under comunes/ and appended to every suite gallery.
  */
 const sharedGallery: GalleryPhoto[] = [
   ...photoRun("comunes", "area-comun", "Áreas comunes", "Cocina compartida exclusiva para huéspedes", 5),
-  ...photoRun("comunes", "entorno", "Entorno", "Restaurante YURAKUNA en el primer piso del edificio", 6),
 ];
 
 /**
@@ -169,14 +166,13 @@ export const listings: Listing[] = [
     beds: "1 cama queen",
     bath: "Baño privado",
     shortDescription:
-      "Suite amplia con sala de estar independiente, zona de trabajo y vista hacia el centro histórico. Cama queen, baño propio y cocina compartida exclusiva para huéspedes, para empezar el día con calma.",
+      "Suite amplia con sala de estar independiente y vista hacia el centro histórico. Cama queen, baño propio y cocina compartida exclusiva para huéspedes, para empezar el día con calma.",
     longDescription: [
-      "La suite más valorada de la casa: un dormitorio acogedor con cama queen, una sala privada con vista hacia el centro histórico y una zona de trabajo cómoda si viajas con el laptop a cuestas.",
+      "La suite más valorada de la casa: un dormitorio acogedor con cama queen y una sala privada con vista hacia el centro histórico.",
       "Está dentro de un edificio empresarial seguro y tranquilo, a una cuadra de la Calle Mercaderes. Bajas las escaleras y estás en el corazón de Arequipa: la Plaza de Armas, el Monasterio de Santa Catalina y los mejores cafés quedan a minutos a pie.",
     ],
     amenities: [
       ...sharedAmenities,
-      { icon: "desk", label: "Zona de trabajo" },
       { icon: "iron", label: "Plancha" },
     ],
     notIncluded: sharedNotIncluded,
@@ -209,7 +205,7 @@ export const listings: Listing[] = [
       "Suite acogedora con sala privada y todo lo esencial para una estadía cómoda en pleno centro: cama queen, baño propio y acceso a una cocina compartida exclusiva para huéspedes.",
     longDescription: [
       "Una suite pensada para descansar bien después de recorrer la ciudad: cama queen, sala de estar privada y un baño completo solo para ti. Los huéspedes destacan la comunicación y la ubicación con puntaje perfecto.",
-      "El edificio es empresarial y seguro, con cocina compartida exclusiva para huéspedes y un restaurante vegano en el primer piso. Todo el centro histórico queda a pasos de la puerta.",
+      "El edificio es empresarial y seguro, con cocina compartida exclusiva para huéspedes. Todo el centro histórico queda a pasos de la puerta.",
     ],
     amenities: sharedAmenities,
     notIncluded: sharedNotIncluded,
@@ -272,14 +268,13 @@ export const listings: Listing[] = [
     beds: "1 cama queen + 1 cama individual",
     bath: "Baño privado",
     shortDescription:
-      "El espacio más amplio de la casa: para hasta tres personas, con cama queen y cama adicional, sala, zona de trabajo y baño privado, muy cerca de la Plaza de Armas.",
+      "El espacio más amplio de la casa: para hasta tres personas, con cama queen y cama adicional, sala y baño privado, muy cerca de la Plaza de Armas.",
     longDescription: [
-      "Un minidepartamento ideal para tres viajeros o para quien simplemente quiere más espacio: dormitorio con cama queen, cama individual adicional, sala de estar amplia y zona de trabajo.",
+      "Un minidepartamento ideal para tres viajeros o para quien simplemente quiere más espacio: dormitorio con cama queen, cama individual adicional y sala de estar amplia.",
       "Como toda La Casa de Roos, está dentro de un edificio empresarial seguro a una cuadra de Mercaderes, con cocina compartida de huéspedes y el centro histórico entero a minutos a pie.",
     ],
     amenities: [
       ...sharedAmenities,
-      { icon: "desk", label: "Zona de trabajo" },
       { icon: "bed", label: "Cama individual adicional" },
     ],
     notIncluded: sharedNotIncluded,

@@ -179,7 +179,7 @@ export default async function HomePage() {
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-tinta-700 sm:text-lg">
             A una cuadra de la Calle Mercaderes y a pasos de la Plaza de
             Armas: suites privadas con baño propio, sala de estar y acceso
-            a la cocina compartida, más un mini apartamento con cocina propia.
+            a la cocina compartida, más un mini apartamento con cocina propia y lavandería privada.
             Todo con llegada autónoma y una anfitriona que responde en
             minutos.
           </p>
@@ -258,8 +258,7 @@ export default async function HomePage() {
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-tinta-700">
               Estamos en {site.neighborhood}, dentro de un edificio empresarial
-              tranquilo y seguro. En el primer piso te espera YURAKUNA, un
-              restaurante vegano favorito de nuestros huéspedes.
+              tranquilo y seguro.
             </p>
             <ul className="mt-6 space-y-3">
               {landmarks.map((l) => (
@@ -291,10 +290,6 @@ export default async function HomePage() {
                 El centro histórico tiene vida: de noche puede llegar algo de
                 ruido de la calle. Por eso cada suite incluye{" "}
                 <strong>tapones para los oídos de cortesía</strong>.
-              </li>
-              <li>
-                No hay aire acondicionado ni calefacción. Con el clima templado
-                de Arequipa casi nunca se extrañan.
               </li>
               <li>
                 La cocina es compartida (solo huéspedes) y está en el área común
