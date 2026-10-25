@@ -19,9 +19,13 @@ export type RequestFormRoom = { slug: string; title: string; subtitle: string; c
 
 export function RequestForm({
   initialSlug,
+  initialCheckin,
+  initialCheckout,
   rooms,
 }: {
   initialSlug?: string;
+  initialCheckin?: string;
+  initialCheckout?: string;
   rooms: RequestFormRoom[];
 }) {
   const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
@@ -32,8 +36,8 @@ export function RequestForm({
     suite: rooms.some((l) => l.slug === initialSlug)
       ? (initialSlug as string)
       : (rooms[0]?.slug ?? ""),
-    checkin: "",
-    checkout: "",
+    checkin: initialCheckin ?? "",
+    checkout: initialCheckout ?? "",
     guests: "2",
     name: "",
     contact: "",

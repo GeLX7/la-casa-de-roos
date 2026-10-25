@@ -98,8 +98,8 @@ const sharedAmenities: { icon: string; label: string }[] = [
 ];
 
 const sharedNotIncluded = [
-  "Lavadora y secadora dentro de la suite (hay una lavandería de pago cercana)",
-  "Cocina propia dentro de la suite (la cocina compartida está en el área común previa a las suites y es solo para huéspedes)",
+  "Sin lavadora ni secadora en la suite. Hay una lavandería de pago cercana.",
+  "Sin cocina propia en la suite. La cocina compartida está en el área común previa a las suites y es solo para huéspedes.",
 ];
 
 const baseRules = (quietHours: string) => [

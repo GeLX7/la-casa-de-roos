@@ -6,7 +6,7 @@ import { getRoomBySlug, getRooms } from "@/lib/catalog/data";
 import { site, SITE_URL } from "@/data/site";
 import { SuiteGallery } from "@/components/suite-gallery";
 import { AmenityList } from "@/components/amenity-list";
-import { AvailabilityPrepPanel } from "@/components/availability-prep-panel";
+import { AvailabilityCalendar } from "@/components/availability-calendar";
 import { JsonLd } from "@/components/json-ld";
 import { whatsappUrl, roomWhatsappMessage } from "@/lib/whatsapp";
 import {
@@ -155,7 +155,7 @@ export default async function RoomPage({
             ))}
           </section>
 
-          <AvailabilityPrepPanel roomName={listing.subtitle} />
+          <AvailabilityCalendar roomSlug={listing.slug} roomName={listing.subtitle} />
 
           <section>
             <h2 className="mb-4 font-display text-2xl font-bold text-tinta-900">
@@ -163,7 +163,7 @@ export default async function RoomPage({
             </h2>
             <AmenityList items={listing.amenities} />
             <h3 className="mb-2 mt-6 text-sm font-semibold text-tinta-900">
-              Para que lo sepas antes de reservar
+              No incluido en la suite
             </h3>
             <ul className="space-y-1.5">
               {listing.notIncluded.map((n) => (
