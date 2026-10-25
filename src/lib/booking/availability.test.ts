@@ -193,8 +193,19 @@ describe("cache never turns old data into 'available'", () => {
     assert.equal(r.status, "unverified");
   });
 
-  it("checkedAt is when the calendar was read, not 'now'", async () => {
+  it("checkedAt is the query time; calendarReadAt is the last successful read", async () => {
+    const first = await getRoomAvailability(ROOM, "2026-12-10", "2026-12-12");
+    assert.ok(first.calendarReadAt, "calendar was read");
+    await new Promise((r) => setTimeout(r, 25));
+    const second = await getRoomAvailability(ROOM, "2026-12-10", "2026-12-12");
+    assert.equal(second.calendarReadAt, first.calendarReadAt, "served from cache: same read time");
+    assert.ok(Date.parse(second.checkedAt) > Date.parse(first.checkedAt), "query time moves on");
+  });
+
+  it("calendarReadAt is null when the calendar was never read", async () => {
+    delete process.env[ICAL_ENV];
     const r = await getRoomAvailability(ROOM, "2026-12-10", "2026-12-12");
-    assert.ok(Date.now() - Date.parse(r.checkedAt) < 5000);
+    assert.equal(r.status, "unverified");
+    assert.equal(r.calendarReadAt, null);
   });
 });
