@@ -5,7 +5,7 @@ import {
   isValidStayRange,
   normalizeDateBlocks,
 } from "@/lib/booking/dates";
-import { syncAirbnbCalendar } from "@/lib/booking/ical";
+import { getCachedCalendar } from "@/lib/booking/calendar-cache";
 import { getStoredUnavailableBlocks } from "@/lib/booking/repository";
 import type { AvailabilityResult, DateBlock } from "@/lib/booking/types";
 
@@ -36,6 +36,7 @@ export async function getRoomAvailability(
       unavailableRanges: [],
       unavailableDates: [],
       checkedAt,
+      calendarReadAt: null,
       message: "Fechas o suite inválidas.",
     };
   }
@@ -47,11 +48,31 @@ export async function getRoomAvailability(
   if (storedBlocks.ok) blocks.push(...storedBlocks.data);
   else verified = false;
 
-  const sync = await syncAirbnbCalendar(roomSlug);
-  if (sync.state === "ok") blocks.push(...sync.blocks);
-  else verified = false;
+  // The Airbnb feed is cached for ~5 minutes. Only a fresh read can support "available";
+  // an expired entry that could not be refreshed ("stale") can only add blocks.
+  const calendar = await getCachedCalendar(roomSlug);
+  let calendarReadAt: number | null = null;
+  if (calendar.state === "ok") {
+    blocks.push(...calendar.blocks);
+    calendarReadAt = calendar.fetchedAt;
+  } else if (calendar.state === "stale") {
+    blocks.push(...calendar.blocks);
+    calendarReadAt = calendar.fetchedAt;
+    verified = false;
+  } else {
+    verified = false;
+  }
 
-  return buildAvailability({ roomSlug, startDate, endDate, checkedAt, blocks, verified });
+  // checkedAt = time of this query; calendarReadAt = last successful Airbnb read.
+  return buildAvailability({
+    roomSlug,
+    startDate,
+    endDate,
+    checkedAt,
+    calendarReadAt: calendarReadAt === null ? null : new Date(calendarReadAt).toISOString(),
+    blocks,
+    verified,
+  });
 }
 
 /** Pure decision logic (unit-tested): turns the blocks read so far into a result. */
@@ -60,11 +81,13 @@ export function buildAvailability(input: {
   startDate: string;
   endDate: string;
   checkedAt: string;
+  calendarReadAt?: string | null;
   blocks: DateBlock[];
   /** true ONLY if every source (Airbnb feed AND database) was read successfully. */
   verified: boolean;
 }): AvailabilityResult {
   const { roomSlug, startDate, endDate, checkedAt, blocks, verified } = input;
+  const calendarReadAt = input.calendarReadAt ?? null;
   const unavailableRanges = filterBlocksInRange(
     normalizeDateBlocks(blocks),
     startDate,
@@ -81,6 +104,7 @@ export function buildAvailability(input: {
       unavailableRanges,
       unavailableDates: enumerateBlockedDates(unavailableRanges),
       checkedAt,
+      calendarReadAt,
       message: "Estas fechas tienen bloqueos conocidos. Escríbenos para buscar alternativas.",
     };
   }
@@ -95,6 +119,7 @@ export function buildAvailability(input: {
       unavailableRanges: [],
       unavailableDates: [],
       checkedAt,
+      calendarReadAt,
       message: UNVERIFIED_MESSAGE,
     };
   }
@@ -108,6 +133,7 @@ export function buildAvailability(input: {
     unavailableRanges: [],
     unavailableDates: [],
     checkedAt,
+    calendarReadAt,
     message:
       "Sin bloqueos conocidos en el calendario sincronizado. La disponibilidad se confirma antes de la reserva.",
   };

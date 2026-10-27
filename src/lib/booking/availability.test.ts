@@ -35,6 +35,7 @@ let server: Server;
 let base = "";
 let mode: Mode;
 let getRoomAvailability: typeof import("@/lib/booking/availability").getRoomAvailability;
+let clearCalendarCache: typeof import("@/lib/booking/calendar-cache").clearCalendarCache;
 
 before(async () => {
   server = createServer((req, res) => {
@@ -66,6 +67,7 @@ before(async () => {
   process.env.SUPABASE_SERVICE_ROLE_KEY = "test-key-not-real";
   delete process.env.CATALOG_DATA_SOURCE; // catalog stays on the static fallback
   ({ getRoomAvailability } = await import("@/lib/booking/availability"));
+  ({ clearCalendarCache } = await import("@/lib/booking/calendar-cache"));
 });
 
 after(() => {
@@ -73,6 +75,7 @@ after(() => {
 });
 
 beforeEach(() => {
+  clearCalendarCache();
   mode = { feed: { status: 200, body: feed() }, restStatus: 200, manualBlocks: [] };
   process.env[ICAL_ENV] = `${base}/ical`;
 });
@@ -167,5 +170,42 @@ describe("known blocks produce 'unavailable'", () => {
     mode.feed = { status: 200, body: feed(["2026-12-12", "2026-12-15"]) };
     const r = await getRoomAvailability(ROOM, "2026-12-14", "2026-12-16");
     assert.equal(r.status, "unavailable");
+  });
+});
+
+describe("cache never turns old data into 'available'", () => {
+  it("within the cache window a known block still wins and a new read after clearing sees updates", async () => {
+    mode.feed = { status: 200, body: feed(["2026-12-12", "2026-12-15"]) };
+    const first = await getRoomAvailability(ROOM, "2026-12-13", "2026-12-14");
+    assert.equal(first.status, "unavailable");
+    mode.feed = { status: 200, body: feed() };
+    const cached = await getRoomAvailability(ROOM, "2026-12-13", "2026-12-14");
+    assert.equal(cached.status, "unavailable", "served from cache (<5 min)");
+    clearCalendarCache();
+    const refreshed = await getRoomAvailability(ROOM, "2026-12-13", "2026-12-14");
+    assert.equal(refreshed.status, "available", "reservation cancelled and cache refreshed");
+  });
+
+  it("a cached 'ok' feed is not trusted once the link is removed", async () => {
+    await getRoomAvailability(ROOM, "2026-12-10", "2026-12-12");
+    delete process.env[ICAL_ENV];
+    const r = await getRoomAvailability(ROOM, "2026-12-10", "2026-12-12");
+    assert.equal(r.status, "unverified");
+  });
+
+  it("checkedAt is the query time; calendarReadAt is the last successful read", async () => {
+    const first = await getRoomAvailability(ROOM, "2026-12-10", "2026-12-12");
+    assert.ok(first.calendarReadAt, "calendar was read");
+    await new Promise((r) => setTimeout(r, 25));
+    const second = await getRoomAvailability(ROOM, "2026-12-10", "2026-12-12");
+    assert.equal(second.calendarReadAt, first.calendarReadAt, "served from cache: same read time");
+    assert.ok(Date.parse(second.checkedAt) > Date.parse(first.checkedAt), "query time moves on");
+  });
+
+  it("calendarReadAt is null when the calendar was never read", async () => {
+    delete process.env[ICAL_ENV];
+    const r = await getRoomAvailability(ROOM, "2026-12-10", "2026-12-12");
+    assert.equal(r.status, "unverified");
+    assert.equal(r.calendarReadAt, null);
   });
 });

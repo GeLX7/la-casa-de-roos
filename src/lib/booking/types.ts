@@ -41,7 +41,10 @@ export type AvailabilityResult = {
   status: AvailabilityStatus;
   unavailableRanges: DateBlock[];
   unavailableDates: string[];
+  /** When this query was made. */
   checkedAt: string;
+  /** When the Airbnb calendar was last read successfully (null if never / not configured). */
+  calendarReadAt: string | null;
   message: string;
 };
 
