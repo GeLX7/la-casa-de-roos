@@ -50,8 +50,10 @@ export default async function ReservarPage({
         <p>
           <strong className="text-tinta-700">Cómo sigue:</strong> Roos confirma
           la disponibilidad y coordina contigo el pago y los detalles de
-          llegada. Las tarifas se confirman al responder tu solicitud
-          (“Consultar precio”). Si prefieres, también puedes reservar
+          llegada. Los precios que ves son referenciales: la tarifa final
+          se confirma al responder tu solicitud. La reserva directa se confirma
+          con un <strong className="text-tinta-700">adelanto del 50% no
+          reembolsable</strong>. Si prefieres, también puedes reservar
           directamente en Airbnb desde la página de cada suite.
         </p>
       </div>
