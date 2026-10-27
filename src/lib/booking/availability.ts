@@ -10,6 +10,7 @@ import { getStoredUnavailableBlocks } from "@/lib/booking/repository";
 import type { AvailabilityResult, DateBlock } from "@/lib/booking/types";
 
 const UNVERIFIED_MESSAGE = "Disponibilidad sujeta a confirmación.";
+const AVAILABLE_MESSAGE = "Sin bloqueos detectados. Confirmamos tu fecha por WhatsApp.";
 const DISABLED_MESSAGE = UNVERIFIED_MESSAGE;
 
 /* Three outcomes:
@@ -108,9 +109,8 @@ export function buildAvailability(input: {
     unavailableRanges: [],
     unavailableDates: [],
     checkedAt,
-    message:
-      "Sin bloqueos conocidos en el calendario sincronizado. La disponibilidad se confirma antes de la reserva.",
+    message: AVAILABLE_MESSAGE,
   };
 }
 
-export { DISABLED_MESSAGE, UNVERIFIED_MESSAGE };
+export { AVAILABLE_MESSAGE, DISABLED_MESSAGE, UNVERIFIED_MESSAGE };
