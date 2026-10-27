@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { RequestForm } from "@/components/request-form";
+import { isValidStayRange } from "@/lib/booking/dates";
 import { getRooms } from "@/lib/catalog/data";
 
 export const metadata: Metadata = {
@@ -12,9 +13,11 @@ export const metadata: Metadata = {
 export default async function ReservarPage({
   searchParams,
 }: {
-  searchParams: Promise<{ suite?: string }>;
+  searchParams: Promise<{ suite?: string; checkin?: string; checkout?: string }>;
 }) {
-  const { suite } = await searchParams;
+  const { suite, checkin, checkout } = await searchParams;
+  const validRange =
+    checkin && checkout && isValidStayRange(checkin, checkout) && checkin >= new Date().toISOString().slice(0, 10);
   const rooms = await getRooms();
 
   return (
@@ -37,6 +40,8 @@ export default async function ReservarPage({
       <div className="mt-8 rounded-lg border border-sillar-200 bg-white p-5 shadow-sm sm:p-8">
         <RequestForm
           initialSlug={suite}
+          initialCheckin={validRange ? checkin : undefined}
+          initialCheckout={validRange ? checkout : undefined}
           rooms={rooms.map(({ slug, title, subtitle, capacity }) => ({ slug, title, subtitle, capacity }))}
         />
       </div>
