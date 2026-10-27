@@ -85,6 +85,7 @@ describe("availability never reports 'available' without verified data", () => {
     const r = await getRoomAvailability(ROOM, "2026-12-10", "2026-12-12");
     assert.equal(r.status, "available");
     assert.equal(r.live, true);
+    assert.equal(r.message, "Sin bloqueos detectados. Confirmamos tu fecha por WhatsApp.");
   });
 
   it("no calendar link configured => unverified", async () => {
@@ -136,6 +137,11 @@ describe("availability never reports 'available' without verified data", () => {
 describe("known blocks produce 'unavailable'", () => {
   it("overlapping reservation in the Airbnb feed", async () => {
     mode.feed = { status: 200, body: feed(["2026-12-12", "2026-12-15"]) };
+    const blocked = await getRoomAvailability(ROOM, "2026-12-13", "2026-12-14");
+    assert.equal(
+      blocked.message,
+      "Estas fechas tienen bloqueos conocidos. Escríbenos para buscar alternativas.",
+    );
     const r = await getRoomAvailability(ROOM, "2026-12-13", "2026-12-14");
     assert.equal(r.status, "unavailable");
     assert.deepEqual(r.unavailableDates, ["2026-12-12", "2026-12-13", "2026-12-14"]);
