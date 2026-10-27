@@ -52,8 +52,10 @@ export default async function ReservarPage({
           la disponibilidad y coordina contigo el pago y los detalles de
           llegada. Los precios que ves son referenciales: la tarifa final
           se confirma al responder tu solicitud. La reserva directa se confirma
-          con un <strong className="text-tinta-700">adelanto del 50% no
-          reembolsable</strong>. Si prefieres, también puedes reservar
+          con un <strong className="text-tinta-700">adelanto del 50%</strong>,
+          reembolsable (menos comisiones bancarias) si cancelas con al menos 5
+          días de anticipación al check-in; con menos días, o si no te
+          presentas, el adelanto no se reembolsa. Si prefieres, también puedes reservar
           directamente en Airbnb desde la página de cada suite.
         </p>
       </div>
