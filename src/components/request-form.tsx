@@ -227,7 +227,9 @@ export function RequestForm({
       <p className="text-center text-xs leading-relaxed text-tinta-500">
         Esto es una <strong>solicitud, no una reserva instantánea</strong>: Roos
         confirma la disponibilidad personalmente, normalmente en minutos y
-        siempre dentro de 24 horas.
+        siempre dentro de 24 horas. La reserva se confirma con un adelanto del
+        50%, reembolsable si cancelas con 5 o más días de anticipación al
+        check-in.
       </p>
     </form>
   );
