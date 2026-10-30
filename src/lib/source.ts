@@ -1,8 +1,14 @@
-/* Traffic-source tag (point 11). Links we publish (Instagram, TikTok,
-   Facebook, Google Business…) carry ?utm_source=…; we remember it for the
-   browser tab only (sessionStorage — no cookies, no analytics, nothing sent to
-   third parties) and append "(ref: …)" to the WhatsApp message the visitor
-   chooses to send, so the owner sees where each chat came from. */
+/* Web-origin and traffic-source markers.
+   Every WhatsApp message that starts from lacasaderoos.com ends with a stable
+   marker "(ref: web)" so the reservations automation can tell web inquiries
+   from any other chat. When the visitor arrived from a link we published
+   (Instagram, TikTok, Facebook, Google Business…) with ?utm_source=…, the
+   campaign source is kept separately as "(fuente: instagram/bio)" — we remember
+   it for the browser tab only (sessionStorage — no cookies, no analytics,
+   nothing sent to third parties).
+
+   The "(ref: web)" marker is a routing hint, not proof of identity: anyone can
+   type it. Exclusion tags in the CRM always take precedence. */
 
 const KEY = "roos_src";
 
@@ -37,8 +43,22 @@ export function getStoredSource(): string | null {
   }
 }
 
-/** Appends "(ref: <source>)" to a WhatsApp message when a source is known. */
+export const WEB_MARKER = "(ref: web)";
+const WEB_MARKER_RE = /\(ref: web\)/;
+const SOURCE_MARKER_RE = /\(fuente: [a-z0-9_/-]+\)/;
+
+/**
+ * Pure helper: appends "(ref: web)" and, when known, "(fuente: <origen>)".
+ * Idempotent — never duplicates a marker that is already in the message.
+ */
+export function appendMarkers(message: string, source: string | null): string {
+  const extra: string[] = [];
+  if (!WEB_MARKER_RE.test(message)) extra.push(WEB_MARKER);
+  if (source && !SOURCE_MARKER_RE.test(message)) extra.push(`(fuente: ${source})`);
+  return extra.length ? `${message}\n${extra.join("\n")}` : message;
+}
+
+/** Message with the web marker and, if a UTM source is stored, the source. */
 export function withSourceTag(message: string): string {
-  const source = getStoredSource();
-  return source ? `${message}\n(ref: ${source})` : message;
+  return appendMarkers(message, getStoredSource());
 }
