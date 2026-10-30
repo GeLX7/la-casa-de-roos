@@ -4,8 +4,9 @@ import { useEffect } from "react";
 import { sourceFromSearch, storeSource, withSourceTag } from "@/lib/source";
 
 /**
- * Remembers ?utm_source for this tab and tags every wa.me link on click, so
- * no call site needs changing. Renders nothing.
+ * Remembers ?utm_source for this tab and, on click, makes sure every wa.me link
+ * carries "(ref: web)" and, if known, "(fuente: …)" — idempotent, so no call
+ * site is ever double-tagged. Renders nothing.
  */
 export function SourceCapture() {
   useEffect(() => {
@@ -20,7 +21,7 @@ export function SourceCapture() {
       try {
         const url = new URL(a.href);
         const text = url.searchParams.get("text");
-        if (!text || /\n\(ref: [a-z0-9_/-]+\)$/.test(text)) return;
+        if (!text) return;
         const tagged = withSourceTag(text);
         if (tagged === text) return;
         url.searchParams.set("text", tagged);
