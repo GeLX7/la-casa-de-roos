@@ -1,8 +1,14 @@
 # Enlaces con origen (UTM)
 
-Pega cada enlace donde corresponde. Al hacer clic en WhatsApp, la web añade al
-final del mensaje `(ref: <origen>)`, que verás en tu chat. Solo se recuerda
-durante la visita (sin cookies ni analítica).
+Pega cada enlace donde corresponde. TODO mensaje de WhatsApp que sale de la web
+termina con `(ref: web)` (también el tráfico directo, sin UTM). Si el visitante
+llegó por uno de estos enlaces, se añade aparte `(fuente: <origen>)`, por
+ejemplo `(fuente: instagram/bio)`. Solo se recuerda durante la visita (sin
+cookies ni analítica).
+
+`(ref: web)` indica "consulta iniciada desde la web"; no prueba la identidad de
+nadie (cualquiera puede escribirlo) y las etiquetas de exclusión del CRM
+siempre prevalecen.
 
 | Dónde se pega | Enlace |
 |---|---|

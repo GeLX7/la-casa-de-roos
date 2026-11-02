@@ -75,7 +75,9 @@ export default function PrivacidadPage() {
           Si llegas desde un enlace nuestro (por ejemplo, Instagram o Google),
           recordamos solo el nombre de ese origen mientras tu pestaña está
           abierta y lo añadimos al final del mensaje de WhatsApp que decides
-          enviar, para saber por qué canal nos encontraste. No usamos cookies
+          enviar, para saber por qué canal nos encontraste. Además, todo mensaje que
+          preparamos desde la web termina con la marca «(ref: web)» para
+          identificar que la consulta nació aquí. No usamos cookies
           ni herramientas de analítica para esto.
         </p>
         <p>
