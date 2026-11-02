@@ -23,7 +23,7 @@ const faqs = [
   },
   {
     q: "¿Cómo se reserva?",
-    a: "Nos escribes por WhatsApp o desde el formulario de solicitud con tus fechas, y te confirmamos disponibilidad y tarifa, normalmente en minutos. No se paga nada en esta web.",
+    a: "Nos escribes por WhatsApp o desde el formulario de solicitud con tus fechas y el equipo confirma disponibilidad y precio final. Luego se solicita el pago anticipado del 100% del importe total; la reserva queda confirmada al verificar el pago completo. No se paga nada en esta web.",
   },
   {
     q: "¿Dónde está exactamente La Casa de Roos?",
