@@ -257,9 +257,11 @@ export default async function RoomPage({
           </div>
           <p className="mt-1 text-xs text-tinta-500">
             Precio referencial por noche. Confirmamos tarifa y disponibilidad por
-            WhatsApp, sin compromiso. La reserva se confirma con un adelanto del
-            50%, reembolsable si cancelas con 5 o más días de anticipación al
-            check-in.
+            WhatsApp, sin compromiso. Para confirmar la reserva se requiere el
+            pago anticipado del 100% del importe total, que se solicita una vez
+            confirmados la disponibilidad y el precio final. Con 5 o más días de
+            anticipación al check-in, devolución del 100% del importe pagado
+            (menos gastos bancarios); con menos días, sin devolución.
           </p>
           <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1.5 border-t border-sillar-200 pt-4 text-xs text-tinta-700">
             <span className="flex items-center gap-1.5">

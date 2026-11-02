@@ -226,10 +226,12 @@ export function RequestForm({
 
       <p className="text-center text-xs leading-relaxed text-tinta-500">
         Esto es una <strong>solicitud, no una reserva instantánea</strong>: Roos
-        confirma la disponibilidad personalmente, normalmente en minutos y
-        siempre dentro de 24 horas. La reserva se confirma con un adelanto del
-        50%, reembolsable si cancelas con 5 o más días de anticipación al
-        check-in.
+        confirma la disponibilidad y el precio final personalmente. Después se
+        solicita el pago anticipado del 100% del importe total, y la reserva queda confirmada
+        solo cuando se verifica el pago completo. Con 5 o más días de
+        anticipación al check-in, devolvemos el 100% del importe pagado
+        (descontando los gastos bancarios aplicables); con menos días no
+        corresponde devolución.
       </p>
     </form>
   );

@@ -180,8 +180,7 @@ export default async function HomePage() {
             A una cuadra de la Calle Mercaderes y a pasos de la Plaza de
             Armas: suites privadas con baño propio, sala de estar y acceso
             a la cocina compartida, más un mini apartamento con cocina propia y lavandería privada.
-            Todo con llegada autónoma y una anfitriona que responde en
-            minutos.
+            Todo con llegada autónoma y atención cercana de nuestra anfitriona.
           </p>
         </div>
       </section>
@@ -392,8 +391,8 @@ export default async function HomePage() {
               ¿Listo para despertar en el centro histórico?
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-sm text-tinta-700 sm:text-base">
-              Cuéntanos tus fechas y te confirmamos disponibilidad, normalmente
-              en minutos.
+              Cuéntanos tus fechas y nuestro equipo confirmará la disponibilidad
+              y el precio final.
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-3">
               <Link
